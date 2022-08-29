@@ -4,15 +4,16 @@ body>header {
     height: 50px;
     box-shadow: rgb(213 221 225) 0px 4px 6px;
     background-image: url("../images/logo.png");
-    background-size: auto 100%;
+    background-size: auto 90%;
     background-repeat: no-repeat;
     padding-left: 70px;
-    background-position: 10px center;
+    background-position: 15px center;
 }
 
 body>header>h2 {
     font-family: cursive;
     color: #0855d7;
+    font-weight: 200;
 }
 
 body>header>.github {
@@ -142,4 +143,11 @@ body>header>.github:hover {
 
 .main-view>.doc>ul>li {
     list-style-type: decimal;
+}
+
+.main-view>.doc .warn {
+    font-size: 12px;
+    color: #dac305;
+    font-weight: 400;
+    padding: 0 3px;
 }

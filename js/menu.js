@@ -80,7 +80,6 @@ var initToggle = function (idName) {
                         loadPage(spans[i].getAttribute('tag').replace(/\-/g, '/') + "/menu", function (data) {
                             document.getElementById('menu-id').innerHTML = data;
                             initToggle('menu');
-                            window.location.href = "#/" + routers[0] + "/" + routers[1];
                         });
 
                     }
@@ -91,6 +90,7 @@ var initToggle = function (idName) {
                         loadPage(routers.join('/') + "/" + tag, function (data) {
                             document.getElementById('doc-id').innerHTML = data;
                             window.location.href = "#/" + routers[0] + "/" + routers[1] + "/" + tag;
+                            window.doShader(document.getElementById('doc-id'));
                         });
                     }
                 });
