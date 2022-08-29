@@ -15,6 +15,23 @@ body>header>h2 {
     color: #0855d7;
 }
 
+body>header>.github {
+    position: absolute;
+    right: 20px;
+    top: 0;
+    line-height: 50px;
+    color: black;
+    text-decoration: underline;
+    font-size: 15px;
+    font-style: italic;
+    font-weight: 200;
+    cursor: pointer;
+}
+
+body>header>.github:hover {
+    font-weight: 400;
+}
+
 .main-view {
     white-space: nowrap;
     font-size: 0;
@@ -27,6 +44,7 @@ body>header>h2 {
     font-size: 16px;
     padding: 10px;
     white-space: normal;
+    overflow: auto;
 }
 
 .main-view>div:not(:last-child) {
@@ -81,9 +99,47 @@ body>header>h2 {
 
 .main-view>.doc {
     width: calc(100vw - 520px);
+    padding: 30px;
 }
 
 .main-view>.doc>header {
     font-size: 24px;
     padding: 20px 0;
+}
+
+.main-view>.doc>h2 {
+    font-size: 15px;
+    line-height: 2em;
+    padding: 20px 0;
+}
+
+.main-view>.doc>h3 {
+    font-size: 14px;
+    line-height: 2em;
+    padding: 15px 0;
+}
+
+.main-view>.doc>h4 {
+    font-size: 12px;
+    padding: 15px 0 5px 0;
+    text-decoration: overline;
+}
+
+.main-view>.doc>p {
+    line-height: 1.6em;
+    text-indent: 2em;
+    color: #3c3939;
+    font-weight: 400;
+    font-size: 14px;
+    margin: 10px 0;
+}
+
+.main-view>.doc>ul {
+    font-size: 13px;
+    line-height: 2.4em;
+    margin-left: 2.5em;
+}
+
+.main-view>.doc>ul>li {
+    list-style-type: decimal;
 }

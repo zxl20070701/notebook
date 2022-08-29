@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="./styles/common.css">
     <script src="./js/menu.js"></script>
     <title>《文档笔记》编程、数学、计算机等各种常用的内容快速查询</title>
+    <script>
+        var host = window.location.host;
+        window.needCache = !(/^127\.0\.0\.1/.test(host) || /^localhost/.test(host));
+    </script>
 </head>
 
 <body onload="initMenu()">
@@ -17,6 +21,7 @@
         <h2>
             文档笔记
         </h2>
+        <a class="github" href="https://github.com/zxl20070701/notebook" target="_blank">Fork Me On Github</a>
     </header>
     <div class="main-view">
         <div class="book">

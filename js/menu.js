@@ -27,11 +27,18 @@ var urlFormat = function (url) {
 // 加载新的页面
 var loadPage = function loadPage(pagename, callback) {
 
+    var storageData = sessionStorage.getItem("cache@" + pagename);
+    if (storageData && window.needCache) {
+        callback(storageData);
+        return;
+    }
+
     var xmlhttp = new XMLHttpRequest();
 
     // 请求完成回调
     xmlhttp.onload = function () {
         if (xmlhttp.readyState == 4) {
+            sessionStorage.setItem("cache@" + pagename, xmlhttp.responseText);
             callback(xmlhttp.responseText);
         }
     };
