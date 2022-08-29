@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./images/logo.png">
+    <link rel="stylesheet" href="./styles/normalize.css">
+    <link rel="stylesheet" href="./styles/common.css">
+    <script src="./js/menu.js"></script>
+    <title>《文档笔记》编程、数学、计算机等各种常用的内容快速查询</title>
+</head>
+
+<body onload="initMenu()">
+    <header>
+        <h2>
+            文档笔记
+        </h2>
+    </header>
+    <div class="main-view">
+        <div class="book">
+            <h2>列表</h2>
+            <ul id="book-id">
+                <li>
+                    <span>编程</span>
+                    <ul>
+                        <li>
+                            <span tag="program-course">
+                                教程&经验快速查询
+                            </span>
+                        </li>
+                        <li>
+                            <span tag="program-api">
+                                常用接口API
+                            </span>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <span>数学</span>
+                    <ul>
+                        <li>
+                            <span tag="math-basic">
+                                初等数学相关
+                            </span>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="menu">
+            <h2>目录</h2>
+            <ul id="menu-id"></ul>
+        </div>
+        <div class="doc" id="doc-id"></div>
+    </div>
+</body>
+
+</html>
