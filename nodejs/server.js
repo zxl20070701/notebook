@@ -13,7 +13,7 @@ var server = http.createServer(function (request, response) {
     try {
         log("[" + index++ + "]" + request.url);
 
-        request.url = request.url.replace(/(\?_=[0-9]+)$/, '');
+        request.url = request.url.split("?")[0];
 
         // 请求的文件路径
         var filePath = fullPath(request.url == "/" ? "index.html" : request.url.replace(/^\//, ""), basePath);

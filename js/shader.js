@@ -1,3 +1,30 @@
+var htmlColors = {
+    "text": "#000000",/*文本颜色*/
+    "annotation": "#6a9955",/*注释颜色*/
+    "insign": "#9e9e9e",/*符号颜色*/
+    "node": "#1e50b3",/*结点颜色*/
+    "attrKey": "#1e83b1",/*属性名称颜色*/
+    "attrValue": "#ac4c1e"/*属性值颜色*/
+};
+
+var cssColors = {
+    "annotation": "#6a9955",/*注释颜色*/
+    "insign": "#9e9e9e",/*符号颜色*/
+    "selector": "#1e50b3",/*选择器*/
+    "attrKey": "#1e83b1",/*属性名称颜色*/
+    "attrValue": "#ac4c1e"/*属性值颜色*/
+};
+
+var jsColors = {
+    "text": "#000000",/*文本颜色*/
+    "annotation": "#6a9955",/*注释颜色*/
+    "insign": "#9e9e9e",/*符号颜色*/
+    "key": "#ff0000",/*关键字颜色*/
+    "string": "#ac4c1e",/*字符串颜色*/
+    "funName": "#1e50b3",/*函数名称颜色*/
+    "execName": "#1e83b1"/*执行方法颜色*/
+};
+
 var _cssShader = function (textString, colors) {
     var shaderArray = [];
 
@@ -297,6 +324,7 @@ var _jsShader = function (textString, colors) {
 
 var _htmlShader = function (textString, colors) {
 
+    textString = textString.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
     var shaderArray = [];
 
     // 当前面对的
@@ -523,8 +551,8 @@ var _htmlShader = function (textString, colors) {
                         "style>": _cssShader,
                         "script>": _jsShader
                     }[langHelp](template, {
-                        "style>": colors._css,
-                        "script>": colors._javascript
+                        "style>": cssColors,
+                        "script>": jsColors
                     }[langHelp]);
 
                     innerShaderArray.forEach(function (innerShader) {
@@ -554,6 +582,10 @@ var _htmlShader = function (textString, colors) {
 
     }
 
+    for (i = 0; i < shaderArray.length; i++) {
+        shaderArray[i].content = shaderArray[i].content.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
     return shaderArray;
 
 };
@@ -563,38 +595,18 @@ window.doShader = function (el) {
     var preEls = el.getElementsByTagName('pre'), i, j;
     for (i = 0; i < preEls.length; i++) {
         var shaderJSON = null;
+        var source = preEls[i].innerHTML.trim();
         switch (preEls[i].getAttribute('tag')) {
             case "html": {
-                shaderJSON = _htmlShader(preEls[i].innerHTML, {
-                    "text": "#000000",/*文本颜色*/
-                    "annotation": "#6a9955",/*注释颜色*/
-                    "insign": "#9e9e9e",/*符号颜色*/
-                    "node": "#1e50b3",/*结点颜色*/
-                    "attrKey": "#1e83b1",/*属性名称颜色*/
-                    "attrValue": "#ac4c1e"/*属性值颜色*/
-                });
+                shaderJSON = _htmlShader(source, htmlColors);
                 break
             }
             case "css": {
-                shaderJSON = _cssShader(preEls[i].innerHTML, {
-                    "annotation": "#6a9955",/*注释颜色*/
-                    "insign": "#9e9e9e",/*符号颜色*/
-                    "selector": "#1e50b3",/*选择器*/
-                    "attrKey": "#1e83b1",/*属性名称颜色*/
-                    "attrValue": "#ac4c1e"/*属性值颜色*/
-                });
+                shaderJSON = _cssShader(source, cssColors);
                 break
             }
             case "javascript": {
-                shaderJSON = _jsShader(preEls[i].innerHTML, {
-                    "text": "#000000",/*文本颜色*/
-                    "annotation": "#6a9955",/*注释颜色*/
-                    "insign": "#9e9e9e",/*符号颜色*/
-                    "key": "#ff0000",/*关键字颜色*/
-                    "string": "#ac4c1e",/*字符串颜色*/
-                    "funName": "#1e50b3",/*函数名称颜色*/
-                    "execName": "#1e83b1"/*执行方法颜色*/
-                });
+                shaderJSON = _jsShader(source, jsColors);
                 break
             }
         }
@@ -608,6 +620,7 @@ window.doShader = function (el) {
             preEls[i].style.padding = '10px';
             preEls[i].style.fontSize = '12px';
             preEls[i].style.fontFamily = 'sans-serif';
+            preEls[i].style.fontWeight = '400';
         }
     }
 

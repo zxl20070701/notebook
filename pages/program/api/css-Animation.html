@@ -1,0 +1,61 @@
+<header>
+    Animation 动画
+</header>
+<pre tag="css">
+    animation: name duration timing-function delay iteration-count direction;
+</pre>
+<p>
+    请始终规定 animation-duration 属性，否则时长为 0，就不会播放动画了。上面是统一设置，也可以分别设置各个属性：
+</p>
+<h2>
+    animation-name
+</h2>
+<p>
+    规定需要绑定到选择器的 keyframe 名称。
+</p>
+<p>
+    下面是一个定义的 keyframe 例子：
+</p>
+<pre tag="css">
+@keyframes myAnim1 {
+    0% {
+        transform: rotateY(0deg);
+    }
+    50% {
+        transform: rotateY(180deg);
+    }
+    100% {
+        transform: rotateY(0deg);
+    }
+}
+</pre>
+<h2>
+    animation-duration
+</h2>
+<p>
+    规定完成动画所花费的时间，以秒或毫秒计。
+</p>
+<h2>
+    animation-timing-function
+</h2>
+<p>
+    规定动画的速度曲线。
+</p>
+<h2>
+    animation-delay
+</h2>
+<p>
+    规定在动画开始之前的延迟。
+</p>
+<h2>
+    animation-iteration-count
+</h2>
+<p>
+    规定动画应该播放的次数。可以是一个数字表示次数，或者是infinite表示无限次（永远）。
+</p>
+<h2>
+    animation-direction
+</h2>
+<p>
+    规定是否应该轮流反向播放动画。
+</p>
