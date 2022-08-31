@@ -224,3 +224,90 @@ body>header>.github:hover {
     border: 1px solid #c1bcbc;
     color: #fff;
 }
+
+.main-view>.doc>button[tag] {
+    margin: 10px 30px;
+    background: red;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+/* 例子 */
+.example-view {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(228, 224, 224, 0.661);
+    display: none;
+}
+
+.example-view>div {
+    width: 90vw;
+    height: 90vh;
+    margin-top: 5vh;
+    margin-left: 5vw;
+    background-color: white;
+    font-size: 0;
+    white-space: nowrap;
+}
+
+.example-view>div>div {
+    display: inline-block;
+    width: calc(45vw - 30px);
+    height: calc(90vh - 40px);
+    font-size: 16px;
+    white-space: normal;
+    vertical-align: top;
+    outline: 1px solid #8c9da5;
+    margin: 20px 0 0 20px;
+}
+
+.example-view>div>div>h2 {
+    border-bottom: 1px solid #8c9da5;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 20px;
+    position: relative;
+    font-family: cursive;
+}
+
+.example-view>div>div>iframe,
+.example-view>div>div>textarea {
+    width: calc(45vw - 30px);
+    height: calc(90vh - 90px);
+    outline: none;
+    border: none;
+}
+
+.example-view>div>div>textarea {
+    padding: 10px;
+    font-family: cursive;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.example-view>div>div>h2>button {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 20px;
+    border: none;
+    outline: none;
+    color: white;
+    cursor: pointer;
+}
+
+.example-view>div>div>h2>button.run {
+    background-color: red;
+}
+
+.example-view>div>div>h2>button.close {
+    background-color: #e6e3dd;
+}

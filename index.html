@@ -14,17 +14,24 @@
     <script>
         var host = window.location.host;
         window.needCache = !(/^127\.0\.0\.1/.test(host) || /^localhost/.test(host));
+        window.needCache = true;
     </script>
 </head>
 
 <body onload="initMenu()">
+
+    <!-- 进度 -->
     <div id="process"></div>
+
+    <!-- 顶部 -->
     <header>
         <h2>
             文档笔记
         </h2>
         <a class="github" href="https://github.com/zxl20070701/notebook" target="_blank">Fork Me On Github</a>
     </header>
+
+    <!-- 主界面 -->
     <div class="main-view">
         <div class="book">
             <h2>列表</h2>
@@ -72,6 +79,43 @@
         </div>
         <div class="doc" id="doc-id"></div>
     </div>
+
+    <!-- 例子 -->
+    <div class="example-view" id="example-root">
+        <div>
+            <div>
+                <h2>
+                    源代码
+                    <button class="run" id="run-btn" onclick="runExample()">
+                        运行
+                    </button>
+                </h2>
+                <textarea id="source-id"></textarea>
+            </div>
+            <div>
+                <h2>
+                    运行结果
+                    <button class="close" onclick="closeExample()">
+                        关闭
+                    </button>
+                </h2>
+                <iframe id="run-id"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function runExample() {
+            var iframeDocument = document.getElementById('run-id').contentWindow.document;
+            iframeDocument.open();
+            iframeDocument.write(document.getElementById('source-id').value);
+            iframeDocument.close();
+        }
+        function closeExample() {
+            document.getElementById('example-root').style.display = "none";
+        }
+    </script>
+
 </body>
 
 </html>

@@ -25,7 +25,7 @@ var urlFormat = function (url) {
 };
 
 // 加载新的页面
-var loadPage = function loadPage(pagename, callback) {
+var loadPage = function (pagename, callback) {
     var processEl = document.getElementById('process');
 
     if (window.needCache) {
@@ -58,7 +58,7 @@ var loadPage = function loadPage(pagename, callback) {
     }
 
 
-    xmlhttp.open("GET", "./pages/" + pagename + ".html?hash=" + new Date().valueOf(), true);
+    xmlhttp.open("GET", "./" + pagename + ".html?hash=" + new Date().valueOf(), true);
 
     // 设置超时时间
     xmlhttp.timeout = 6000;
@@ -91,7 +91,7 @@ var initToggle = function (idName) {
                     // 更新菜单
                     if (idName == 'book') {
                         routers = spans[i].getAttribute('tag').split('-');
-                        loadPage(spans[i].getAttribute('tag').replace(/\-/g, '/') + "/menu", function (data) {
+                        loadPage("pages/" + spans[i].getAttribute('tag').replace(/\-/g, '/') + "/menu", function (data) {
                             document.getElementById('menu-id').innerHTML = data;
                             initToggle('menu');
                         });
@@ -101,10 +101,27 @@ var initToggle = function (idName) {
                     // 打开页面
                     else {
                         var tag = spans[i].getAttribute('tag');
-                        loadPage(routers.join('/') + "/" + tag, function (data) {
+                        loadPage("pages/" + routers.join('/') + "/" + tag, function (data) {
                             document.getElementById('doc-id').innerHTML = data;
                             window.location.href = "#/" + routers[0] + "/" + routers[1] + "/" + tag;
                             window.doShader(document.getElementById('doc-id'));
+
+                            var buttons = document.getElementsByTagName('button'), index;
+                            for (index = 0; index < buttons.length; index++) {
+                                (function (index) {
+                                    var exampleName = buttons[index].getAttribute('tag');
+                                    if (exampleName) {
+                                        buttons[index].addEventListener('click', function () {
+                                            loadPage("examples/" + exampleName, function (data) {
+                                                document.getElementById('example-root').style.display = "block";
+                                                document.getElementById('source-id').value = data;
+                                                document.getElementById('run-btn').click();
+                                            });
+                                        });
+                                    }
+                                })(index);
+                            }
+
                         });
                     }
                 });
