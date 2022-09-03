@@ -609,6 +609,12 @@ window.doShader = function (el) {
                 shaderJSON = _jsShader(source, jsColors);
                 break
             }
+            default: {
+                shaderJSON = [{
+                    color: "black",
+                    content: source
+                }];
+            }
         }
         if (shaderJSON) {
             var template = "";
@@ -621,6 +627,7 @@ window.doShader = function (el) {
             preEls[i].style.fontSize = '12px';
             preEls[i].style.fontFamily = 'sans-serif';
             preEls[i].style.fontWeight = '400';
+            preEls[i].style.lineHeight = '18px';
         }
     }
 

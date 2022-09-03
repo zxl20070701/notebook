@@ -6,19 +6,38 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="./images/logo.png">
+    <meta name="keywords" content="zxl20070701 1904314465@qq.com notebook math web english computer">
     <link rel="stylesheet" href="./styles/normalize.css">
     <link rel="stylesheet" href="./styles/common.css">
     <script src="./js/shader.js"></script>
     <script src="./js/menu.js"></script>
-    <title>《文档笔记》编程、数学、计算机等各种常用的内容快速查询</title>
+    <title>《文档笔记》包括编程、数学、计算机等各种常用的内容快速查询</title>
     <script>
+
+        // 控制是否需要缓存
         var host = window.location.host;
         window.needCache = !(/^127\.0\.0\.1/.test(host) || /^localhost/.test(host));
-        window.needCache = true;
+
+        // 监听浏览器点击了回退按钮
+        if (window.addEventListener)
+            window.addEventListener("hashchange", () => {
+                setTimeout(() => {
+                    if (window.noFresh) {
+                        window.noFresh = false;
+                    } else {
+                        window.location.reload();
+                    }
+                }, 200);
+            }, false);
     </script>
 </head>
 
 <body onload="initMenu()">
+
+    <!-- 快速定位fixed -->
+    <div class="fixed-view" id="fixed-id">
+        <div class="menu" id="fixed-menu-id"></div>
+    </div>
 
     <!-- 进度 -->
     <div id="process"></div>
@@ -28,7 +47,9 @@
         <h2>
             文档笔记
         </h2>
-        <a class="github" href="https://github.com/zxl20070701/notebook" target="_blank">Fork Me On Github</a>
+        <a class="github" href="https://github.com/zxl20070701/notebook" id="github-id" tag="type1" target="_blank">
+            Fork Me On Github
+        </a>
     </header>
 
     <!-- 主界面 -->
@@ -95,7 +116,7 @@
             <div>
                 <h2>
                     运行结果
-                    <button class="close" onclick="closeExample()">
+                    <button class="close" id="example-close-id">
                         关闭
                     </button>
                 </h2>
@@ -110,9 +131,6 @@
             iframeDocument.open();
             iframeDocument.write(document.getElementById('source-id').value);
             iframeDocument.close();
-        }
-        function closeExample() {
-            document.getElementById('example-root').style.display = "none";
         }
     </script>
 

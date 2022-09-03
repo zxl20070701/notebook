@@ -1,17 +1,7 @@
 /* 滚动条 */
-::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background: rgba(0, 0, 0, .1);
-}
-
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 10px;
-}
-
-::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 6px rgb(0 0 0 / 10%);
-    border-radius: 10px;
+    width: 0px;
+    height: 0px;
 }
 
 /* 请求进度 */
@@ -44,7 +34,12 @@ body>header>h2 {
 }
 
 body>header>.github {
-    position: absolute;
+    user-select: none;
+    position: fixed;
+    z-index: 1;
+}
+
+body>header>.github[tag='type1'] {
     right: 20px;
     top: 0;
     line-height: 50px;
@@ -54,6 +49,23 @@ body>header>.github {
     font-style: italic;
     font-weight: 200;
     cursor: pointer;
+    z-index: 1;
+}
+
+body>header>.github[tag='type2'] {
+    transform: rotate(-45deg);
+    line-height: 18px;
+    transform-origin: 150px 23px;
+    text-align: center;
+    display: inline-block;
+    bottom: 46px;
+    right: -107px;
+    width: 300px;
+    background-color: #000000;
+    outline: 4px solid #000000;
+    border: 2px dashed #ffffff;
+    color: #ffffff;
+    font-size: 12px;
 }
 
 body>header>.github:hover {
@@ -78,6 +90,7 @@ body>header>.github:hover {
 
 .main-view>div:not(:last-child) {
     border-right: 1px solid rgb(188, 186, 186);
+    user-select: none;
 }
 
 .main-view>div:not(:last-child)>h2 {
@@ -135,6 +148,7 @@ body>header>.github:hover {
 .main-view>.doc {
     width: calc(100vw - 520px);
     padding: 30px;
+    position: relative;
 }
 
 .main-view>.doc>header {
@@ -188,6 +202,12 @@ body>header>.github:hover {
     font-size: 12px;
     color: #dac305;
     font-weight: 400;
+    padding: 0 3px;
+}
+
+.main-view>.doc .important {
+    color: rgb(255, 0, 0);
+    font-weight: 800;
     padding: 0 3px;
 }
 
@@ -254,6 +274,7 @@ body>header>.github:hover {
     background-color: white;
     font-size: 0;
     white-space: nowrap;
+    box-shadow: 0 0 16px black;
 }
 
 .example-view>div>div {
@@ -310,4 +331,72 @@ body>header>.github:hover {
 
 .example-view>div>div>h2>button.close {
     background-color: #e6e3dd;
+}
+
+/* 最大化快速定位相关 */
+.full-btn {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    right: 20px;
+    top: 20px;
+    cursor: pointer;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+}
+
+.full-btn[tag='toFull'] {
+    background-image: url('../images/icon1.png');
+}
+
+.full-btn[tag='toRight'] {
+    background-image: url('../images/icon2.png');
+}
+
+.fixed-view {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #f7f7f7;
+    display: none;
+}
+
+.fixed-view>.menu {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 260px;
+    height: 100vh;
+    overflow: auto;
+    padding: 20px;
+}
+
+.fixed-view>.menu>h2,
+.fixed-view>.menu>h3,
+.fixed-view>.menu>h4 {
+    font-size: 12px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-weight: 400;
+}
+
+.fixed-view>.menu>h2:hover,
+.fixed-view>.menu>h3:hover,
+.fixed-view>.menu>h4:hover {
+    text-decoration: underline;
+}
+
+.fixed-view>.menu>h2 {
+    padding-left: 1em;
+}
+
+.fixed-view>.menu>h3 {
+    padding-left: 2em;
+}
+
+.fixed-view>.menu>h4 {
+    padding-left: 3em;
 }

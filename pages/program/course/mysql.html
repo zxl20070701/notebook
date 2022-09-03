@@ -1,0 +1,169 @@
+<header>
+    实用命令和基本操作
+</header>
+<p>
+    使用下面的命令进行登录：
+</p>
+<pre tag>
+    mysql -h 主机名 -u 用户名 -p
+</pre>
+<p>
+    回车后输入密码即可。
+</p>
+<h2>
+    基础命令
+</h2>
+<h3>
+    查看版本
+</h3>
+<pre tag>
+    select version();
+</pre>
+<h2>
+    数据库操作
+</h2>
+<h3>
+    创建
+</h3>
+<pre tag>
+    create database [数据库名];
+</pre>
+<h3>
+    删除
+</h3>
+<pre tag>
+    drop database [数据库名];
+</pre>
+<h3>
+    选择
+</h3>
+<p>
+    在你连接到 MySQL 数据库后，可能有多个可以操作的数据库，所以你需要选择你要操作的数据库：
+</p>
+<pre tag>
+    use [数据库名];
+</pre>
+<h3>
+    查看
+</h3>
+<p>
+    也就是查看当前有哪些数据库：
+</p>
+<pre tag>
+    show databases;
+</pre>
+<h3>
+    当前
+</h3>
+<p>
+    查看当前选中操作的数据库是谁：
+</p>
+<pre tag>
+    select database();
+</pre>
+<h2>
+    表操作
+</h2>
+<h3>
+    查看有哪些表
+</h3>
+<pre tag>
+    show tables;
+</pre>
+<h3>
+    查看表结构
+</h3>
+<pre tag>
+    desc [表名];
+</pre>
+<h3>
+    删除表
+</h3>
+<pre tag>
+    drop table [表名];
+</pre>
+<h3>
+    创建表
+</h3>
+<pre tag>
+    create table [表名] (列名 列类型,列名 列类型,...);
+</pre>
+<h4>
+    例子
+</h4>
+<pre tag>
+create table myhobby(
+   id INT NOT NULL AUTO_INCREMENT,
+   label VARCHAR(40) NOT NULL,
+   info VARCHAR(100) NOT NULL,
+   date DATE,
+   PRIMARY KEY ( id )
+   )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+</pre>
+<h3>
+    插入数据
+</h3>
+<pre tag>
+insert into [表名]  
+    ( field1, field2,...fieldN )
+values
+    ( value1, value2,...valueN );
+</pre>
+<p>
+    如果数据是字符型，必须使用单引号或者双引号。
+</p>
+<h4>
+    例子
+</h4>
+<pre tag>
+insert into myhobby
+    ( label, info, date )
+values
+    ( "喜欢吃水果"," 特别喜欢吃橘子",NOW() );
+</pre>
+<p>
+    或一次插入多条数据：
+</p>
+<pre tag>
+insert into myhobby
+    ( label, info, date )
+values
+    ( "运动"," 比如跑步、跳绳","2022-08-16" ),
+    ( "追番"," 哈哈哈，已经看了很多年",NOW() );
+</pre>
+<h3>
+    查询数据
+</h3>
+<pre tag>
+    select field1,field2,...,fieldN from [表名] [WHERE Clause] [LIMIT N][ OFFSET M];
+</pre>
+<p>
+    如果是查询全部，直接：
+</p>
+<pre tag>
+    select * from [表名];
+</pre>
+<h3>
+    修改数据
+</h3>
+<pre tag>
+    update [表名] set field1=newValue1,field2=newValue2,...,fieldN=newValueN [WHERE Clause];
+</pre>
+<h4>
+    例子
+</h4>
+<pre tag>
+    update myhobby set date="2030-12-31" where id=2;
+</pre>
+<h3>
+    删除数据
+</h3>
+<pre tag>
+    delete from [表名] [WHERE Clause];
+</pre>
+<h4>
+    例子
+</h4>
+<pre tag>
+    delete from myhobby where id=2;
+</pre>
