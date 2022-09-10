@@ -61,8 +61,8 @@ body>header>.github[tag='type2'] {
     bottom: 46px;
     right: -107px;
     width: 300px;
-    background-color: #000000;
-    outline: 4px solid #000000;
+    background-color: #2196f3;
+    outline: 4px solid #2196f3;
     border: 2px dashed #ffffff;
     color: #ffffff;
     font-size: 12px;
@@ -331,6 +331,20 @@ body>header>.github:hover {
 
 .example-view>div>div>h2>button.close {
     background-color: #e6e3dd;
+}
+
+/* 编辑按钮 */
+.editor-btn {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    right: 53px;
+    top: 8px;
+    cursor: pointer;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-image: url('../images/edit.png');
 }
 
 /* 最大化快速定位相关 */

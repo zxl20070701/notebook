@@ -249,11 +249,11 @@ var initToggle = function (idName) {
                                 })(index);
                             }
 
-                            // 最大化按钮
                             var fullBtn = document.createElement('span');
                             var fixedBtn = document.getElementById('fixed-id');
                             var githubBtn = document.getElementById('github-id');
 
+                            // 最大化
                             fullBtn.setAttribute('class', 'full-btn');
                             fullBtn.setAttribute('tag', 'toFull');
                             docEl.appendChild(fullBtn);
@@ -303,6 +303,14 @@ var initToggle = function (idName) {
                             if (urlObj.params.model == 'full') {
                                 fullBtn.click();
                             }
+
+                            // 打开编辑界面按钮
+                            var editorBtn = document.createElement('a');
+                            docEl.appendChild(editorBtn);
+
+                            editorBtn.setAttribute('class', 'editor-btn');
+                            editorBtn.setAttribute('href', "https://github.com/zxl20070701/notebook/edit/master/pages/" + urlObj.router.join('/') + ".html");
+                            editorBtn.setAttribute('target', '_blank');
 
                             // 分析fixed
                             var els = docEl.children;

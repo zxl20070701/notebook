@@ -5,7 +5,7 @@ const mineTypes = require('./mime.types.js');
 const { log, error } = require('./log');
 const { fullPath } = require('./path');
 
-var port = 8080; // 端口号
+var port = 20000; // 端口号
 var basePath = process.cwd(); // 服务器根路径
 
 var index = 0;
