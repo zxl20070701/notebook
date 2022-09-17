@@ -29,10 +29,89 @@
                     }
                 }, 200);
             }, false);
+
+    </script>
+    <script>
+
+        var _updateView_params_ = {
+            willDo: false,// 记录是否已经有未完成的任务
+            noNew: true// 记录是否可以立刻执行未完成的任务
+        };
+
+        // 调整显示区域的尺寸
+        // 兼容不同大小的屏幕
+        function updateView() {
+
+            // 如果前置任务都完成了
+            if (!_updateView_params_.willDo) {
+
+                // 记录有未完成的任务
+                _updateView_params_.willDo = true;
+
+                // 既然前置任务已经没有了，那么就可以更新了？
+                // 不是的，可能非常短的时间里，后续有改变，
+                // 因此延迟一点点来看看后续有没有改变，
+                // 如果改变了，就再延迟看看
+                var interval = window.setInterval(function () {
+
+                    // 判断当前是否可以立刻更新
+                    // 如果后续又来新任务，noNew肯定被设置成false了，那就只能再等等
+                    if (_updateView_params_.noNew) {
+                        var _height;
+
+                        // 计算缩放比
+                        window.scale = window.innerWidth / 1400;
+
+                        // 进行缩放
+                        document.body.style.transformOrigin = 'left top';
+                        document.body.style.transform = 'scale(' + window.scale + ', ' + window.scale + ')';
+
+                        // 恢复
+                        // 为什么需要恢复？
+                        // 因为现在屏幕的内容可能无法和内容大小保持一致了，
+                        // 比如屏幕小，那body就要缩小，那内容也缩小了，就需要把内容区域设置大点
+
+                        document.body.style.width = (100 / window.scale) + "vw"; // body
+                        document.body.style.height = (100 / window.scale) + 'vh';
+
+                        _height = "calc(" + (100 / window.scale) + "vh - 50px)";
+                        _width = "calc(" + (100 / window.scale) + "vw - 520px)";
+
+                        document.getElementById('doc-id').style.height = window.isFull ? (100 / window.scale) + 'vh' : _height; // 内容的高
+                        document.getElementById('book-view-id').style.height = _height;
+                        document.getElementById('menu-view-id').style.height = _height;
+
+                        document.getElementById('doc-id').style.width = _width; // 内容的宽
+
+                        document.getElementById('example-left-id').style.width = 'calc(' + (45 / window.scale) + 'vw - 30px)'; // 例子界面
+                        document.getElementById('example-left-id').style.height = 'calc(' + (90 / window.scale) + 'vh - 40px)';
+                        document.getElementById('example-right-id').style.width = 'calc(' + (45 / window.scale) + 'vw - 30px)';
+                        document.getElementById('example-right-id').style.height = 'calc(' + (90 / window.scale) + 'vh - 40px)';
+
+                        // 标记任务完毕
+                        window.clearInterval(interval);
+                        _updateView_params_.willDo = false;
+
+                    }
+
+                    //  标记没有新任务了，如果后续有，会被重新设置为false
+                    _updateView_params_.noNew = true;
+                }, 100);
+
+            }
+
+            // 如果前置有任务，
+            // 那么当前应该干的事情是记录已经有的任务不能立刻执行，
+            // 需要等会看看会不会又有新任务
+            else {
+                _updateView_params_.noNew = false;
+            }
+        }
+
     </script>
 </head>
 
-<body onload="initMenu()">
+<body onload="initMenu();updateView();" onresize="updateView()">
 
     <!-- 快速定位fixed -->
     <div class="fixed-view" id="fixed-id">
@@ -54,7 +133,7 @@
 
     <!-- 主界面 -->
     <div class="main-view">
-        <div class="book">
+        <div class="book" id="book-view-id">
             <h2>列表</h2>
             <ul id="book-id">
                 <li>
@@ -99,7 +178,7 @@
                 </li>
             </ul>
         </div>
-        <div class="menu">
+        <div class="menu" id="menu-view-id">
             <h2>目录</h2>
             <ul id="menu-id"></ul>
         </div>
@@ -109,7 +188,7 @@
     <!-- 例子 -->
     <div class="example-view" id="example-root">
         <div>
-            <div>
+            <div id="example-left-id">
                 <h2>
                     源代码
                     <button class="run" id="run-btn" onclick="runExample()">
@@ -118,7 +197,7 @@
                 </h2>
                 <textarea id="source-id"></textarea>
             </div>
-            <div>
+            <div id="example-right-id">
                 <h2>
                     运行结果
                     <button class="close" id="example-close-id">
@@ -131,12 +210,15 @@
     </div>
 
     <script>
+
+        // 运行例子
         function runExample() {
             var iframeDocument = document.getElementById('run-id').contentWindow.document;
             iframeDocument.open();
             iframeDocument.write(document.getElementById('source-id').value);
             iframeDocument.close();
         }
+
     </script>
 
 </body>

@@ -156,7 +156,7 @@ var loadPage = function (pagename, callback) {
 
     // 请求进度
     xmlhttp.onprogress = data => {
-        processEl.style.width = ((data.loaded / 6112727) * 100).toFixed(2) + 'vw';
+        processEl.style.width = ((data.loaded / 6112727) * 100).toFixed(2) + '%';
     }
 
     xmlhttp.open("GET", "./" + pagename + ".html?hash=" + new Date().valueOf(), true);
@@ -190,7 +190,7 @@ var initToggle = function (idName) {
 
             // 如果有孩子，只需要控制菜单打开关闭即可
             if (spans[i].parentElement.getElementsByTagName('li').length > 0) {
-                spans[i].parentElement.setAttribute('is-open', 'yes');
+                spans[i].parentElement.setAttribute('is-open', 'no');
                 spans[i].addEventListener('click', function () {
                     spans[i].parentElement.setAttribute('is-open', spans[i].parentElement.getAttribute('is-open') == 'no' ? 'yes' : 'no');
                 });
@@ -199,6 +199,14 @@ var initToggle = function (idName) {
             // 否则就要控制打开关闭页面了
             else {
                 spans[i].addEventListener('click', function () {
+
+                    var isOpenEl = spans[i];
+                    while (isOpenEl) {
+                        if (isOpenEl.getAttribute('is-open')) {
+                            isOpenEl.setAttribute('is-open', 'yes');
+                        }
+                        isOpenEl = isOpenEl.parentElement;
+                    }
 
                     // 更新菜单
                     if (idName == 'book') {
@@ -262,6 +270,9 @@ var initToggle = function (idName) {
 
                             fullBtn.addEventListener('click', function () {
 
+                                // 记录当前是否最大化了
+                                window.isFull = fullBtn.getAttribute('tag') == 'toFull';
+
                                 // 最大化
                                 if (fullBtn.getAttribute('tag') == 'toFull') {
                                     fullBtn.setAttribute('tag', 'toRight');
@@ -271,7 +282,7 @@ var initToggle = function (idName) {
                                     docEl.style.backgroundColor = 'white';
                                     docEl.style.boxShadow = "0 0 7px 1px #607d8b";
 
-                                    docEl.style.height = '100vh';
+                                    docEl.style.height = (100 / window.scale) + 'vh';
 
                                     fixedBtn.style.display = 'block';
                                     githubBtn.setAttribute("tag", "type2");
@@ -282,6 +293,7 @@ var initToggle = function (idName) {
 
                                 // 复位
                                 else {
+
                                     fullBtn.setAttribute('tag', 'toFull');
                                     docEl.style.position = "relative";
                                     docEl.style.left = '0';
@@ -291,7 +303,8 @@ var initToggle = function (idName) {
                                     fixedBtn.style.display = 'none';
                                     githubBtn.setAttribute("tag", "type1");
 
-                                    docEl.style.height = '';
+                                    docEl.style.height = "calc(" + (100 / window.scale) + "vh - 50px)";
+
 
                                     delete urlObj.params.model;
 
