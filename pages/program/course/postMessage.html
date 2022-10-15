@@ -31,5 +31,5 @@ window.addEventListener('message', function (e) {
     targetWindow.postMessage("你好呀！", "*");
 </pre>
 <p>
-    在实际使用中，两个页面不一定需要通过iframe关联，比如使用window.location.href等也是可以的，不过有一个基本的原则要注意：发送信息的时候，一定要确保接受方已经完成了信息接受事件的注册。
+    在实际使用中，两个页面不一定需要通过iframe关联，比如使用window.location.href等也是可以的，不过有一个基本的原则要注意：发送信息的时候，一定要确保接收方已经完成了信息接收事件的注册。
 </p>

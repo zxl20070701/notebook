@@ -590,12 +590,20 @@ var _htmlShader = function (textString, colors) {
 
 };
 
+// 对特殊转义符号等进行校对
+var replaceCode = function (source) {
+    return source
+        .replace(/\&amp;/g, '&')
+        .replace(/\&lt;/g, '<')
+        .replace(/\&gt;/g, '>');
+}
 window.doShader = function (el) {
 
     var preEls = el.getElementsByTagName('pre'), i, j;
     for (i = 0; i < preEls.length; i++) {
         var shaderJSON = null;
-        var source = preEls[i].innerHTML.trim();
+        var source = replaceCode(preEls[i].innerHTML.trim());
+
         switch (preEls[i].getAttribute('tag')) {
             case "html": {
                 shaderJSON = _htmlShader(source, htmlColors);
@@ -617,17 +625,56 @@ window.doShader = function (el) {
             }
         }
         if (shaderJSON) {
-            var template = "";
-            for (j = 0; j < shaderJSON.length; j++) {
-                template += "<span style='color:" + shaderJSON[j].color + "'>" + shaderJSON[j].content + "</span>";
-            }
-            preEls[i].innerHTML = template;
+            preEls[i].innerHTML = "";
             preEls[i].style.backgroundColor = '#d6d6e4';
             preEls[i].style.padding = '10px';
             preEls[i].style.fontSize = '12px';
             preEls[i].style.fontFamily = 'sans-serif';
             preEls[i].style.fontWeight = '400';
             preEls[i].style.lineHeight = '18px';
+
+            var itemEl;
+            for (j = 0; j < shaderJSON.length; j++) {
+                itemEl = document.createElement('span');
+                preEls[i].appendChild(itemEl);
+
+                itemEl.style.color = shaderJSON[j].color;
+                itemEl.innerText = replaceCode(shaderJSON[j].content);
+            }
+
+            var copyEl = document.createElement('button');
+            preEls[i].appendChild(copyEl);
+
+            copyEl.setAttribute('class', 'copy-icon');
+
+            (function (copyEl) {
+                copyEl.addEventListener('click', function () {
+                    var filterEl = document.createElement('div');
+                    filterEl.innerHTML = copyEl.parentElement.innerHTML.replace(/\<br\>/g, '\n');
+
+                    var textareaEl = document.createElement('textarea');
+                    textareaEl.innerHTML = filterEl.innerText;
+
+                    document.body.appendChild(textareaEl);
+                    textareaEl.select();
+
+                    try {
+                        var result = window.document.execCommand("copy", false, null);
+
+                        if (result) {
+                            alert('复制成功');
+                        } else {
+                            alert('复制失败');
+                        }
+                    } catch (e) {
+                        alert('复制失败');
+                        console.error(e);
+                    }
+
+                    document.body.removeChild(textareaEl);
+
+                });
+            })(copyEl);
         }
     }
 

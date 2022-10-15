@@ -229,6 +229,8 @@ var initToggle = function (idName) {
                             updateUrl();
                             window.doShader(docEl);
 
+                            docEl.scrollTop = 0;
+
                             // 修改标题
                             document.getElementsByTagName('title')[0].innerText = spans[i].innerText + " - notebook 文档笔记";
 

@@ -149,6 +149,36 @@ body>header>.github:hover {
     width: 260px;
 }
 
+/* 快捷导航 */
+.quick-link {
+    position: fixed;
+    left: 0;
+    bottom: 100px;
+    background-color: white;
+    box-shadow: 0 0 6px 0px #d6cdcd;
+    padding: 5px;
+    width: 60px;
+    border-radius: 0 10px 10px 0;
+}
+
+.quick-link>a {
+    display: block;
+    font-size: 12px;
+    height: 80px;
+    width: 50px;
+    background-size: 100% auto;
+    background-position: center top;
+    background-repeat: no-repeat;
+    padding-top: 50px;
+    line-height: 30px;
+    text-align: center;
+    color: black;
+}
+
+.quick-link>a.toolbox {
+    background-image: url('../images/toolbox.png');
+}
+
 /* 文档 */
 .main-view>.doc {
     width: calc(100vw - 520px);
@@ -261,6 +291,15 @@ body>header>.github:hover {
     cursor: pointer;
 }
 
+.main-view>.doc .pip-block {
+    font-size: 12px;
+    margin: 0 10px;
+    padding: 3px 5px;
+    background-color: rgb(38, 34, 34);
+    color: rgb(255, 255, 255);
+    border-radius: 5px;
+}
+
 /* 例子 */
 .example-view {
     position: fixed;
@@ -304,8 +343,8 @@ body>header>.github:hover {
 
 .example-view>div>div>iframe,
 .example-view>div>div>textarea {
-    width: calc(45vw - 30px);
-    height: calc(90vh - 90px);
+    width: 100%;
+    height: calc(100% - 50px);
     outline: none;
     border: none;
 }
@@ -418,4 +457,24 @@ body>header>.github:hover {
 
 .fixed-view>.menu>h4 {
     padding-left: 3em;
+}
+
+pre {
+    position: relative;
+}
+
+pre>.copy-icon {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    background-image: url('../images/copy.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-color: transparent;
+    outline: none;
+    border: none;
 }
