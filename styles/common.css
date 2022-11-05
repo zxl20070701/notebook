@@ -38,6 +38,21 @@ body>header>h2 {
     font-weight: 200;
 }
 
+body>header>.tips {
+    font-size: 12px;
+    color: #2196f3;
+    background-color: #ffeb3b;
+    position: fixed;
+    user-select: none;
+    width: 500px;
+    line-height: 30px;
+    height: 30px;
+    text-align: center;
+    left: calc(50% - 250px);
+    top: 10px;
+    text-align: center;
+}
+
 body>header>.github {
     user-select: none;
     position: fixed;

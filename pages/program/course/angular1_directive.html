@@ -1,0 +1,68 @@
+<header>
+    自定义指令相关内容
+</header>
+<h2>
+    有价值的经验
+</h2>
+<h3>
+    视图和model之间的数据格式化
+</h3>
+<p>
+    类似过滤器的功能，有时候我们希望页面显示的是数据经过某种翻译后的样子，以便于约定，不过对于数据库也许简单的序号会更有益，因此你可能会需要在link中使用下面的方法来实现这个功能：
+</p>
+<ol>
+    <li>
+        ctrl.$formatters.unshift(function(input) {//model到view的数据格式化})；
+    </li>
+    <li>
+        ctrl.$parsers.unshift(function(input) {//view到model的数据格式化})。
+    </li>
+</ol>
+<p>
+    上面的$formatters和$parsers就是两个队列，视图到model和model到视图，会方便经过里面定义的方法的过滤，有点类似管道流，最后流到目的地。
+</p>
+<p class="warn">
+    别忘了设置类似require: "?ngModel"这样的语句去查找控制器。
+</p>
+<h3>
+    视图和model数据同步问题
+</h3>
+<p>
+    有时候在指令里面通过jquery修改了input的数据，不过angularjs并不会知道，这时候，你可以选择下面中的一个方法：
+</p>
+<ol>
+    <li>
+        触发输入框change改变，让Angularjs发现数据改变了，从而去调用$setViewValue(value),同步数据：$("input").trigger("change");
+    </li>
+    <li>
+        直接手动触发同步value到viewValue和modelValue中的行为：ctrl.$setViewValue($scope.info)。
+    </li>
+</ol>
+<h3>
+    常用方法或服务
+</h3>
+<p>
+    解析一段字符串（可能是属性也可能是方法）的方法有两个：
+</p>
+<ol>
+    <li>
+        $scope.$eval(expression);
+    </li>
+    <li>
+        $parse(expression)($scope);
+    </li>
+</ol>
+<h3>
+    几个零碎的技巧
+</h3>
+<ol>
+    <li>
+        根据输入框是否合法来设置true或false：ctrl.$setValidity(errorType, boolean);//errorType表示错误类别，可以自定义；
+    </li>
+    <li>
+        设置监听指定的一个model值，当然还有监听集合等方法：$scope.$watch(attrs['ngModel'], function(newValue, oldValue) {});
+    </li>
+    <li>
+        有时候在指令里面新添加的字符串需要被angularjs管理，就可以用下面的方法编译一下：$compile(newHtml)($scope)。
+    </li>
+</ol>
