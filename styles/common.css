@@ -164,6 +164,28 @@ body>header>.github:hover {
     width: 260px;
 }
 
+/* 切换文字 */
+.lang-change {
+    position: fixed;
+    left: 0;
+    bottom: 50px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 0 6px 0px #d6cdcd;
+    padding: 10px 5px;
+    font-size: 12px;
+}
+
+.lang-change>span {
+    cursor: pointer;
+    margin: 0 5px;
+}
+
+.lang-change>span.active {
+    background-color: #334669;
+    padding: 0 5px;
+    color: white;
+}
+
 /* 快捷导航 */
 .quick-link {
     position: fixed;

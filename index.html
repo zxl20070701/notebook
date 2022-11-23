@@ -9,6 +9,7 @@
     <meta name="keywords" content="zxl20070701 1904314465@qq.com notebook math web english computer">
     <link rel="stylesheet" href="./styles/normalize.css">
     <link rel="stylesheet" href="./styles/common.css">
+    <script src="./js/zh-tw.js"></script>
     <script src="./js/shader.js"></script>
     <script src="./js/menu.js"></script>
     <title>《文档笔记》包括编程、数学、计算机等各种常用的内容快速查询</title>
@@ -122,7 +123,7 @@
     <div id="process"></div>
 
     <!-- 顶部 -->
-    <header>
+    <header id="header-id">
         <h2>
             文档笔记
         </h2>
@@ -135,7 +136,7 @@
     </header>
 
     <!-- 主界面 -->
-    <div class="main-view">
+    <div class="main-view" id="main-view-id">
         <div class="book" id="book-view-id">
             <h2>列表</h2>
             <ul id="book-id">
@@ -230,11 +231,30 @@
     </script>
 
     <!-- 快捷导航 -->
-    <div class="quick-link">
+    <div class="quick-link" id="quick-link-id">
         <a class="toolbox" href="https://zxl20070701.github.io/toolbox" target="_blank">
             实用工具
         </a>
     </div>
+
+    <!-- 切换文字 -->
+    <div class="lang-change">
+        <span id="zh-cn-btn" onclick="changeLang('zh-cn')">简体</span>
+        <span id="zh-tw-btn" onclick="changeLang('zh-tw')">繁体</span>
+    </div>
+
+    <script>
+
+        // 文字切换按钮标记
+        document.getElementById(sessionStorage.getItem('lang') + "-btn").setAttribute('class', 'active');
+
+        // 非xhr的文字切换
+        var langIds = ['main-view-id', 'header-id', 'example-root', 'quick-link-id'], langEl;
+        for (langIndex = 0; langIndex < langIds.length; langIndex++) {
+            langEl = document.getElementById(langIds[langIndex]);
+            langEl.innerHTML = window.zhcnTozhtw(langEl.innerHTML);
+        }
+    </script>
 
 </body>
 

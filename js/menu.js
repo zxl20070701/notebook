@@ -133,7 +133,7 @@ var loadPage = function (pagename, callback) {
     if (window.needCache) {
         var storageData = sessionStorage.getItem("cache://notebook/" + pagename);
         if (storageData) {
-            callback(storageData);
+            callback(zhcnTozhtw(storageData));
             return;
         }
     }
@@ -150,7 +150,7 @@ var loadPage = function (pagename, callback) {
             }
 
             processEl.style.width = "0";
-            callback(xmlhttp.responseText);
+            callback(zhcnTozhtw(xmlhttp.responseText));
         }
     };
 
@@ -179,6 +179,17 @@ var updateUrl = function () {
     }
     window.location.href = "#/" + urlObj.router.join('/') + (paramsStr == "" ? "" : "?" + paramsStr.replace(/\&$/, ''));
 };
+
+// 记录当前文字
+sessionStorage.setItem('lang', urlObj.params.lang || "zh-cn");
+
+// 切换文字
+function changeLang(lang) {
+    urlObj.params.lang = lang;
+    updateUrl();
+
+    window.location.reload();
+}
 
 // 初始化菜单点击事件
 var initToggle = function (idName) {
