@@ -164,11 +164,24 @@ body>header>.github:hover {
     width: 260px;
 }
 
+/* 实验项目 */
+.laboratory {
+    background-image: url('../images/laboratory.png');
+    position: fixed;
+    left: 0px;
+    bottom: 170px;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    background-size: 100% auto;
+    transform: rotateY(180deg);
+}
+
 /* 切换文字 */
 .lang-change {
     position: fixed;
     left: 0;
-    bottom: 50px;
+    bottom: 10px;
     background-color: rgb(255, 255, 255);
     box-shadow: 0 0 6px 0px #d6cdcd;
     padding: 10px 5px;
@@ -190,7 +203,7 @@ body>header>.github:hover {
 .quick-link {
     position: fixed;
     left: 0;
-    bottom: 100px;
+    bottom: 60px;
     background-color: white;
     box-shadow: 0 0 6px 0px #d6cdcd;
     padding: 5px;

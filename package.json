@@ -1,7 +1,7 @@
 {
   "name": "notebook",
   "version": "0.1.0",
-  "description": "文档笔记，包括编程、数学、计算机等各种常用的内容快速查询",
+  "description": "✔️ 文档笔记，包括编程、数学、计算机等各种常用的内容快速查询",
   "scripts": {
     "dev": "node ./nodejs/server.js"
   },
