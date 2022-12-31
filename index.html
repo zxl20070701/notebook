@@ -21,8 +21,8 @@
 
         // 监听浏览器点击了回退按钮
         if (window.addEventListener)
-            window.addEventListener("hashchange", () => {
-                setTimeout(() => {
+            window.addEventListener("hashchange", function () {
+                setTimeout(function () {
                     if (window.noFresh) {
                         window.noFresh = false;
                     } else {

@@ -155,7 +155,7 @@ var loadPage = function (pagename, callback) {
     };
 
     // 请求进度
-    xmlhttp.onprogress = data => {
+    xmlhttp.onprogress = function (data) {
         processEl.style.width = ((data.loaded / 6112727) * 100).toFixed(2) + '%';
     }
 
