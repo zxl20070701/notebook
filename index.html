@@ -79,7 +79,7 @@
                         _width = "calc(" + (100 / window.scale) + "vw - 520px)";
 
                         document.getElementById('doc-id').style.height = window.isFull ? (100 / window.scale) + 'vh' : _height; // 内容的高
-                        document.getElementById('book-view-id').style.height = _height;
+                        document.getElementById('book-view-id').style.height = "calc(" + (100 / window.scale) + "vh - 220px)";
                         document.getElementById('menu-view-id').style.height = _height;
 
                         document.getElementById('doc-id').style.width = _width; // 内容的宽
@@ -141,7 +141,7 @@
             <h2>列表</h2>
             <ul id="book-id">
                 <li>
-                    <span>编程</span>
+                    <span>计算机&编程</span>
                     <ul>
                         <li>
                             <span tag="program-course">
@@ -165,6 +165,16 @@
                         </li>
                     </ul>
                 </li>
+                <!-- <li>
+                    <span>语言类</span>
+                    <ul>
+                        <li>
+                            <span tag="language-english">
+                                英语
+                            </span>
+                        </li>
+                    </ul>
+                </li> -->
                 <li>
                     <span>数学</span>
                     <ul>
@@ -175,6 +185,16 @@
                         </li>
                     </ul>
                 </li>
+                <!-- <li>
+                    <span>读书笔记</span>
+                    <ul>
+                        <li>
+                            <span tag="readbook-economics">
+                                经济学
+                            </span>
+                        </li>
+                    </ul>
+                </li> -->
             </ul>
         </div>
         <div class="menu" id="menu-view-id">

@@ -1,0 +1,60 @@
+<header>
+    tsconfig.json
+</header>
+<p>
+    此文件指定用来编译这个项目的根文件和编译选项。
+</p>
+<h2>
+    compilerOptions
+</h2>
+<h3>
+    strict
+</h3>
+<p>
+    boolean类型，默认false，如果设置true，表示启用所有严格类型检查选项，相当于同时开启了noImplicitAny、noImplicitThis、alwaysStrict、strictNullChecks、strictFunctionTypes、strictPropertyInitialization。
+</p>
+<p class="warn">
+    温馨提示：如果各自进行了配置，以各自配置的为准。
+</p>
+<h3>
+    noImplicitAny
+</h3>
+<p>
+    boolean类型，默认false，如果设置true，表示在表达式和声明上有隐含的 any类型时报错。
+</p>
+<h3>
+    noImplicitThis
+</h3>
+<p>
+    boolean类型，默认false，如果设置true，表示当this表达式的值为any类型的时候，生成一个错误。
+</p>
+<h3>
+    alwaysStrict
+</h3>
+<p>
+    boolean类型，默认false，如果设置true，表示以严格模式解析并为每个源文件生成 "use strict"语句。
+</p>
+<h3>
+    strictNullChecks
+</h3>
+<p>
+    boolean类型，默认false，如果设置true，表示null和undefined值不包含在任何类型里，只允许用它们自己和any来赋值。
+</p>
+<p class="warn">
+    温馨提示：有个例外，undefined可以赋值到void。
+</p>
+<h3>
+    strictFunctionTypes
+</h3>
+<p>
+    boolean类型，默认false，如果设置true，表示禁用函数参数双向协变检查。
+</p>
+<h3>
+    strictPropertyInitialization
+</h3>
+<p>
+    boolean类型，默认false，如果设置true，表示确保类的非undefined属性已经在构造函数里初始化。
+</p>
+<p class="warn">
+    温馨提示：若要令此选项生效，需要同时启用strictNullChecks。
+</p>

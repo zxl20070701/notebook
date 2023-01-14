@@ -183,7 +183,7 @@ var _jsShader = function (textString, colors) {
                     color: colors.insign,
                     content: "("
                 });
-                template = template.substr(1);
+                template = template.substring(1);
             }
 
             shaderArray.push({
@@ -626,7 +626,7 @@ window.doShader = function (el) {
         }
         if (shaderJSON) {
             preEls[i].innerHTML = "";
-            preEls[i].style.backgroundColor = '#d6d6e4';
+            preEls[i].style.backgroundColor = '#f2f2f3';
             preEls[i].style.padding = '10px';
             preEls[i].style.fontSize = '12px';
             preEls[i].style.fontFamily = 'sans-serif';

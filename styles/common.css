@@ -5,8 +5,25 @@ html {
 
 /* 滚动条 */
 ::-webkit-scrollbar {
-    width: 0px;
-    height: 0px;
+    width: 5px;
+    height: 5px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 2.5px rgb(0 0 0 / 30%);
+    box-shadow: inset 0 0 2.5px rgb(0 0 0 / 30%);
+    border-radius: 2.5px;
+    background-color: #294E80;
+    opacity: .7;
+    transition: opacity ease-in-out 200ms;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 2.5px rgb(0 0 0 / 30%);
+    box-shadow: inset 0 0 2.5px rgb(0 0 0 / 30%);
+    border-radius: 2.5px;
+    background-color: #F5F5F5;
 }
 
 /* 请求进度 */
@@ -110,6 +127,7 @@ body>header>.github:hover {
 
 .main-view>div:not(:last-child) {
     border-right: 1px solid rgb(188, 186, 186);
+    border-bottom: 1px solid rgb(188, 186, 186);
     user-select: none;
 }
 
@@ -158,6 +176,7 @@ body>header>.github:hover {
 
 .main-view>.book {
     width: 260px;
+    border-radius: 0 0 10px 0;
 }
 
 .main-view>.menu {
@@ -169,11 +188,12 @@ body>header>.github:hover {
     background-image: url('../images/laboratory.png');
     position: fixed;
     left: 0px;
-    bottom: 170px;
+    bottom: 50px;
     width: 100px;
     height: 100px;
     cursor: pointer;
     background-size: 100% auto;
+    z-index: 2;
 }
 
 /* 切换文字 */
@@ -185,6 +205,7 @@ body>header>.github:hover {
     box-shadow: 0 0 6px 0px #d6cdcd;
     padding: 10px 5px;
     font-size: 12px;
+    z-index: 2;
 }
 
 .lang-change>span {
@@ -201,13 +222,14 @@ body>header>.github:hover {
 /* 快捷导航 */
 .quick-link {
     position: fixed;
-    left: 0;
-    bottom: 60px;
+    left: 160px;
+    bottom: 80.5px;
     background-color: white;
-    box-shadow: 0 0 6px 0px #d6cdcd;
-    padding: 5px;
-    width: 60px;
-    border-radius: 0 10px 10px 0;
+    border: 1px solid rgb(188, 186, 186);
+    border-top: none;
+    padding: 5px 10px;
+    width: 70px;
+    border-radius: 0 0 10px 10px;
 }
 
 .quick-link>a {
@@ -266,6 +288,13 @@ body>header>.github:hover {
     font-weight: 400;
     font-size: 14px;
     margin: 10px 0;
+}
+
+.main-view>.doc a {
+    font-size: 12px;
+    color: #0286b6;
+    text-decoration: underline;
+    margin: 0 5px;
 }
 
 .main-view>.doc>ul,
@@ -358,6 +387,7 @@ body>header>.github:hover {
     height: 100%;
     background-color: rgba(228, 224, 224, 0.661);
     display: none;
+    z-index: 2;
 }
 
 .example-view>div {
@@ -426,31 +456,43 @@ body>header>.github:hover {
     background-color: #e6e3dd;
 }
 
-/* 编辑按钮 */
-.editor-btn {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    right: 53px;
-    top: 8px;
+.editor-btn,
+.full-btn {
+    position: fixed;
+    top: 49px;
+    right: 10px;
     cursor: pointer;
     background-position: center center;
     background-repeat: no-repeat;
+    width: 50px;
+    height: 50px;
+    border-style: solid;
+    border-color: rgb(188, 186, 186);
+    background-color: rgb(255, 255, 255);
+}
+
+.editor-btn[isFull='yes'],
+.full-btn[isFull='yes'] {
+    top: 0;
+    right: 256px;
+}
+
+/* 编辑按钮 */
+.editor-btn {
+    margin-right: 60px !important;
     background-size: 100% auto;
     background-image: url('../images/edit.png');
+    border-width: 0 0 1px 1px;
+    border-radius: 0 0 0 10px;
+    z-index: 1;
 }
 
 /* 最大化快速定位相关 */
 .full-btn {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    right: 20px;
-    top: 20px;
-    cursor: pointer;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: 100% auto;
+    background-size: 70% auto;
+    margin-right: 20px !important;
+    border-width: 0 1px 1px 0;
+    border-radius: 0 0 10px 0;
 }
 
 .full-btn[tag='toFull'] {
@@ -473,12 +515,21 @@ body>header>.github:hover {
 
 .fixed-view>.menu {
     position: fixed;
-    left: 0;
-    top: 0;
-    width: 260px;
-    height: 100%;
+    left: 15px;
+    top: 10px;
+    width: 230px;
+    height: calc(100% - 181px);
     overflow: auto;
-    padding: 20px;
+    padding: 10px;
+    outline: 1px solid rgb(205, 203, 203);
+    background-color: white;
+    border-radius: 5px;
+}
+
+.fixed-view>.menu>h1 {
+    padding: 10px 0;
+    font-size: 16px;
+    border-bottom: 1px solid rgb(205, 203, 203);
 }
 
 .fixed-view>.menu>h2,

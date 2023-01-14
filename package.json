@@ -1,6 +1,6 @@
 {
   "name": "notebook",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "✔️ 文档笔记，包括编程、数学、计算机等各种常用的内容快速查询",
   "scripts": {
     "dev": "node ./nodejs/server.js"
@@ -14,7 +14,9 @@
     "math",
     "web",
     "english",
-    "computer"
+    "computer",
+    "language",
+    "economics"
   ],
   "author": "zxl20070701",
   "license": "MIT",

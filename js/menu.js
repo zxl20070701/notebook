@@ -274,10 +274,22 @@ var initToggle = function (idName) {
                             var fixedBtn = document.getElementById('fixed-id');
                             var githubBtn = document.getElementById('github-id');
 
+                            // 打开编辑界面按钮
+                            var editorBtn = document.createElement('a');
+                            docEl.appendChild(editorBtn);
+
+                            editorBtn.setAttribute('title', '发现错误？想参与编辑？ 在 GitHub 上编辑此页！');
+
+                            editorBtn.setAttribute('class', 'editor-btn');
+                            editorBtn.setAttribute('href', "https://github.com/zxl20070701/notebook/edit/master/pages/" + urlObj.router.join('/') + ".html");
+                            editorBtn.setAttribute('target', '_blank');
+
                             // 最大化
                             fullBtn.setAttribute('class', 'full-btn');
                             fullBtn.setAttribute('tag', 'toFull');
                             docEl.appendChild(fullBtn);
+
+                            fullBtn.setAttribute('title', '点击我切换显示模式');
 
                             docEl.style.top = '0';
 
@@ -302,6 +314,9 @@ var initToggle = function (idName) {
 
                                     urlObj.params.model = 'full';
 
+                                    fullBtn.setAttribute("isFull", "yes");
+                                    editorBtn.setAttribute("isFull", "yes");
+
                                 }
 
                                 // 复位
@@ -318,30 +333,19 @@ var initToggle = function (idName) {
 
                                     docEl.style.height = "calc(" + (100 / window.scale) + "vh - 50px)";
 
-
                                     delete urlObj.params.model;
 
+                                    fullBtn.setAttribute("isFull", "no");
+                                    editorBtn.setAttribute("isFull", "no");
                                 }
 
                                 updateUrl();
                             });
 
-                            if (urlObj.params.model == 'full') {
-                                fullBtn.click();
-                            }
-
-                            // 打开编辑界面按钮
-                            var editorBtn = document.createElement('a');
-                            docEl.appendChild(editorBtn);
-
-                            editorBtn.setAttribute('class', 'editor-btn');
-                            editorBtn.setAttribute('href', "https://github.com/zxl20070701/notebook/edit/master/pages/" + urlObj.router.join('/') + ".html");
-                            editorBtn.setAttribute('target', '_blank');
-
                             // 分析fixed
                             var els = docEl.children;
                             var fixedMenuEl = document.getElementById('fixed-menu-id');
-                            fixedMenuEl.innerHTML = "";
+                            fixedMenuEl.innerHTML = "<h1>导航</h1>";
                             for (index = 0; index < els.length; index++) {
                                 (function (index) {
 
@@ -367,6 +371,9 @@ var initToggle = function (idName) {
                                 })(index);
                             }
 
+                            if (urlObj.params.model == 'full') {
+                                fullBtn.click();
+                            }
                         });
                     }
                 });

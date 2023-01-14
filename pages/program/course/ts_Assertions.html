@@ -1,0 +1,32 @@
+<header>
+    类型断言
+</header>
+<h2>
+    解释
+</h2>
+<p>
+    比如你定义了一个变量类型是any，可是你明确知道此处其真实的值一定是一个字符串，那么你就可以告诉编译器，"相信我，这是一个字符串"。
+</p>
+<h2>
+    使用
+</h2>
+<p>
+    类型断言有两种形式，我们以上面字符串为例来演示。
+</p>
+<h3>
+    尖括号
+</h3>
+<pre tag="javascript">
+let someValue: any = "this is a string";
+let strLength: number = (&lt;string&gt;someValue).length;
+</pre>
+<h3>
+    as语法
+</h3>
+<pre tag="javascript">
+let someValue: any = "this is a string";
+let strLength: number = (someValue as string).length;
+</pre>
+<p>
+    两种形式是等价的，至于使用哪个大多数情况下是凭个人喜好，然而，当你在TypeScript里使用JSX时，只有as语法断言是被允许的。
+</p>
