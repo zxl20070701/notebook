@@ -123,6 +123,15 @@ var urlFormat = function (url) {
         params: paramResult
     };
 
+    if (resultData.router.length > 3) {
+        var router3 = resultData.router[2], index;
+        for (index = 3; index < resultData.router.length; index++) {
+            router3 += "/" + resultData.router[index];
+        }
+
+        resultData.router = [resultData.router[0], resultData.router[1], router3];
+    }
+
     return resultData;
 };
 
@@ -239,30 +248,58 @@ var initToggle = function (idName) {
                             docEl.innerHTML = data;
                             updateUrl();
                             window.doShader(docEl);
+                            window.doFormula(docEl);
 
                             docEl.scrollTop = 0;
 
                             // 修改标题
                             document.getElementsByTagName('title')[0].innerText = spans[i].innerText + " - notebook 文档笔记";
 
-                            // 例子
+                            // 弹框
                             var buttons = document.getElementsByTagName('button'), index;
                             for (index = 0; index < buttons.length; index++) {
                                 (function (index) {
-                                    var exampleName = buttons[index].getAttribute('tag');
-                                    if (exampleName) {
-                                        buttons[index].addEventListener('click', function () {
-                                            loadPage("examples/" + exampleName, function (data) {
-                                                document.getElementById('example-root').style.display = "block";
-                                                document.getElementById('source-id').value = data;
-                                                document.getElementById('run-btn').click();
+                                    var pageName = buttons[index].getAttribute('tag');
+                                    var pageType = buttons[index].getAttribute('type') || "example";
+                                    if (pageName) {
 
-                                                urlObj.params.example = exampleName;
-                                                updateUrl();
-                                            });
+                                        buttons[index].addEventListener('click', function () {
+
+                                            // 解释说明
+                                            if (pageType == "explain") {
+                                                var explainEl = document.getElementById('explain-content-id');
+                                                loadPage("explains/" + pageName, function (data) {
+                                                    document.getElementById('explain-root').style.display = "block";
+                                                    explainEl.innerHTML = data;
+
+                                                    window.doShader(explainEl);
+                                                    window.doFormula(explainEl);
+
+                                                    explainEl.scrollTop = 0;
+
+                                                    urlObj.params.dialog = pageName;
+                                                    urlObj.params.type = "explain";
+                                                    updateUrl();
+                                                });
+                                            }
+
+                                            // 默认就是例子
+                                            else {
+                                                loadPage("examples/" + pageName, function (data) {
+                                                    document.getElementById('example-root').style.display = "block";
+                                                    document.getElementById('source-id').value = data;
+                                                    document.getElementById('run-btn').click();
+
+                                                    urlObj.params.dialog = pageName;
+                                                    urlObj.params.type = "example";
+                                                    updateUrl();
+                                                });
+                                            }
+
+
                                         });
 
-                                        if (exampleName == urlObj.params.example) {
+                                        if (pageName == urlObj.params.dialog && pageType == urlObj.params.type) {
                                             buttons[index].click();
                                         }
 
@@ -397,11 +434,22 @@ var initToggle = function (idName) {
 window.initMenu = function () {
     initToggle('book');
 
+    var closeDialog = function (idName) {
+        document.getElementById(idName).style.display = "none";
+
+        delete urlObj.params.dialog;
+        delete urlObj.params.type;
+
+        updateUrl();
+    };
+
     // 关闭例子
     document.getElementById('example-close-id').addEventListener('click', function () {
-        document.getElementById('example-root').style.display = "none";
+        closeDialog('example-root');
+    });
 
-        delete urlObj.params.example;
-        updateUrl();
+    // 关闭解释说明
+    document.getElementById('explain-close-id').addEventListener('click', function () {
+        closeDialog('explain-root');
     });
 };

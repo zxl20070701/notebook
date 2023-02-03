@@ -12,12 +12,13 @@
     <script src="./js/zh-tw.js"></script>
     <script src="./js/shader.js"></script>
     <script src="./js/menu.js"></script>
-    <title>《文档笔记》包括编程、数学、计算机等各种常用的内容快速查询</title>
+    <script src="./js/formula.js"></script>
+    <title>《文档笔记》包括编程、数学、计算机、英语、历史、经济学等各种常用的内容快速查询</title>
     <script>
 
         // 控制是否需要缓存
         var host = window.location.host;
-        window.needCache = !(/^127\.0\.0\.1/.test(host) || /^localhost/.test(host));
+        window.needCache = !(/^127\.0\.0\.1/.test(host) || /^localhost/.test(host) || host == "");
 
         // 监听浏览器点击了回退按钮
         if (window.addEventListener)
@@ -35,8 +36,8 @@
     <script>
 
         var _updateView_params_ = {
-            willDo: false,// 记录是否已经有未完成的任务
-            noNew: true// 记录是否可以立刻执行未完成的任务
+            willDo: false, // 记录是否已经有未完成的任务
+            noNew: true // 记录是否可以立刻执行未完成的任务
         };
 
         // 调整显示区域的尺寸
@@ -88,6 +89,9 @@
                         document.getElementById('example-left-id').style.height = 'calc(' + (90 / window.scale) + 'vh - 40px)';
                         document.getElementById('example-right-id').style.width = 'calc(' + (45 / window.scale) + 'vw - 30px)';
                         document.getElementById('example-right-id').style.height = 'calc(' + (90 / window.scale) + 'vh - 40px)';
+
+                        document.getElementById('explain-content-id').style.width = 'calc(' + (100 / window.scale) + 'vw - 420px)';// 解释说明
+                        document.getElementById('explain-content-id').style.height = 'calc(' + (100 / window.scale) + 'vh - 50px)';
 
                         // 标记任务完毕
                         window.clearInterval(interval);
@@ -155,17 +159,17 @@
                         </li>
                         <li>
                             <span tag="program-tool">
-                                实用命令&工具
+                                命令或工具等
                             </span>
                         </li>
                         <li>
-                            <span tag="program-algorithm">
-                                算法
+                            <span tag="program-system">
+                                理论&总结
                             </span>
                         </li>
                     </ul>
                 </li>
-                <!-- <li>
+                <li>
                     <span>语言类</span>
                     <ul>
                         <li>
@@ -174,27 +178,42 @@
                             </span>
                         </li>
                     </ul>
-                </li> -->
+                </li>
                 <li>
                     <span>数学</span>
                     <ul>
                         <li>
                             <span tag="math-basic">
-                                初等数学相关
+                                基础&通识
+                            </span>
+                        </li>
+                        <li>
+                            <span tag="math-high">
+                                高等数学
                             </span>
                         </li>
                     </ul>
                 </li>
-                <!-- <li>
-                    <span>读书笔记</span>
+                <li>
+                    <span>经济学</span>
                     <ul>
                         <li>
-                            <span tag="readbook-economics">
-                                经济学
+                            <span tag="economics-readbook">
+                                读书笔记
                             </span>
                         </li>
                     </ul>
-                </li> -->
+                </li>
+                <li>
+                    <span>历史</span>
+                    <ul>
+                        <li>
+                            <span tag="history-china">
+                                华夏文明
+                            </span>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
         <div class="menu" id="menu-view-id">
@@ -240,6 +259,15 @@
 
     </script>
 
+    <!-- 解释说明 -->
+    <div class="explain-view" id="explain-root">
+        <button id="explain-close-id">
+            关<br />闭
+        </button>
+        <div class="doc" id="explain-content-id">
+        </div>
+    </div>
+
     <!-- 快捷导航 -->
     <div class="quick-link" id="quick-link-id">
         <a class="toolbox" href="https://zxl20070701.github.io/toolbox" target="_blank">
@@ -266,6 +294,47 @@
             langEl = document.getElementById(langIds[langIndex]);
             langEl.innerHTML = window.zhcnTozhtw(langEl.innerHTML);
         }
+    </script>
+
+    <!-- 控制台打印 -->
+    <script>
+        console.log("%c\n\n\t\t学习的目的绝对不只是为了追求名誉或财富，而是为了在短暂的生命里给灵魂一个栖息的地方，同时寻着一个生存之道。\n\n %cby zxl20070701\n\n", "color:#555555;font-size:12px;font-family:cursive;", "color:gray;padding-left:60px;");
+
+        var colors1 = ["red", "#aaa", "gray"];
+
+        console.log(
+            "\n%c【希腊字母】\n" +
+            "\n%c    大写：%cΑ Β Γ Δ Ε Ζ Η Θ Ι Κ ∧ Μ Ν Ξ Ο ∏ Ρ ∑ Τ Υ Φ Χ Ψ Ω" +
+            "\n%c    小写：%cα β γ δ ε ζ η θ ι κ λ μ ν ξ ο π ρ σ τ υ φ χ ψ ω" +
+            "\n",
+            "color:" + colors1[0],
+            "color:" + colors1[1],
+            "color:" + colors1[2],
+            "color:" + colors1[1],
+            "color:" + colors1[2]);
+
+        console.log(
+            "\n%c【数学符号】\n" +
+            "\n%c    运算：%c＋ － × ÷ ±" +
+            "\n%c    几何：%c⊥ ∥ ∽" +
+            "\n%c    记号：%c㏒ ∞ π" +
+            "\n%c    集合：%c∪ ∩ ∈ ∉" +
+            "\n%c    比较：%c≈ ≡ ≌ ≠ ≤ ≥ ＜ ＞ ≮ ≯" +
+            "\n%c    积分：%c∮ ∫" +
+            "\n",
+            "color:" + colors1[0],
+            "color:" + colors1[1],
+            "color:" + colors1[2],
+            "color:" + colors1[1],
+            "color:" + colors1[2],
+            "color:" + colors1[1],
+            "color:" + colors1[2],
+            "color:" + colors1[1],
+            "color:" + colors1[2],
+            "color:" + colors1[1],
+            "color:" + colors1[2],
+            "color:" + colors1[1],
+            "color:" + colors1[2]);
     </script>
 
 </body>

@@ -1,0 +1,101 @@
+<header>
+    选项
+</header>
+<p>
+    我们在开发插件的时候，可以配置“插件名称name”和“代码转译transform”等，下面来说明具体可以配置的内容。
+</p>
+<p class="warn">
+    温馨提示：具体的细节可以去 ‘./node_modules/vite/dist/node/index.d.ts’ 查看。
+</p>
+<h2>
+    enforce
+</h2>
+<p class="important">
+    vite 和 rollup 共享
+</p>
+<p>
+    值可以是'pre'或'post'，用于控制插件的执行时机，具体执行顺序如下：
+</p>
+<p>
+    <span class="pip-block">
+        alias resolution
+    </span>
+    →
+    <span class="pip-block">
+        `enforce: 'pre'` plugins
+    </span>
+    →
+    <span class="pip-block">
+        vite core plugins
+    </span>
+    →
+    <span class="pip-block">
+        normal plugins
+    </span>
+    →
+    <span class="pip-block">
+        vite build plugins
+    </span>
+    →
+    <span class="pip-block">
+        `enforce: 'post'` plugins
+    </span>
+    →
+    <span class="pip-block">
+        vite build post plugins
+    </span>
+</p>
+<h2>
+    transform
+</h2>
+<p class="important">
+    vite 和 rollup 共享
+</p>
+<p>
+    这个函数的功能类似于 `webpack` 的 `loader`，应该有一个返回值。
+</p>
+<h2>
+    apply
+</h2>
+<p class="important">
+    vite 和 rollup 共享
+</p>
+<p>
+    值可以是字符串'serve'、'build'或一个函数，用于控制开发时候还是打包时候使用，或者通过函数动态判断。
+</p>
+<p>
+    函数的结构如下：
+</p>
+<pre tag="javascript">
+import type { Plugin, UserConfig, ConfigEnv } from 'vite'
+
+export default function DemoPlugin(): Plugin {
+    return {
+        ...
+        apply: (config: UserConfig, env: ConfigEnv): boolean =&gt; {
+            // todo
+        }
+    }
+}
+</pre>
+<h2>
+    config
+</h2>
+<p class="important">
+    vite 独享
+</p>
+<p>
+    在解析 Vite 配置前调用，可以自定义配置，会与 vite 基础配置进行合并：
+</p>
+<pre tag="javascript">
+import type { Plugin, UserConfig, ConfigEnv } from 'vite'
+
+export default function DemoPlugin(): Plugin {
+    return {
+        ...
+        config: (config: UserConfig, env: ConfigEnv): UserConfig | null | void | Promise&lt;UserConfig | null | void&gt; =&gt; {
+            // todo
+        }
+    }
+}
+</pre>

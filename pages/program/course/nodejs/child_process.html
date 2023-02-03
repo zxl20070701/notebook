@@ -1,0 +1,26 @@
+<header>
+    child_process（子进程）
+</header>
+<h2>
+    spawn
+</h2>
+<pre tag="javascript">
+require('child_process').spawn(command:string, args:Array&lt;string&gt;, options:Object);
+</pre>
+<p>
+    例如：
+</p>
+<pre tag="javascript">
+require('child_process').spawn("node", ['./demo.js'], {
+    stdio: 'inherit'
+});
+</pre>
+<p>
+    等价于：
+</p>
+<pre>
+node ./demo.js
+</pre>
+<p>
+    也就是运行命令 “node” 并携带参数 “./demo.js”。
+</p>

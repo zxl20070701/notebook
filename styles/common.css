@@ -3,6 +3,10 @@ html {
     overflow: hidden;
 }
 
+body {
+    background-color: white;
+}
+
 /* 滚动条 */
 ::-webkit-scrollbar {
     width: 5px;
@@ -64,7 +68,6 @@ body>header>.tips {
     width: 500px;
     line-height: 30px;
     height: 30px;
-    text-align: center;
     left: calc(50% - 250px);
     top: 10px;
     text-align: center;
@@ -251,37 +254,37 @@ body>header>.github:hover {
 }
 
 /* 文档 */
-.main-view>.doc {
+.doc {
     width: calc(100vw - 520px);
     padding: 30px;
     position: relative;
 }
 
-.main-view>.doc>header {
+.doc>header {
     font-size: 28px;
     padding: 20px 0;
     font-weight: 800;
 }
 
-.main-view>.doc>h2 {
+.doc>h2 {
     font-size: 20px;
     line-height: 2em;
     padding: 20px 0;
 }
 
-.main-view>.doc>h3 {
+.doc>h3 {
     font-size: 16px;
     line-height: 2em;
     padding: 15px 0;
 }
 
-.main-view>.doc>h4 {
+.doc>h4 {
     font-size: 12px;
     padding: 15px 0 5px 0;
     text-decoration: overline;
 }
 
-.main-view>.doc>p {
+.doc>p {
     line-height: 1.6em;
     text-indent: 2em;
     color: #3c3939;
@@ -290,76 +293,95 @@ body>header>.github:hover {
     margin: 10px 0;
 }
 
-.main-view>.doc a {
+.doc a {
     font-size: 12px;
     color: #0286b6;
     text-decoration: underline;
     margin: 0 5px;
 }
 
-.main-view>.doc>ul,
-.main-view>.doc>ol {
+.doc>ul,
+.doc>ol {
     font-size: 13px;
     line-height: 2.4em;
     margin-left: 2.5em;
 }
 
-.main-view>.doc>ol>li {
+.doc>ol>li {
     list-style-type: decimal;
 }
 
-.main-view>.doc>ul>li {
+.doc>ul>li {
     list-style-type: disc;
 }
 
-.main-view>.doc .warn {
+.doc .warn {
     font-size: 12px;
     color: #dac305;
     font-weight: 400;
     padding: 0 3px;
 }
 
-.main-view>.doc .important {
+.doc .gray {
+    color: #454545;
+    font-weight: 800;
+}
+
+.doc .important {
     color: rgb(255, 0, 0);
     font-weight: 800;
     padding: 0 3px;
 }
 
-.main-view>.doc>table {
+.doc .special {
+    font-weight: 800;
+    text-decoration: underline;
+}
+
+.doc .tips-info {
+    display: block;
+    border-top: 1px solid rgba(193, 190, 190, 0.3);
+    font-size: 12px;
+    color: #0c5cbc;
+    margin: 0 20px;
+    text-indent: 1em;
+}
+
+.doc>table {
     width: 100%;
     line-height: 20px;
     font-size: 14px;
 }
 
-.main-view>.doc>table>tbody>tr>* {
+.doc>table>tbody>tr>* {
     border-width: 0 1px 1px 0;
     border-style: solid;
     border-color: #c1bcbc;
 }
 
-.main-view>.doc>table>*>tr>td {
+.doc>table>*>tr>td {
     padding-left: 1em;
 }
 
-.main-view>.doc>table>tbody>tr>*:first-child {
+.doc>table>tbody>tr>*:first-child {
     border-width: 0 1px 1px 1px;
 }
 
-.main-view>.doc>table>tbody>tr:nth-child(2n) {
+.doc>table>tbody>tr:nth-child(2n) {
     background-color: #F5F5F5;
 }
 
-.main-view>.doc>table>tbody>tr:nth-child(2n+1) {
+.doc>table>tbody>tr:nth-child(2n+1) {
     background-color: #fff;
 }
 
-.main-view>.doc>table>thead>tr {
+.doc>table>thead>tr {
     background-color: #c1bcbc;
     border: 1px solid #c1bcbc;
     color: #fff;
 }
 
-.main-view>.doc>button[tag] {
+.doc>button[tag] {
     margin: 10px 30px;
     background: red;
     color: white;
@@ -369,13 +391,16 @@ body>header>.github:hover {
     cursor: pointer;
 }
 
-.main-view>.doc .pip-block {
+.doc .pip-block {
     font-size: 12px;
-    margin: 0 10px;
+    margin: 5px;
     padding: 3px 5px;
     background-color: rgb(38, 34, 34);
     color: rgb(255, 255, 255);
     border-radius: 5px;
+    white-space: nowrap;
+    display: inline-block;
+    text-indent: 0;
 }
 
 /* 例子 */
@@ -455,6 +480,55 @@ body>header>.github:hover {
 .example-view>div>div>h2>button.close {
     background-color: #e6e3dd;
 }
+
+/* 解释说明 */
+.explain-view {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 0%;
+    height: 0%;
+    display: none;
+    z-index: 2;
+}
+
+.explain-view>div {
+    width: calc(100vw - 420px);
+    height: calc(100vh - 50px);
+    position: fixed;
+    top: 0;
+    right: 210px;
+    background-color: white;
+    font-size: 0;
+    white-space: nowrap;
+    box-shadow: 0 0 16px black;
+    overflow: auto;
+    border-radius: 0 0 10px 10px;
+}
+
+.explain-view>div::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+.explain-view>button {
+    position: fixed;
+    top: 100px;
+    right: 180px;
+    background-color: #0855d7;
+    line-height: 20px;
+    width: 30px;
+    padding: 5px 0;
+    text-align: center;
+    border: none;
+    outline: none;
+    color: white;
+    cursor: pointer;
+    z-index: 1;
+    border-radius: 0 5px 5px 0;
+}
+
+/* 按钮 */
 
 .editor-btn,
 .full-btn {
