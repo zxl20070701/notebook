@@ -1,0 +1,147 @@
+body {
+    background-color: #f7f7f7;
+}
+
+.zfb {
+    width: 200px;
+    height: 280px;
+    background-image: url('../images/zfb.jpeg');
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: 170px auto;
+    margin: auto;
+    outline: 1px solid rgb(205, 203, 203);
+    border-radius: 0 0 10px 10px;
+    position: fixed;
+    top: 0;
+    right: 35px;
+    background-color: white;
+}
+
+body>nav {
+    position: fixed;
+    left: 0;
+    bottom: 30px;
+    outline: 2px solid rgb(205, 203, 203);
+    border-radius: 0 5px 5px 0;
+    background-color: #d3d1d1;
+    font-size: 0;
+}
+
+body>nav>h2 {
+    display: inline-block;
+    vertical-align: top;
+    font-size: 14px;
+    line-height: 40px;
+    padding: 0 10px;
+    color: white;
+}
+
+body>nav>div {
+    display: inline-block;
+    vertical-align: top;
+}
+
+body>nav>div>a {
+    display: inline-block;
+    line-height: 40px;
+    padding: 0 10px;
+    font-size: 14px;
+    color: black;
+    background-color: white;
+}
+
+body>nav>div>a:hover {
+    text-decoration: underline;
+}
+
+body>nav>div>a:first-child {
+    border-radius: 5px 0 0 5px;
+    padding-left: 20px;
+}
+
+body>nav>div>a:last-child {
+    border-radius: 0 5px 5px 0;
+    padding-right: 20px;
+}
+
+body>nav>div>a.fragement-contrib {
+    background-position: 5px center;
+    background-repeat: no-repeat;
+    background-size: auto 70%;
+    background-image: url("../images/fragement-contrib.jpeg");
+    padding-left: 40px;
+}
+
+body>nav>div>a.split {
+    position: relative;
+}
+
+body>nav>div>a.split::before {
+    position: absolute;
+    display: inline-block;
+    width: 1px;
+    height: calc(100% - 6px);
+    content: " ";
+    background-color: #d4d0d0;
+    left: 0;
+    top: 3px;
+}
+
+body>.cat {
+    position: fixed;
+    right: 0;
+    bottom: 20px;
+    width: 196px;
+    height: 147px;
+    background-repeat: no-repeat;
+    background-image: url("../images/cat.webp");
+    background-position: center bottom;
+    background-size: auto 100%;
+    outline: 2px solid rgb(0, 0, 0);
+    border-radius: 5px 0 0 5px;
+}
+
+
+body>.help {
+    font-size: 12px;
+    padding: 10px;
+    width: 200px;
+    position: fixed;
+    top: 280px;
+    right: 30px;
+}
+
+body>.help>.title {
+    font-weight: 800;
+    font-size: 14px;
+    display: block;
+    line-height: 2.5em;
+}
+
+body>.help>a {
+    color: rgb(10, 165, 226);
+    text-decoration: underline;
+}
+
+body>.belief {
+    position: fixed;
+    bottom: 10px;
+    line-height: 80px;
+    left: 500px;
+    font-size: 30px;
+    font-family: cursive;
+    font-weight: 200;
+    color: black;
+}
+
+body>.content {
+    position: fixed;
+    width: 1110px;
+    height: calc(100% - 100px);
+    left: 20px;
+    top: 0;
+    background-color: rgb(255, 255, 255);
+    outline: 1px solid rgb(205, 203, 203);
+    overflow: auto;
+}

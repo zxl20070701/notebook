@@ -136,6 +136,10 @@ var urlFormat = function (url) {
 };
 
 // 加载新的页面
+
+var now = new Date();
+var hash = now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate();
+
 var loadPage = function (pagename, callback) {
     var processEl = document.getElementById('process');
 
@@ -164,11 +168,11 @@ var loadPage = function (pagename, callback) {
     };
 
     // 请求进度
-    xmlhttp.onprogress = function (data) {
-        processEl.style.width = ((data.loaded / 6112727) * 100).toFixed(2) + '%';
+    xmlhttp.onprogress = function (event) {
+        processEl.style.width = event.total == 0 ? "100%" : (((event.loaded / event.total) * 100).toFixed(2) + '%');
     }
 
-    xmlhttp.open("GET", "./" + pagename + ".html?hash=" + new Date().valueOf(), true);
+    xmlhttp.open("GET", "./" + pagename + ".html?hash=" + hash, true);
 
     // 设置超时时间
     xmlhttp.timeout = 6000;

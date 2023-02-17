@@ -439,295 +439,308 @@ window.doFormula = function (el) {
 
     var codeEls = el.getElementsByTagName('code'), i;
     for (i = codeEls.length - 1; i > -1; i--) {
-        var format = jsonToFormat(JSON.parse(codeEls[i].innerHTML));
 
-        // 设置画布大小并插入页面
+        try {
+            var format = jsonToFormat(JSON.parse(codeEls[i].innerHTML));
 
-        var canvas = document.createElement('canvas');
+            // 设置画布大小并插入页面
 
-        canvas.style.width = format.width + "px";
-        canvas.setAttribute('width', 3 * format.width);
+            var canvas = document.createElement('canvas');
 
-        canvas.style.height = format.height + "px";
-        canvas.setAttribute('height', 3 * format.height);
+            canvas.style.width = format.width + "px";
+            canvas.setAttribute('width', 3 * format.width);
 
-        canvas.style.verticalAlign = "middle";
+            canvas.style.height = format.height + "px";
+            canvas.setAttribute('height', 3 * format.height);
 
-        codeEls[i].parentNode.insertBefore(canvas, codeEls[i].nextSibling);
-        codeEls[i].parentNode.removeChild(codeEls[i]);
+            canvas.style.verticalAlign = "middle";
 
-        // 获取画笔并进行配置
+            codeEls[i].parentNode.insertBefore(canvas, codeEls[i].nextSibling);
+            codeEls[i].parentNode.removeChild(codeEls[i]);
 
-        var painter = canvas.getContext("2d");
+            // 获取画笔并进行配置
 
-        painter.scale(3, 3);
+            var painter = canvas.getContext("2d");
 
-        painter.textAlign = "center";
-        painter.textBaseline = "middle";
-        painter.font = "12px sans-serif";
+            painter.scale(3, 3);
 
-        var drawFormula = function (x, y, data) {
+            painter.textAlign = "center";
+            painter.textBaseline = "middle";
+            painter.font = "12px sans-serif";
 
-            switch (data.type) {
+            var drawFormula = function (x, y, data) {
 
-                case "string": {
-                    painter.fillText(data.contents[0], x + data.width * 0.5, y + data.height * 0.5);
-                    break;
-                }
+                switch (data.type) {
 
-                case "gen": {
-                    // 先绘制根号下的表达式
-                    drawFormula(x + 5 + paddingSize, y + paddingSize, data.contents[0]);
-
-                    // 然后绘制根号
-                    painter.beginPath();
-                    painter.lineTo(x + paddingSize, y + data.height - paddingSize);
-                    painter.lineTo(x + paddingSize + 2.5, y + data.height - paddingSize - 2.5);
-                    painter.lineTo(x + paddingSize + 5, y + data.height - paddingSize);
-                    painter.lineTo(x + paddingSize + 5, y + paddingSize * 0.5);
-                    painter.lineTo(x + data.width - paddingSize, y + paddingSize * 0.5);
-                    painter.stroke();
-                    break;
-                }
-
-                case "limt": {
-                    var leftTop = y + data.contents[1].height * 0.5 - data._help.limtSize.height * 0.5;
-
-                    // 先绘制极限文字和趋势
-                    painter.fillText("lim", x + paddingSize + data._help.leftWidth * 0.5, paddingSize + leftTop);
-                    drawFormula(x, data._help.limtSize.height + leftTop - paddingSize, data.contents[0]);
-
-                    // 然后绘制表达式
-                    drawFormula(x + paddingSize + data._help.leftWidth, y, data.contents[1]);
-                    break;
-                }
-
-                case "sum": {
-
-                    // 先绘制左边的，从下到上
-                    drawFormula(x + data._help.leftWidth * 0.5 - data._help.p1Width * 0.5 + paddingSize, y + data.height * 0.5 + 10 + paddingSize, data.contents[0]);
-                    painter.beginPath();
-                    painter.lineTo(x + data._help.leftWidth * 0.5 + 10 + paddingSize, y + data.height * 0.5 - 10 + paddingSize);
-                    painter.lineTo(x + data._help.leftWidth * 0.5 - 10 + paddingSize, y + data.height * 0.5 - 10 + paddingSize);
-                    painter.lineTo(x + data._help.leftWidth * 0.5 + 7 + paddingSize, y + data.height * 0.5 + paddingSize);
-                    painter.lineTo(x + data._help.leftWidth * 0.5 - 10 + paddingSize, y + data.height * 0.5 + 10 + paddingSize);
-                    painter.lineTo(x + data._help.leftWidth * 0.5 + 10 + paddingSize, y + data.height * 0.5 + 10 + paddingSize);
-                    painter.stroke();
-                    drawFormula(x + data._help.leftWidth * 0.5 - data._help.p2Width * 0.5 + paddingSize, y + data.height * 0.5 - 10 - data._help.p2Height + paddingSize, data.contents[1]);
-
-                    // 然后绘制右边的
-                    drawFormula(x + data._help.leftWidth + paddingSize, y + data.height * 0.5 - data._help.rightHeight * 0.5, data.contents[2]);
-
-                    break;
-                }
-
-                case "join": {
-
-                    // 从左到右，一个个绘制即可
-                    for (var item of data.contents) {
-                        drawFormula(x + paddingSize, y - item.height * 0.5 + data.height * 0.5, item);
-                        x += item.width;
+                    case "string": {
+                        painter.fillText(data.contents[0], x + data.width * 0.5, y + data.height * 0.5);
+                        break;
                     }
 
-                    break;
-                }
+                    case "gen": {
+                        // 先绘制根号下的表达式
+                        drawFormula(x + 5 + paddingSize, y + paddingSize, data.contents[0]);
 
-                case "matrix": {
-                    // 先绘制内容
-                    for (var i in data.contents) {
-                        for (var j in data.contents[i]) {
-                            var curData = data.contents[i][j];
+                        // 然后绘制根号
+                        painter.beginPath();
+                        painter.lineTo(x + paddingSize, y + data.height - paddingSize);
+                        painter.lineTo(x + paddingSize + 2.5, y + data.height - paddingSize - 2.5);
+                        painter.lineTo(x + paddingSize + 5, y + data.height - paddingSize);
+                        painter.lineTo(x + paddingSize + 5, y + paddingSize * 0.5);
+                        painter.lineTo(x + data.width - paddingSize, y + paddingSize * 0.5);
+                        painter.stroke();
+                        break;
+                    }
 
-                            // 对于"|"特殊处理
-                            if (curData.contents[0] == '|') {
-                                painter.beginPath()
-                                painter.lineTo(x + data._help.colCenter[j], y + data._help.rowCenter[i] - curData.height * 0.5);
-                                painter.lineTo(x + data._help.colCenter[j], y + data._help.rowCenter[i] + curData.height * 0.5);
-                                painter.stroke();
-                            } else {
-                                drawFormula(x + data._help.colCenter[j] - curData.width * 0.5, y + data._help.rowCenter[i] - curData.height * 0.5, curData);
+                    case "limt": {
+                        var leftTop = y + data.contents[1].height * 0.5 - data._help.limtSize.height * 0.5;
+
+                        // 先绘制极限文字和趋势
+                        painter.fillText("lim", x + paddingSize + data._help.leftWidth * 0.5, paddingSize + leftTop);
+                        drawFormula(x, data._help.limtSize.height + leftTop - paddingSize, data.contents[0]);
+
+                        // 然后绘制表达式
+                        drawFormula(x + paddingSize + data._help.leftWidth, y, data.contents[1]);
+                        break;
+                    }
+
+                    case "sum": {
+
+                        // 先绘制左边的，从下到上
+                        drawFormula(x + data._help.leftWidth * 0.5 - data._help.p1Width * 0.5 + paddingSize, y + data.height * 0.5 + 10 + paddingSize, data.contents[0]);
+                        painter.beginPath();
+                        painter.lineTo(x + data._help.leftWidth * 0.5 + 10 + paddingSize, y + data.height * 0.5 - 10 + paddingSize);
+                        painter.lineTo(x + data._help.leftWidth * 0.5 - 10 + paddingSize, y + data.height * 0.5 - 10 + paddingSize);
+                        painter.lineTo(x + data._help.leftWidth * 0.5 + 7 + paddingSize, y + data.height * 0.5 + paddingSize);
+                        painter.lineTo(x + data._help.leftWidth * 0.5 - 10 + paddingSize, y + data.height * 0.5 + 10 + paddingSize);
+                        painter.lineTo(x + data._help.leftWidth * 0.5 + 10 + paddingSize, y + data.height * 0.5 + 10 + paddingSize);
+                        painter.stroke();
+                        drawFormula(x + data._help.leftWidth * 0.5 - data._help.p2Width * 0.5 + paddingSize, y + data.height * 0.5 - 10 - data._help.p2Height + paddingSize, data.contents[1]);
+
+                        // 然后绘制右边的
+                        drawFormula(x + data._help.leftWidth + paddingSize, y + data.height * 0.5 - data._help.rightHeight * 0.5, data.contents[2]);
+
+                        break;
+                    }
+
+                    case "join": {
+
+                        // 从左到右，一个个绘制即可
+                        for (var item of data.contents) {
+                            drawFormula(x + paddingSize, y - item.height * 0.5 + data.height * 0.5, item);
+                            x += item.width;
+                        }
+
+                        break;
+                    }
+
+                    case "matrix": {
+                        // 先绘制内容
+                        for (var i in data.contents) {
+                            for (var j in data.contents[i]) {
+                                var curData = data.contents[i][j];
+
+                                // 对于"|"特殊处理
+                                if (curData.contents[0] == '|') {
+                                    painter.beginPath()
+                                    painter.lineTo(x + data._help.colCenter[j], y + data._help.rowCenter[i] - curData.height * 0.5);
+                                    painter.lineTo(x + data._help.colCenter[j], y + data._help.rowCenter[i] + curData.height * 0.5);
+                                    painter.stroke();
+                                } else {
+                                    drawFormula(x + data._help.colCenter[j] - curData.width * 0.5, y + data._help.rowCenter[i] - curData.height * 0.5, curData);
+                                }
                             }
                         }
+
+                        // 绘制两边
+                        if (data._help.isHLS) {
+
+                            painter.beginPath();
+                            painter.lineTo(x + paddingSize + 5, y + paddingSize);
+                            painter.lineTo(x + paddingSize + 5, y + data.height - paddingSize);
+                            painter.stroke();
+
+                            painter.beginPath();
+                            painter.lineTo(x - paddingSize - 5 + data.width, y + paddingSize);
+                            painter.lineTo(x - paddingSize - 5 + data.width, y + data.height - paddingSize);
+                            painter.stroke();
+
+                        } else {
+
+                            painter.beginPath();
+                            painter.lineTo(x + paddingSize + 10, y + paddingSize);
+                            painter.lineTo(x + paddingSize + 5, y + paddingSize + 5);
+                            painter.lineTo(x + paddingSize + 5, y + data.height - paddingSize - 5);
+                            painter.lineTo(x + paddingSize + 10, y + data.height - paddingSize);
+                            painter.stroke();
+
+                            painter.beginPath();
+                            painter.lineTo(x - paddingSize - 10 + data.width, y + paddingSize);
+                            painter.lineTo(x - paddingSize - 5 + data.width, y + paddingSize + 5);
+                            painter.lineTo(x - paddingSize - 5 + data.width, y + data.height - paddingSize - 5);
+                            painter.lineTo(x - paddingSize - 10 + data.width, y + data.height - paddingSize);
+                            painter.stroke();
+
+                        }
+                        break;
                     }
 
-                    // 绘制两边
-                    if (data._help.isHLS) {
+                    case "division": {
 
+                        // 先绘制内容，从上到下
+                        drawFormula(x + (data.width - data.contents[0].width) * 0.5, y + paddingSize, data.contents[0]);
+                        drawFormula(x + (data.width - data.contents[1].width) * 0.5, y + paddingSize + data.contents[0].height + 2, data.contents[1]);
+
+                        // 再绘制中间的线条
                         painter.beginPath();
-                        painter.lineTo(x + paddingSize + 5, y + paddingSize);
-                        painter.lineTo(x + paddingSize + 5, y + data.height - paddingSize);
+                        painter.lineTo(x + paddingSize, y + data.contents[0].height + 1);
+                        painter.lineTo(x + data.width - paddingSize, y + data.contents[0].height + 1);
                         painter.stroke();
 
-                        painter.beginPath();
-                        painter.lineTo(x - paddingSize - 5 + data.width, y + paddingSize);
-                        painter.lineTo(x - paddingSize - 5 + data.width, y + data.height - paddingSize);
-                        painter.stroke();
-
-                    } else {
-
-                        painter.beginPath();
-                        painter.lineTo(x + paddingSize + 10, y + paddingSize);
-                        painter.lineTo(x + paddingSize + 5, y + paddingSize + 5);
-                        painter.lineTo(x + paddingSize + 5, y + data.height - paddingSize - 5);
-                        painter.lineTo(x + paddingSize + 10, y + data.height - paddingSize);
-                        painter.stroke();
-
-                        painter.beginPath();
-                        painter.lineTo(x - paddingSize - 10 + data.width, y + paddingSize);
-                        painter.lineTo(x - paddingSize - 5 + data.width, y + paddingSize + 5);
-                        painter.lineTo(x - paddingSize - 5 + data.width, y + data.height - paddingSize - 5);
-                        painter.lineTo(x - paddingSize - 10 + data.width, y + data.height - paddingSize);
-                        painter.stroke();
-
-                    }
-                    break;
-                }
-
-                case "division": {
-
-                    // 先绘制内容，从上到下
-                    drawFormula(x + (data.width - data.contents[0].width) * 0.5, y + paddingSize, data.contents[0]);
-                    drawFormula(x + (data.width - data.contents[1].width) * 0.5, y + paddingSize + data.contents[0].height + 2, data.contents[1]);
-
-                    // 再绘制中间的线条
-                    painter.beginPath();
-                    painter.lineTo(x + paddingSize, y + data.contents[0].height + 1);
-                    painter.lineTo(x + data.width - paddingSize, y + data.contents[0].height + 1);
-                    painter.stroke();
-
-                    break;
-                }
-
-                case "bracket": {
-                    // 先绘制中间的内容
-                    drawFormula(x + paddingSize + 10, y + paddingSize, data.contents[0]);
-
-                    // 再绘制括号
-                    drawBracket(painter, data._help.type, 'left', x + paddingSize, y + paddingSize, data.height - 2 * paddingSize);
-                    drawBracket(painter, data._help.type, 'right', x + data.width - paddingSize - 10, y + paddingSize, data.height - 2 * paddingSize);
-                    break;
-                }
-
-                case "rightTop": {
-                    drawFormula(x + 0.5 * paddingSize, y + data.height - data._help.p1Height - paddingSize, data.contents[0]);
-                    drawFormula(x - 1.5 * paddingSize + data._help.p1Width, y + 0.5 * paddingSize, data.contents[1]);
-                    break;
-                }
-
-                case "rightBottom": {
-                    drawFormula(x + 0.5 * paddingSize, y + paddingSize, data.contents[0]);
-                    drawFormula(x - 1.5 * paddingSize + data._help.p1Width, y + data.height - 0.5 * paddingSize - data._help.p2Height, data.contents[1]);
-                    break;
-                }
-
-                case "equationSet": {
-                    drawBracket(painter, "big", 'left', x + paddingSize, y + paddingSize, data.height - 2 * paddingSize);
-
-                    for (var i in data.contents) {
-                        drawFormula(x + paddingSize + 10, y + data._help.pxTops[i], data.contents[i]);
+                        break;
                     }
 
-                    break;
+                    case "bracket": {
+                        // 先绘制中间的内容
+                        drawFormula(x + paddingSize + 10, y + paddingSize, data.contents[0]);
+
+                        // 再绘制括号
+                        drawBracket(painter, data._help.type, 'left', x + paddingSize, y + paddingSize, data.height - 2 * paddingSize);
+                        drawBracket(painter, data._help.type, 'right', x + data.width - paddingSize - 10, y + paddingSize, data.height - 2 * paddingSize);
+                        break;
+                    }
+
+                    case "rightTop": {
+                        drawFormula(x + 0.5 * paddingSize, y + data.height - data._help.p1Height - paddingSize, data.contents[0]);
+                        drawFormula(x - 1.5 * paddingSize + data._help.p1Width, y + 0.5 * paddingSize, data.contents[1]);
+                        break;
+                    }
+
+                    case "rightBottom": {
+                        drawFormula(x + 0.5 * paddingSize, y + paddingSize, data.contents[0]);
+                        drawFormula(x - 1.5 * paddingSize + data._help.p1Width, y + data.height - 0.5 * paddingSize - data._help.p2Height, data.contents[1]);
+                        break;
+                    }
+
+                    case "equationSet": {
+                        drawBracket(painter, "big", 'left', x + paddingSize, y + paddingSize, data.height - 2 * paddingSize);
+
+                        for (var i in data.contents) {
+                            drawFormula(x + paddingSize + 10, y + data._help.pxTops[i], data.contents[i]);
+                        }
+
+                        break;
+                    }
+
+                    case "upLine": {
+                        drawFormula(x, y + paddingSize, data.contents[0]);
+                        painter.beginPath();
+                        painter.lineTo(x, y + paddingSize);
+                        painter.lineTo(x + data.width, y + paddingSize);
+                        painter.stroke();
+
+                        break;
+                    }
+
+                    case "downLine": {
+                        drawFormula(x, y, data.contents[0]);
+                        painter.beginPath();
+                        painter.lineTo(x, y + data.height - paddingSize);
+                        painter.lineTo(x + data.width, y + data.height - paddingSize);
+                        painter.stroke();
+
+                        break;
+                    }
+
+                    case "abs": {
+                        drawFormula(x + paddingSize, y, data.contents[0]);
+
+                        painter.beginPath();
+                        painter.lineTo(x + paddingSize, y);
+                        painter.lineTo(x + paddingSize, y + data.height);
+                        painter.stroke();
+
+                        painter.beginPath();
+                        painter.lineTo(x + data.width - paddingSize, y);
+                        painter.lineTo(x + data.width - paddingSize, y + data.height);
+                        painter.stroke();
+
+                        break;
+                    }
+
+                    case "integral": {
+                        drawFormula(x + paddingSize + 15, y + paddingSize, data.contents[3]);
+                        drawFormula(x + paddingSize + 10, y + data.height - data.contents[2].height - paddingSize, data.contents[2]);
+                        drawFormula(x + paddingSize + 15, y + paddingSize + data.contents[3].height, data.contents[0]);
+                        drawFormula(x + paddingSize + 15 + data.contents[0].width, y + paddingSize + data.contents[3].height + 0.5 * (data.contents[0].height - data.contents[1].height), data.contents[1]);
+
+                        // 然后绘制积分符号
+                        painter.beginPath();
+                        painter.moveTo(x + paddingSize, y + data.height - paddingSize - 2.5);
+                        painter.arc(x + paddingSize + 2.5, y + data.height - paddingSize - 2.5, 2.5, Math.PI, 0, true);
+                        painter.lineTo(x + paddingSize + 10, y + paddingSize + 2.5);
+                        painter.arc(x + paddingSize + 12.5, y + paddingSize + 2.5, 2.5, Math.PI, 2 * Math.PI, false);
+                        painter.stroke();
+
+                        break;
+                    }
+
+                    case "listedOr": {
+                        drawFormula(x + data.width * 0.5 - data.contents[0].width * 0.5, y + data.height - paddingSize - data.contents[0].height, data.contents[0]);
+                        drawFormula(x + data.width * 0.5 - data.contents[1].width * 0.5, y + paddingSize, data.contents[1]);
+
+                        painter.beginPath();
+                        painter.moveTo(x + data.width * 0.5 - 15, y + paddingSize + data.contents[1].height);
+                        painter.lineTo(x + data.width * 0.5 - 15, y + paddingSize + data.contents[1].height + 25);
+                        painter.bezierCurveTo(
+                            x + data.width * 0.5 - 10, y + paddingSize + data.contents[1].height + 30,
+                            x + data.width * 0.5 + 10, y + paddingSize + data.contents[1].height + 30,
+                            x + data.width * 0.5 + 15, y + paddingSize + data.contents[1].height + 25
+                        );
+                        painter.lineTo(x + data.width * 0.5 + 15, y + paddingSize + data.contents[1].height);
+                        painter.stroke();
+
+                        break;
+                    }
+
+                    case "listedAnd": {
+                        drawFormula(x + data.width * 0.5 - data.contents[0].width * 0.5, y + data.height - paddingSize - data.contents[0].height, data.contents[0]);
+                        drawFormula(x + data.width * 0.5 - data.contents[1].width * 0.5, y + paddingSize, data.contents[1]);
+
+                        painter.beginPath();
+                        painter.moveTo(x + data.width * 0.5 - 15, y + paddingSize + data.contents[1].height + 35);
+                        painter.lineTo(x + data.width * 0.5 - 15, y + paddingSize + data.contents[1].height + 10);
+                        painter.bezierCurveTo(
+                            x + data.width * 0.5 - 10, y + paddingSize + data.contents[1].height + 5,
+                            x + data.width * 0.5 + 10, y + paddingSize + data.contents[1].height + 5,
+                            x + data.width * 0.5 + 15, y + paddingSize + data.contents[1].height + 10
+                        );
+                        painter.lineTo(x + data.width * 0.5 + 15, y + paddingSize + data.contents[1].height + 35);
+                        painter.stroke();
+
+                        break;
+                    }
+
+                    default: {
+                        console.error('未匹配的数据格式：');
+                        console.error(x, y, data);
+                    }
                 }
 
-                case "upLine": {
-                    drawFormula(x, y + paddingSize, data.contents[0]);
-                    painter.beginPath();
-                    painter.lineTo(x, y + paddingSize);
-                    painter.lineTo(x + data.width, y + paddingSize);
-                    painter.stroke();
+            };
 
-                    break;
-                }
+            drawFormula(0, 0, format);
 
-                case "downLine": {
-                    drawFormula(x, y, data.contents[0]);
-                    painter.beginPath();
-                    painter.lineTo(x, y + data.height - paddingSize);
-                    painter.lineTo(x + data.width, y + data.height - paddingSize);
-                    painter.stroke();
+        } catch (event) {
 
-                    break;
-                }
+            console.log(event)
+            codeEls[i].innerText = event.message + " " + event.filename + " " + event.lineno + " \nstack :\n" + (event.error ? event.error.stack : "");
 
-                case "abs": {
-                    drawFormula(x + paddingSize, y, data.contents[0]);
-
-                    painter.beginPath();
-                    painter.lineTo(x + paddingSize, y);
-                    painter.lineTo(x + paddingSize, y + data.height);
-                    painter.stroke();
-
-                    painter.beginPath();
-                    painter.lineTo(x + data.width - paddingSize, y);
-                    painter.lineTo(x + data.width - paddingSize, y + data.height);
-                    painter.stroke();
-
-                    break;
-                }
-
-                case "integral": {
-                    drawFormula(x + paddingSize + 15, y + paddingSize, data.contents[3]);
-                    drawFormula(x + paddingSize + 10, y + data.height - data.contents[2].height - paddingSize, data.contents[2]);
-                    drawFormula(x + paddingSize + 15, y + paddingSize + data.contents[3].height, data.contents[0]);
-                    drawFormula(x + paddingSize + 15 + data.contents[0].width, y + paddingSize + data.contents[3].height + 0.5 * (data.contents[0].height - data.contents[1].height), data.contents[1]);
-
-                    // 然后绘制积分符号
-                    painter.beginPath();
-                    painter.moveTo(x + paddingSize, y + data.height - paddingSize - 2.5);
-                    painter.arc(x + paddingSize + 2.5, y + data.height - paddingSize - 2.5, 2.5, Math.PI, 0, true);
-                    painter.lineTo(x + paddingSize + 10, y + paddingSize + 2.5);
-                    painter.arc(x + paddingSize + 12.5, y + paddingSize + 2.5, 2.5, Math.PI, 2 * Math.PI, false);
-                    painter.stroke();
-
-                    break;
-                }
-
-                case "listedOr": {
-                    drawFormula(x + data.width * 0.5 - data.contents[0].width * 0.5, y + data.height - paddingSize - data.contents[0].height, data.contents[0]);
-                    drawFormula(x + data.width * 0.5 - data.contents[1].width * 0.5, y + paddingSize, data.contents[1]);
-
-                    painter.beginPath();
-                    painter.moveTo(x + data.width * 0.5 - 15, y + paddingSize + data.contents[1].height);
-                    painter.lineTo(x + data.width * 0.5 - 15, y + paddingSize + data.contents[1].height + 25);
-                    painter.bezierCurveTo(
-                        x + data.width * 0.5 - 10, y + paddingSize + data.contents[1].height + 30,
-                        x + data.width * 0.5 + 10, y + paddingSize + data.contents[1].height + 30,
-                        x + data.width * 0.5 + 15, y + paddingSize + data.contents[1].height + 25
-                    );
-                    painter.lineTo(x + data.width * 0.5 + 15, y + paddingSize + data.contents[1].height);
-                    painter.stroke();
-
-                    break;
-                }
-
-                case "listedAnd": {
-                    drawFormula(x + data.width * 0.5 - data.contents[0].width * 0.5, y + data.height - paddingSize - data.contents[0].height, data.contents[0]);
-                    drawFormula(x + data.width * 0.5 - data.contents[1].width * 0.5, y + paddingSize, data.contents[1]);
-
-                    painter.beginPath();
-                    painter.moveTo(x + data.width * 0.5 - 15, y + paddingSize + data.contents[1].height + 35);
-                    painter.lineTo(x + data.width * 0.5 - 15, y + paddingSize + data.contents[1].height + 10);
-                    painter.bezierCurveTo(
-                        x + data.width * 0.5 - 10, y + paddingSize + data.contents[1].height + 5,
-                        x + data.width * 0.5 + 10, y + paddingSize + data.contents[1].height + 5,
-                        x + data.width * 0.5 + 15, y + paddingSize + data.contents[1].height + 10
-                    );
-                    painter.lineTo(x + data.width * 0.5 + 15, y + paddingSize + data.contents[1].height + 35);
-                    painter.stroke();
-
-                    break;
-                }
-
-                default: {
-                    console.error('未匹配的数据格式：');
-                    console.error(x, y, data);
-                }
-            }
-
-        };
-
-        drawFormula(0, 0, format);
+            codeEls[i].style.color = 'red';
+            codeEls[i].style.fontSize = "12px";
+            codeEls[i].style.textDecoration = "underline";
+            codeEls[i].style.fontWeight = 800;
+        }
     }
 
 };

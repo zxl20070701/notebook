@@ -9,6 +9,7 @@
     <meta name="keywords" content="zxl20070701 1904314465@qq.com notebook math web english computer">
     <link rel="stylesheet" href="./styles/normalize.css">
     <link rel="stylesheet" href="./styles/common.css">
+    <link rel="stylesheet" href="styles/index.css">
     <script src="./js/zh-tw.js"></script>
     <script src="./js/shader.js"></script>
     <script src="./js/menu.js"></script>
@@ -118,9 +119,27 @@
 
 <body onload="initMenu();updateView();" onresize="updateView()">
 
-    <!-- 快速定位fixed -->
+    <!-- 全屏下的fixed -->
     <div class="fixed-view" id="fixed-id">
+
+        <!-- 快速定位 -->
         <div class="menu" id="fixed-menu-id"></div>
+
+        <!-- 右侧 -->
+        <div class="right">
+
+            <!-- 捐款 -->
+            <div class="sponsors"></div>
+
+            <!-- 提意见 -->
+            <div class="help">
+                <h2 class="title">没有找到你想看的？</h2>
+                你可以
+                <a href="https://github.com/zxl20070701/notebook/issues" target="_blank">点击此处</a>
+                给我们留言哦~
+            </div>
+
+        </div>
     </div>
 
     <!-- 进度 -->
@@ -195,16 +214,6 @@
                     </ul>
                 </li>
                 <li>
-                    <span>经济学</span>
-                    <ul>
-                        <li>
-                            <span tag="economics-readbook">
-                                读书笔记
-                            </span>
-                        </li>
-                    </ul>
-                </li>
-                <li>
                     <span>历史</span>
                     <ul>
                         <li>
@@ -262,7 +271,7 @@
     <!-- 解释说明 -->
     <div class="explain-view" id="explain-root">
         <button id="explain-close-id">
-            关<br />闭
+            关闭
         </button>
         <div class="doc" id="explain-content-id">
         </div>

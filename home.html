@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./images/zxl20070701.jpg">
+    <link rel="stylesheet" href="./styles/normalize.css">
+    <link rel="stylesheet" href="./styles/common.css">
+    <link rel="stylesheet" href="./styles/home.css">
+    <title>zxl20070701 | 捐款支持我们？</title>
+    <script>
+
+        function updateView() {
+            // 计算缩放比
+            var scale = window.innerWidth / 1400;
+
+            // 进行缩放
+            document.body.style.transformOrigin = 'left top';
+            document.body.style.transform = 'scale(' + scale + ', ' + scale + ')';
+
+            document.body.style.height = (100 / scale) + "vh";
+        }
+    </script>
+</head>
+
+<body onload="updateView();" onresize="updateView()">
+
+    <!-- 猫 -->
+    <div class="cat"></div>
+
+    <!-- 捐款 -->
+    <div class="zfb"></div>
+
+    <!-- 提意见 -->
+    <div class="help">
+        <h2 class="title">有什么建议或想法？</h2>
+        你可以
+        <a href="https://github.com/zxl20070701/notebook/issues" target="_blank">点击此处</a>
+        给我们留言哦~
+    </div>
+
+    <!-- 导航 -->
+    <nav>
+        <h2>快速访问</h2>
+        <div>
+            <a href="https://zxl20070701.github.io/notebook/" target="_blank" class="notebook">文档笔记</a>
+            <a href="https://zxl20070701.github.io/toolbox" target="_blank" class="toolbox">实用工具</a>
+            <a href="https://github.com/zxl20070701/laboratory" target="_blank" class="laboratory">实验仓库</a>
+            <a href="https://github.com/fragement-contrib" target="_blank" class="fragement-contrib split">代码笔记</a>
+        </div>
+    </nav>
+
+    <!-- 内容 -->
+    <div class="content"></div>
+
+    <div class="belief">
+        走一步，再走一步
+    </div>
+
+    <!-- 控制台打印 -->
+    <script>
+        console.log("%c\n\n\t\t学习的目的绝对不只是为了追求名誉或财富，而是为了在短暂的生命里给灵魂一个栖息的地方，同时寻着一个生存之道。\n\n %cby zxl20070701\n\n", "color:#555555;font-size:12px;font-family:cursive;", "color:gray;padding-left:60px;");
+    </script>
+
+</body>
+
+</html>
