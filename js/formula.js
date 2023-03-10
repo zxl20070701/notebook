@@ -378,6 +378,18 @@ var jsonToFormat = function (json) {
             };
         }
 
+        // 向量
+        case "vector": {
+            var p1Obj = formatBasic(json[1]);
+
+            return {
+                width: p1Obj.width,
+                height: p1Obj.height + paddingSize,
+                contents: [p1Obj],
+                type: "vector"
+            };
+        }
+
         // 绝对值
         case "abs": {
             var p1Obj = formatBasic(json[1]);
@@ -431,6 +443,32 @@ var jsonToFormat = function (json) {
             };
         }
 
+        // 排列和组合
+
+        case "A": {
+            var p1Obj = formatBasic(json[1]);
+            var p2Obj = formatBasic(json[2]);
+
+            return {
+                width: Math.max(p1Obj.width, p2Obj.width) + 20 + paddingSize * 2,
+                height: p1Obj.height + p2Obj.height + 5 + paddingSize * 2,
+                contents: [p1Obj, p2Obj],
+                type: 'A'
+            };
+        }
+
+        case "C": {
+            var p1Obj = formatBasic(json[1]);
+            var p2Obj = formatBasic(json[2]);
+
+            return {
+                width: Math.max(p1Obj.width, p2Obj.width) + 20 + paddingSize * 2,
+                height: p1Obj.height + p2Obj.height + 5 + paddingSize * 2,
+                contents: [p1Obj, p2Obj],
+                type: 'C'
+            };
+        }
+
     }
 
 };
@@ -443,20 +481,12 @@ window.doFormula = function (el) {
         try {
             var format = jsonToFormat(JSON.parse(codeEls[i].innerHTML));
 
-            // 设置画布大小并插入页面
+            // 设置画布大小
 
             var canvas = document.createElement('canvas');
 
-            canvas.style.width = format.width + "px";
             canvas.setAttribute('width', 3 * format.width);
-
-            canvas.style.height = format.height + "px";
             canvas.setAttribute('height', 3 * format.height);
-
-            canvas.style.verticalAlign = "middle";
-
-            codeEls[i].parentNode.insertBefore(canvas, codeEls[i].nextSibling);
-            codeEls[i].parentNode.removeChild(codeEls[i]);
 
             // 获取画笔并进行配置
 
@@ -467,6 +497,13 @@ window.doFormula = function (el) {
             painter.textAlign = "center";
             painter.textBaseline = "middle";
             painter.font = "12px sans-serif";
+
+            var allStyle = document.defaultView && document.defaultView.getComputedStyle ?
+                document.defaultView.getComputedStyle(codeEls[i], null) :
+                codeEls[i].currentStyle;
+
+            painter.fillStyle = allStyle.getPropertyValue("color");
+            painter.strokeStyle = allStyle.getPropertyValue("color");
 
             var drawFormula = function (x, y, data) {
 
@@ -652,6 +689,21 @@ window.doFormula = function (el) {
                         break;
                     }
 
+                    case "vector": {
+                        drawFormula(x, y + paddingSize, data.contents[0]);
+                        painter.beginPath();
+                        painter.lineTo(x + paddingSize * 0.3, y + paddingSize);
+                        painter.lineTo(x + data.width - paddingSize * 0.3, y + paddingSize);
+                        painter.stroke();
+                        painter.beginPath();
+                        painter.lineTo(x + data.width - 5, y + paddingSize - 2);
+                        painter.lineTo(x + data.width, y + paddingSize);
+                        painter.lineTo(x + data.width - 5, y + paddingSize + 2);
+                        painter.stroke();
+
+                        break;
+                    }
+
                     case "abs": {
                         drawFormula(x + paddingSize, y, data.contents[0]);
 
@@ -721,6 +773,36 @@ window.doFormula = function (el) {
                         break;
                     }
 
+                    case "C": {
+                        drawFormula(x + paddingSize + 20, y + paddingSize, data.contents[1]);
+                        drawFormula(x + paddingSize + 20, y + 5 + data.contents[1].height + paddingSize, data.contents[0]);
+
+                        painter.beginPath();
+                        painter.moveTo(x + 20, y + paddingSize * 2);
+                        painter.bezierCurveTo(x, y + data.height * 0.7, x + 18, y + data.height - paddingSize * 2, x + 22, y + data.height - paddingSize * 2 - 10)
+                        painter.stroke();
+
+                        break;
+                    }
+
+                    case "A": {
+                        drawFormula(x + paddingSize + 20, y + paddingSize, data.contents[1]);
+                        drawFormula(x + paddingSize + 20, y + 5 + data.contents[1].height + paddingSize, data.contents[0]);
+
+                        painter.beginPath();
+                        painter.moveTo(x + paddingSize, y + data.height - paddingSize);
+                        painter.lineTo(x + paddingSize + 10, y + paddingSize);
+                        painter.lineTo(x + paddingSize + 20, y + data.height - paddingSize);
+                        painter.stroke();
+
+                        painter.beginPath();
+                        painter.moveTo(x + paddingSize + 4, y + data.height * 0.5);
+                        painter.lineTo(x + paddingSize + 16, y + data.height * 0.5);
+                        painter.stroke();
+
+                        break;
+                    }
+
                     default: {
                         console.error('未匹配的数据格式：');
                         console.error(x, y, data);
@@ -730,6 +812,23 @@ window.doFormula = function (el) {
             };
 
             drawFormula(0, 0, format);
+
+            // 设置图片文字并插入页面
+            var span = document.createElement("span");
+
+            span.style.display = 'inline-block';
+
+            span.style.width = format.width + "px";
+            span.style.height = format.height + "px";
+
+            span.style.backgroundSize = '100% auto';
+
+            span.style.verticalAlign = "middle";
+
+            span.style.backgroundImage = "url(" + canvas.toDataURL() + ")";
+
+            codeEls[i].parentNode.insertBefore(span, codeEls[i].nextSibling);
+            codeEls[i].parentNode.removeChild(codeEls[i]);
 
         } catch (event) {
 

@@ -394,7 +394,7 @@ var initToggle = function (idName) {
 
                                         var fixedItemEl = document.createElement(els[index].nodeName);
                                         fixedMenuEl.appendChild(fixedItemEl);
-                                        fixedItemEl.innerText = els[index].innerText;
+                                        fixedItemEl.innerHTML = els[index].innerHTML;
                                         fixedItemEl.addEventListener('click', function () {
 
                                             var offsetTop = els[index].offsetTop;
