@@ -386,6 +386,10 @@ body>header>.github:hover {
     text-indent: 0;
 }
 
+.doc .toRight {
+    float: right;
+}
+
 /* 例子 */
 .example-view {
     position: fixed;
