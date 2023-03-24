@@ -566,11 +566,19 @@ body>header>.github:hover {
 }
 
 .fixed-view>.right>.sponsors {
-    height: 335px;
-    background-image: url("../images/zfb.jpeg");
     background-position: center center;
     background-size: 100% auto;
     background-repeat: no-repeat;
+}
+
+.fixed-view>.right>.sponsors.zfb {
+    height: 335px;
+    background-image: url("../images/zfb.jpeg");
+}
+
+.fixed-view>.right>.sponsors.wx {
+    height: 200px;
+    background-image: url("../images/wx.jpeg");
 }
 
 .fixed-view>.right>.help {

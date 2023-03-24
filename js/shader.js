@@ -25,6 +25,12 @@ var jsColors = {
     "execName": "#1e83b1"/*执行方法颜色*/
 };
 
+var configColors = {
+    "text": "#ac4c1e",/*文本颜色*/
+    "annotation": "#6a9955",/*注释颜色*/
+    "insign": "#9e9e9e",/*符号颜色*/
+};
+
 var _cssShader = function (textString, colors) {
     var shaderArray = [];
 
@@ -590,6 +596,88 @@ var _htmlShader = function (textString, colors) {
 
 };
 
+var _configShader = function (textString, colors) {
+
+    var shaderArray = [];
+
+    // 当前面对的
+    var i = 0;
+
+    // 获取往后n个值
+    var nextNValue = function (n) {
+        return textString.substring(i, n + i > textString.length ? textString.length : n + i);
+    };
+
+    var template = "";
+
+    // 初始化模板，开始文本捕获
+    var initTemplate = function () {
+        if (template != "") {
+
+            // 考虑开始的(
+            if (template[0] == '(') {
+                shaderArray.push({
+                    color: colors.insign,
+                    content: "("
+                });
+                template = template.substring(1);
+            }
+
+            shaderArray.push({
+                color: colors.text,
+                content: template
+            });
+        }
+
+        template = "";
+    };
+
+    while (true) {
+
+        /* 1.注释 */
+
+        if (nextNValue(1) == '#') {
+            initTemplate();
+            while (nextNValue(1) !== '\n' && i < textString.length) {
+                template += textString[i++];
+            }
+            shaderArray.push({
+                color: colors.annotation,
+                content: template
+            });
+            template = "";
+        }
+
+
+        /* 2.边界 */
+
+        else if ([";", '{', '}', '(', ')', '.', '\n', '=', '+', '>', '<', '[', ']', '-', '*', '/', '^', '*', '!'].indexOf(nextNValue(1)) > -1) {
+
+            initTemplate();
+            shaderArray.push({
+                color: colors.insign,
+                content: nextNValue(1)
+            });
+            template = "";
+            i += 1;
+        }
+
+        /* 追加字符 */
+
+        else {
+            if (i >= textString.length) {
+                initTemplate();
+                break;
+            } else {
+                template += textString[i++];
+            }
+        }
+
+    }
+
+    return shaderArray;
+};
+
 // 对特殊转义符号等进行校对
 var replaceCode = function (source) {
     return source
@@ -615,6 +703,10 @@ window.doShader = function (el) {
             }
             case "javascript": {
                 shaderJSON = _jsShader(source, jsColors);
+                break
+            }
+            case "config": {
+                shaderJSON = _configShader(source, configColors);
                 break
             }
             default: {

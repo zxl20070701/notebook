@@ -2,20 +2,32 @@ body {
     background-color: #f7f7f7;
 }
 
-.zfb {
-    width: 200px;
-    height: 280px;
-    background-image: url('../images/zfb.jpeg');
+.sponsors {
+    width: 240px;
     background-repeat: no-repeat;
     background-position: center top;
-    background-size: 170px auto;
+    background-size: 180px auto;
     margin: auto;
-    outline: 1px solid rgb(205, 203, 203);
-    border-radius: 0 0 10px 10px;
+    border: 1px solid rgb(205, 203, 203);
     position: fixed;
-    top: 0;
-    right: 35px;
+    right: 15px;
     background-color: white;
+}
+
+.sponsors.zfb {
+    top: 170px;
+    height: 290px;
+    background-image: url('../images/zfb.jpeg');
+    border-radius: 0 0 10px 10px;
+    border-top: none;
+}
+
+.sponsors.wx {
+    top: 0;
+    height: 200px;
+    background-image: url('../images/wx.jpeg');
+    border-bottom: none;
+    border-top: none;
 }
 
 body>nav {
@@ -65,12 +77,19 @@ body>nav>div>a:last-child {
     padding-right: 20px;
 }
 
-body>nav>div>a.fragement-contrib {
+body>nav>div>a.group {
     background-position: 5px center;
     background-repeat: no-repeat;
     background-size: auto 70%;
-    background-image: url("../images/fragement-contrib.jpeg");
     padding-left: 40px;
+}
+
+body>nav>div>a.fragement-contrib {
+    background-image: url("../images/fragement-contrib.jpeg");
+}
+
+body>nav>div>a.oi-contrib {
+    background-image: url("../images/oi-contrib.png");
 }
 
 body>nav>div>a.split {
@@ -102,13 +121,12 @@ body>.cat {
     border-radius: 5px 0 0 5px;
 }
 
-
 body>.help {
     font-size: 12px;
     padding: 10px;
     width: 200px;
     position: fixed;
-    top: 280px;
+    top: 450px;
     right: 30px;
 }
 
@@ -128,7 +146,7 @@ body>.belief {
     position: fixed;
     bottom: 10px;
     line-height: 80px;
-    left: 500px;
+    left: 550px;
     font-size: 30px;
     font-family: cursive;
     font-weight: 200;
