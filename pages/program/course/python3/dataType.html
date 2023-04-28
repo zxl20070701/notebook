@@ -65,7 +65,7 @@
 <p>
     和ES一样，可以使用方括号来截图字符串，例子如下：
 </p>
-<pre tag="javascript">
+<pre tag="python">
 val_str='zxl20070701'
 
 print(val_str[0]) #z
@@ -79,7 +79,7 @@ print(val_str[:5]) #zxl20
 <h3>
     字符串格式化
 </h3>
-<pre tag="javascript">
+<pre tag="python">
 temp="我叫 %s 今年 %d 岁!" % ('zxl20070701', 7)
 
 print('['+temp+']') #[我叫 zxl20070701 今年 7 岁!]
@@ -108,7 +108,7 @@ print('['+temp+']') #[我叫 zxl20070701 今年 7 岁!]
 <p>
     下面用一个例子来展示一些常见的运算：
 </p>
-<pre tag="javascript">
+<pre tag="python">
 val_arr=['Made','in','China']
 del val_arr[1]
 
@@ -134,7 +134,7 @@ print(val_newarr[1:]) #['China', ':information']
 <p>
     再来看一个有用的例子：
 </p>
-<pre tag="javascript">
+<pre tag="python">
 cols=3
 rows=2
 list_2d = [[0 for col in range(cols)] for row in range(rows)]
@@ -147,7 +147,7 @@ print(list_2d) #[[0, 0, 0], [0, 0, 0]]
 <p>
     使用嵌套列表即在列表里创建其它列表，例如：
 </p>
-<pre tag="javascript">
+<pre tag="python">
 loop_arr=['zxl','20070701']
 result_arr=[loop_arr,'同级别']
 
@@ -168,7 +168,7 @@ print(result_arr) #[['zxl', '20070701'], '同级别']
 <p>
     元组中只包含一个元素时，需要在元素后面添加逗号，否则括号会被当作运算符使用
 </p>
-<pre tag="javascript">
+<pre tag="python">
 tup1 = ('Google', 'Runoob', 1997, 2000)
 tup2 = (1, 2, 3, 4, 5 )
 tup3 = "a", "b", "c", "d"

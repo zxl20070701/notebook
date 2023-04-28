@@ -31,6 +31,14 @@ var configColors = {
     "insign": "#9e9e9e",/*符号颜色*/
 };
 
+var pythonColors = {
+    "text": "#000",/*文本颜色*/
+    "annotation": "#6a9955",/*注释颜色*/
+    "insign": "#9e9e9e",/*符号颜色*/
+    "string": "#ac4c1e",/*字符串颜色*/
+    "key": "#ff0000",/*关键字颜色*/
+};
+
 var _cssShader = function (textString, colors) {
     var shaderArray = [];
 
@@ -678,6 +686,130 @@ var _configShader = function (textString, colors) {
     return shaderArray;
 };
 
+var _pythonShader = function (textString, colors) {
+
+    // python关键字
+    var keyWords = ['False', 'None', 'True', 'and', 'as', 'assert', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal', 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield'];
+
+    var shaderArray = [];
+
+    // 当前面对的
+    var i = 0;
+
+    // 获取往后n个值
+    var nextNValue = function (n) {
+        return textString.substring(i, n + i > textString.length ? textString.length : n + i);
+    };
+
+    var template = "";
+
+    // 初始化模板，开始文本捕获
+    var initTemplate = function () {
+        if (template != "") {
+
+            // 考虑开始的(
+            if (template[0] == '(') {
+                shaderArray.push({
+                    color: colors.insign,
+                    content: "("
+                });
+                template = template.substring(1);
+            }
+
+            shaderArray.push({
+                color: colors.text,
+                content: template
+            });
+        }
+
+        template = "";
+    };
+
+    while (true) {
+
+        /* 1.注释 */
+
+        if (nextNValue(1) == '#') {
+            initTemplate();
+            while (nextNValue(1) !== '\n' && i < textString.length) {
+                template += textString[i++];
+            }
+            shaderArray.push({
+                color: colors.annotation,
+                content: template
+            });
+            template = "";
+        }
+
+        /* 2.字符串 */
+
+        else if (["'", '"'].indexOf(nextNValue(1)) > -1) {
+
+            var strBorder = nextNValue(1);
+            initTemplate();
+
+            do {
+                template += textString[i++];
+            } while (nextNValue(1) != strBorder && i < textString.length)
+
+            // 因为可能是没有字符导致的结束
+            if (nextNValue(1) != strBorder) {
+                strBorder = "";
+            } else {
+                i += 1;
+            }
+
+            shaderArray.push({
+                color: colors.string,
+                content: template + strBorder
+            });
+            template = "";
+
+        }
+
+
+        /* 3.边界 */
+
+        else if ([':', '{', '}', '(', ')', '.', '\n', '=', '+', '>', '<', '[', ']', '-', '*', '/', '^', '*', '!'].indexOf(nextNValue(1)) > -1) {
+
+            initTemplate();
+            shaderArray.push({
+                color: colors.insign,
+                content: nextNValue(1)
+            });
+            template = "";
+            i += 1;
+        }
+
+        /* 4.关键字 */
+
+        else if (nextNValue(1) == ' ' && keyWords.indexOf(template.trim()) > -1) {
+
+            shaderArray.push({
+                color: colors.key,
+                content: template + " "
+            });
+            template = "";
+            i += 1;
+
+        }
+
+        /* 追加字符 */
+
+        else {
+            if (i >= textString.length) {
+                initTemplate();
+                break;
+            } else {
+                template += textString[i++];
+            }
+        }
+
+    }
+
+    return shaderArray;
+};
+
 // 对特殊转义符号等进行校对
 var replaceCode = function (source) {
     return source
@@ -707,6 +839,10 @@ window.doShader = function (el) {
             }
             case "config": {
                 shaderJSON = _configShader(source, configColors);
+                break
+            }
+            case "python": {
+                shaderJSON = _pythonShader(source, pythonColors);
                 break
             }
             default: {

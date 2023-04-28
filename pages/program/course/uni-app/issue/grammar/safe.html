@@ -1,0 +1,42 @@
+<header>
+    兼容语法说明
+</header>
+<h2>
+    #1
+</h2>
+<p>
+    calcClass是一个方法，返回class字符串，那么：
+</p>
+<pre tag="html">
+    <view  :class="calcClass('0')"></view>
+</pre>
+<p>
+    应该改为
+</p>
+<pre tag="html">
+    <view  :class="[calcClass('0')]"></view>
+</pre>
+<h2>
+    #2
+</h2>
+<pre tag="javascript">
+computed: {
+    newBarStyle() {
+        return {
+            backgroundColor:"red"
+        };
+    }
+}
+</pre>
+<p>
+    newBarStyle是定义的一个计算属性，那么：
+</p>
+<pre tag="html">
+    <view :style="newBarStyle"></view>
+</pre>
+<p>
+    应该改为
+</p>
+<pre tag="html">
+    <view :style="[newBarStyle]"></view>
+</pre>
