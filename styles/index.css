@@ -410,7 +410,6 @@ body>header>.github:hover {
     left: 5%;
     background-color: white;
     font-size: 0;
-    white-space: nowrap;
     box-shadow: 0 0 16px black;
 }
 

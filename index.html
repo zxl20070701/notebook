@@ -86,10 +86,20 @@
 
                         document.getElementById('doc-id').style.width = _width; // 内容的宽
 
-                        document.getElementById('example-left-id').style.width = 'calc(' + (45 / window.scale) + 'vw - 30px)'; // 例子界面
-                        document.getElementById('example-left-id').style.height = 'calc(' + (90 / window.scale) + 'vh - 40px)';
-                        document.getElementById('example-right-id').style.width = 'calc(' + (45 / window.scale) + 'vw - 30px)';
-                        document.getElementById('example-right-id').style.height = 'calc(' + (90 / window.scale) + 'vh - 40px)';
+                        // 例子界面
+                        if (window.innerWidth > window.innerHeight) {
+                            document.getElementById('example-win').style.whiteSpace = "nowrap";
+                            document.getElementById('example-left-id').style.width = 'calc(' + (45 / window.scale) + 'vw - 30px)'; // 宽屏幕
+                            document.getElementById('example-left-id').style.height = 'calc(' + (90 / window.scale) + 'vh - 40px)';
+                            document.getElementById('example-right-id').style.width = 'calc(' + (45 / window.scale) + 'vw - 30px)';
+                            document.getElementById('example-right-id').style.height = 'calc(' + (90 / window.scale) + 'vh - 40px)';
+                        } else {
+                            document.getElementById('example-win').style.whiteSpace = "normal";
+                            document.getElementById('example-left-id').style.width = 'calc(' + (90 / window.scale) + 'vw - 40px)'; // 高屏幕
+                            document.getElementById('example-left-id').style.height = 'calc(' + (45 / window.scale) + 'vh - 30px)';
+                            document.getElementById('example-right-id').style.width = 'calc(' + (90 / window.scale) + 'vw - 40px)';
+                            document.getElementById('example-right-id').style.height = 'calc(' + (45 / window.scale) + 'vh - 30px)';
+                        }
 
                         document.getElementById('explain-content-id').style.width = 'calc(' + (100 / window.scale) + 'vw - 420px)';// 解释说明
                         document.getElementById('explain-content-id').style.height = 'calc(' + (100 / window.scale) + 'vh - 50px)';
@@ -235,7 +245,7 @@
 
     <!-- 例子 -->
     <div class="example-view" id="example-root">
-        <div>
+        <div id="example-win">
             <div id="example-left-id">
                 <h2>
                     源代码
