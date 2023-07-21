@@ -5,7 +5,7 @@
     spawn
 </h2>
 <pre tag="javascript">
-require('child_process').spawn(command:string, args:Array&lt;string&gt;, options:Object);
+let ls = require('child_process').spawn(command:string, args:Array&lt;string&gt;, options:Object);
 </pre>
 <p>
     例如：
@@ -24,3 +24,17 @@ node ./demo.js
 <p>
     也就是运行命令 “node” 并携带参数 “./demo.js”。
 </p>
+<h3>
+    回调钩子
+</h3>
+<h4>
+    close
+</h4>
+<p>
+    命令执行完毕后触发：
+</p>
+<pre tag="javascript">
+ls.on('close', () => {
+    // todo
+});
+</pre>
