@@ -98,3 +98,39 @@ url = git@github.com:zxl20070701/notebook.git
 <p>
     经过上面的修改以后，就可以正常push成功了，提交前，别忘了配置邮箱和姓名哦～
 </p>
+<h2>
+    ssh配置多用户多密钥
+</h2>
+<p>
+    首先，使用不同邮箱重复上述生成ssh公钥步骤。
+</p>
+<p class="warn">
+    温馨提示：多用户下保存时不要覆盖前面的名称，如id_rsa，我现在使用id_rsa_sabrinayh5y（这样id_rsa和id_rsa_sabrinayh5y就是两组密钥了）。
+</p>
+<p>接下来，我们配置多用户和密钥的关联</p>
+<p>我们切换到 ~/.ssh 文件夹，在文件config中添加</p>
+<pre tag>
+Host default
+    HostName github.com
+    PreferredAuthentications publickey
+    IdentityFile ~/.ssh/id_rsa
+
+# 新加sabrinayh5y密钥
+Host sabrinayh5y
+    HostName github.com
+    PreferredAuthentications publickey
+    IdentityFile ~/.ssh/id_rsa_sabrinayh5y
+</pre>
+<p>第三步，测试连接</p>
+<pre tag>
+ssh -T git@github.com
+ssh -T git@sabrinayh5y
+</pre>
+出现字样`Hi Sabrinayh5y! You've successfully authenticated, but GitHub does not provide shell access.`。到这里，就说明测试通过了，恭喜你！
+<p>最后一步，ssh方法检出代码</p>
+<pre tag>
+git clone git@sabrinayh5y:Sabrinayh5y/notebook.git
+</pre>
+<p class="warn">
+    温馨提示：这里访问的是git@sabrinayh5y，而不是git@github.com，它来自config中新加sabrinayh5y密钥的Host别名。
+</p>
