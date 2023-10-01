@@ -1,0 +1,32 @@
+<header>
+    v-model
+</header>
+<pre tag="html">
+    <input v-model="info">
+</pre>
+<p>
+    上面的代码等价于：
+</p>
+<pre tag="html">
+    <input v-bind:value="info" v-on:input="info = $event.target.value">
+</pre>
+<p>
+    当用在组件上时，则会这样：
+</p>
+<pre tag="html">
+    &lt;ui-input v-bind:value="info" v-on:input="info = $event" &gt;
+</pre>
+<p>
+    当然，这等价于：
+</p>
+<pre tag="html">
+    &lt;ui-input v-model="info"&gt;
+</pre>
+<p>
+    为了让它正常工作，这个组件内的
+    <span class="special">&lt;input&gt;</span>
+    写成代码之后是这样的：
+</p>
+<pre tag="html">
+    <input v-bind:value="value" v-on:input="$emit('input', $event.target.value)">
+</pre>

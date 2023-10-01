@@ -40,3 +40,29 @@ computed: {
 <pre tag="html">
     <view :style="[newBarStyle]"></view>
 </pre>
+<h2>
+    #3
+</h2>
+<p>
+    默认情况下，自定义组件中再修改使用到的组件样式在H5中是可以的，而在小程序中会失败，此时，你可以在自定义组件中添加如下内容：
+</p>
+<pre tag="javascript">
+export default {
+    options: {
+        styleIsolation: "shared"
+    }
+}
+</pre>
+<h2>
+    #4
+</h2>
+<p>
+    对于自定义标签，如果发现在微信小程序中和H5中“展开”不一样（微信小程序中组件的class丢了），可能是设置了virtualHost为true，可以修改一下再试试：
+</p>
+<pre tag="javascript">
+export default {
+    options: {
+        virtualHost: false
+    }
+}
+</pre>

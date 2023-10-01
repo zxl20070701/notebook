@@ -154,6 +154,15 @@ body>header>.github:hover {
     width: 260px;
 }
 
+.stepbystep {
+    margin-top: 20px;
+    width: calc(100% + 10px);
+    font-size: 12px;
+    line-height: 2em;
+    color: #f00;
+    font-weight: 200;
+}
+
 /* 实验项目 */
 .laboratory {
     background-image: url('../images/laboratory.png');

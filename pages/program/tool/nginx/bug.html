@@ -22,3 +22,12 @@ location /pre-url/ {
     proxy_cookie_path  /new-url /pre-url;
 }
 </pre>
+<h2>
+    跨域请求
+</h2>
+<pre tag="config">
+location /demo/ {
+   add_header Access-Control-Allow-Origin * always;
+   # 其他配置
+}
+</pre>

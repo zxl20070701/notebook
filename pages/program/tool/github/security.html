@@ -101,13 +101,18 @@ url = git@github.com:zxl20070701/notebook.git
 <h2>
     ssh配置多用户多密钥
 </h2>
+<h3>
+    生成更多ssh公钥
+</h3>
 <p>
     首先，使用不同邮箱重复上述生成ssh公钥步骤。
 </p>
 <p class="warn">
     温馨提示：多用户下保存时不要覆盖前面的名称，如id_rsa，我现在使用id_rsa_sabrinayh5y（这样id_rsa和id_rsa_sabrinayh5y就是两组密钥了）。
 </p>
-<p>接下来，我们配置多用户和密钥的关联</p>
+<h3>
+    配置多用户和密钥的关联
+</h3>
 <p>我们切换到 ~/.ssh 文件夹，在文件config中添加</p>
 <pre tag>
 Host default
@@ -121,13 +126,23 @@ Host sabrinayh5y
     PreferredAuthentications publickey
     IdentityFile ~/.ssh/id_rsa_sabrinayh5y
 </pre>
-<p>第三步，测试连接</p>
+<h3>
+    测试连接
+</h3>
 <pre tag>
 ssh -T git@github.com
 ssh -T git@sabrinayh5y
 </pre>
-出现字样`Hi Sabrinayh5y! You've successfully authenticated, but GitHub does not provide shell access.`。到这里，就说明测试通过了，恭喜你！
-<p>最后一步，ssh方法检出代码</p>
+<p>
+    出现字样：
+    <span class="special">
+        Hi Sabrinayh5y! You've successfully authenticated, but GitHub does not provide shell access.
+    </span>
+    后，就说明测试通过了，恭喜你！
+</p>
+<h3>
+    ssh方法检出代码
+</h3>
 <pre tag>
 git clone git@sabrinayh5y:Sabrinayh5y/notebook.git
 </pre>
