@@ -886,16 +886,27 @@ window.doShader = function (el) {
                     document.body.appendChild(textareaEl);
                     textareaEl.select();
 
+                    // copy提醒
+                    function prompt(isOk) {
+                        copyEl.setAttribute("copied", isOk ? "yes" : "no")
+                        copyEl.setAttribute('data-before', isOk ? "复制成功" : "复制失败");
+                        setTimeout(function () {
+                            copyEl.removeAttribute("copied");
+                            copyEl.removeAttribute('data-before');
+                            copyEl.blur();
+                        }, 700);
+                    }
+
                     try {
                         var result = window.document.execCommand("copy", false, null);
 
                         if (result) {
-                            alert('复制成功');
+                            prompt(true);
                         } else {
-                            alert('复制失败');
+                            prompt(false);
                         }
                     } catch (e) {
-                        alert('复制失败');
+                        prompt(false);
                         console.error(e);
                     }
 

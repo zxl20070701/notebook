@@ -9,11 +9,13 @@
     <meta name="keywords" content="zxl20070701 1904314465@qq.com notebook math web english computer">
     <link rel="stylesheet" href="./styles/normalize.css">
     <link rel="stylesheet" href="./styles/common.css">
-    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="./styles/index.css">
+    <link rel="stylesheet" href="./styles/F12.css">
     <script src="./scripts/zh-tw.js"></script>
     <script src="./scripts/shader.js"></script>
     <script src="./scripts/menu.js"></script>
     <script src="./scripts/formula.js"></script>
+    <script src="./scripts/F12.js"></script>
     <title>《文档笔记》包括编程、数学、计算机、英语、历史、经济学等各种常用的内容快速查询</title>
     <script>
 
@@ -244,21 +246,6 @@
                         </li>
                     </ul>
                 </li>
-                <li class="stepbystep">
-                    (一些可有可无的随笔)
-                </li>
-                <li>
-                    <span>
-                        Keep Study
-                    </span>
-                    <ul>
-                        <li>
-                            <span>
-                                暂无内容
-                            </span>
-                        </li>
-                    </ul>
-                </li>
             </ul>
         </div>
         <div class="menu" id="menu-view-id">
@@ -278,7 +265,7 @@
                         运行
                     </button>
                 </h2>
-                <textarea id="source-id"></textarea>
+                <textarea id="source-id" spellcheck="false"></textarea>
             </div>
             <div id="example-right-id">
                 <h2>
@@ -287,7 +274,17 @@
                         关闭
                     </button>
                 </h2>
-                <iframe id="run-id"></iframe>
+                <div class="iframe">
+                    <iframe id="run-id"></iframe>
+                    <div class="f12">
+                        <ul class="nav">
+                            <li class="active">
+                                Console
+                            </li>
+                        </ul>
+                        <ul id="f12-console"></ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -297,6 +294,13 @@
         // 运行例子
         function runExample() {
             var iframeDocument = document.getElementById('run-id').contentWindow.document;
+            var iframeWindow = document.getElementById('run-id').contentWindow;
+
+            // 启动F12
+            window.rebotF12({
+                window: iframeWindow
+            });
+
             iframeDocument.open();
             iframeDocument.write(document.getElementById('source-id').value);
             iframeDocument.close();

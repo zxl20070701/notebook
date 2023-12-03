@@ -154,15 +154,6 @@ body>header>.github:hover {
     width: 260px;
 }
 
-.stepbystep {
-    margin-top: 20px;
-    width: calc(100% + 10px);
-    font-size: 12px;
-    line-height: 2em;
-    color: #f00;
-    font-weight: 200;
-}
-
 /* 实验项目 */
 .laboratory {
     background-image: url('../images/laboratory.png');
@@ -440,12 +431,27 @@ body>header>.github:hover {
     font-family: cursive;
 }
 
-.example-view>div>div>iframe,
+.example-view>div>div>.iframe,
 .example-view>div>div>textarea {
     width: 100%;
     height: calc(100% - 50px);
+}
+
+.example-view>div>div>.iframe>iframe,
+.example-view>div>div>textarea {
     outline: none;
     border: none;
+}
+
+.example-view>div>div>.iframe>iframe {
+    width: 100%;
+    height: 70%;
+}
+
+.example-view>div>div>.iframe>.f12 {
+    width: 100%;
+    height: 30%;
+    border-top: 1px solid #8c9da5;
 }
 
 .example-view>div>div>textarea {
@@ -453,6 +459,7 @@ body>header>.github:hover {
     font-family: cursive;
     font-size: 14px;
     font-weight: 400;
+    resize: none;
 }
 
 .example-view>div>div>h2>button {
@@ -696,4 +703,35 @@ pre>.copy-icon {
     background-color: transparent;
     outline: none;
     border: none;
+}
+
+.copy-icon[copied] {
+    outline: 1px solid #343848;
+    border-radius: 0 4px 4px 0;
+}
+
+.copy-icon[copied='no'] {
+    outline: 1px solid #ff0000;
+}
+
+.copy-icon[copied]:before {
+    position: absolute;
+    left: -64px;
+    display: block;
+    border-radius: 4px 0 0 4px;
+    width: 64px;
+    height: 32px;
+    line-height: 32px;
+    top: -1px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #343848;
+    white-space: nowrap;
+    content: attr(data-before);
+}
+
+.copy-icon[copied='no']:before {
+    background-color: #ff0000;
 }

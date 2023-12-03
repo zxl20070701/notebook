@@ -2,7 +2,7 @@
     兼容语法说明
 </header>
 <h2>
-    #1
+    :class失效
 </h2>
 <p>
     calcClass是一个方法，返回class字符串，那么：
@@ -17,7 +17,7 @@
     <view  :class="[calcClass('0')]"></view>
 </pre>
 <h2>
-    #2
+    :style失效
 </h2>
 <pre tag="javascript">
 computed: {
@@ -41,7 +41,7 @@ computed: {
     <view :style="[newBarStyle]"></view>
 </pre>
 <h2>
-    #3
+    组件中无法修改子组件样式
 </h2>
 <p>
     默认情况下，自定义组件中再修改使用到的组件样式在H5中是可以的，而在小程序中会失败，此时，你可以在自定义组件中添加如下内容：
@@ -54,7 +54,7 @@ export default {
 }
 </pre>
 <h2>
-    #4
+    组件展开方式
 </h2>
 <p>
     对于自定义标签，如果发现在微信小程序中和H5中“展开”不一样（微信小程序中组件的class丢了），可能是设置了virtualHost为true，可以修改一下再试试：
@@ -64,5 +64,32 @@ export default {
     options: {
         virtualHost: false
     }
+}
+</pre>
+<h2>
+    v-for运行异常
+</h2>
+<pre tag="html">
+    <view v-for="(item, index) in datalist" :key="'tag-'+index">
+        <button @click="doit(item)">点击我</button>
+    </view>
+</pre>
+<p>
+    上面的代码在微信小程序端会无法正常显示或别的错误，是因为key的问题，需要修改为：
+</p>
+<pre tag>
+    :key="index"
+</pre>
+<h2>
+    slotMultipleInstance
+</h2>
+<p>
+    微信小程序中，如果多个插槽无法正确解析，可以在
+    <span class="special">manifest.json</span>
+    中添加如下配置：
+</p>
+<pre tag="javascript">
+"mp-weixin": {
+    "slotMultipleInstance": true
 }
 </pre>
