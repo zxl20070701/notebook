@@ -274,6 +274,8 @@ var initToggle = function (idName) {
 
                                         buttons[index].addEventListener('click', function () {
 
+                                            document.getElementsByTagName("body")[0].setAttribute("dialog", 'yes');
+
                                             // 解释说明
                                             if (pageType == "explain") {
                                                 var explainEl = document.getElementById('explain-content-id');
@@ -336,24 +338,27 @@ var initToggle = function (idName) {
                             docEl.appendChild(fullBtn);
 
                             fullBtn.setAttribute('title', '点击我切换显示模式');
-
-                            docEl.style.top = '0';
+                            docEl.style.position = "fixed";
 
                             fullBtn.addEventListener('click', function () {
+                                var vwVh = window.getVwVh();
 
                                 // 记录当前是否最大化了
                                 window.isFull = fullBtn.getAttribute('tag') == 'toFull';
+
+                                window.isPhone
 
                                 // 最大化
                                 if (fullBtn.getAttribute('tag') == 'toFull') {
                                     fullBtn.setAttribute('tag', 'toRight');
 
-                                    docEl.style.position = "fixed";
+
                                     docEl.style.left = '260px';
                                     docEl.style.backgroundColor = 'white';
                                     docEl.style.boxShadow = "0 0 7px 1px #607d8b";
+                                    docEl.style.top = '0';
 
-                                    docEl.style.height = (100 / window.scale) + 'vh';
+                                    docEl.style.height = (100 / window.scale) + vwVh.vh;
 
                                     fixedBtn.style.display = 'block';
                                     githubBtn.setAttribute("tag", "type2");
@@ -363,26 +368,30 @@ var initToggle = function (idName) {
                                     fullBtn.setAttribute("isFull", "yes");
                                     editorBtn.setAttribute("isFull", "yes");
 
+                                    document.body.setAttribute("isFull", "yes");
+
                                 }
 
                                 // 复位
                                 else {
 
                                     fullBtn.setAttribute('tag', 'toFull');
-                                    docEl.style.position = "relative";
-                                    docEl.style.left = '0';
+                                    docEl.style.left = '520px';
                                     docEl.style.backgroundColor = 'transparent';
                                     docEl.style.boxShadow = "0 0 0 0 transparent";
+                                    docEl.style.top = '50px';
 
                                     fixedBtn.style.display = 'none';
                                     githubBtn.setAttribute("tag", "type1");
 
-                                    docEl.style.height = "calc(" + (100 / window.scale) + "vh - 50px)";
+                                    docEl.style.height = "calc(" + (100 / window.scale) + vwVh.vh + " - 50px)";
 
                                     delete urlObj.params.model;
 
                                     fullBtn.setAttribute("isFull", "no");
                                     editorBtn.setAttribute("isFull", "no");
+
+                                    document.body.setAttribute("isFull", "no");
                                 }
 
                                 updateUrl();
@@ -448,6 +457,8 @@ window.initMenu = function () {
 
         delete urlObj.params.dialog;
         delete urlObj.params.type;
+
+        document.getElementsByTagName("body")[0].setAttribute("dialog", 'no');
 
         updateUrl();
     };

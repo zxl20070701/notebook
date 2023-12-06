@@ -12,15 +12,39 @@
     <title>zxl20070701 | 捐款支持我们？</title>
     <script>
 
+        // 是否是手机模式？
+        window.isPhone = /Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent);
+
         function updateView() {
+            var _transform = "";
+
+            var _vw = "vw", _vh = "vh";
+            if (window.isPhone && window.innerWidth < window.innerHeight) {
+                _vw = "vh";
+                _vh = "vw";
+            }
+
             // 计算缩放比
-            var scale = window.innerWidth / 1400;
+            var scale = window.innerWidth / (window.isPhone ? 900 : 1400);
+
+            if (window.isPhone) {
+                if (window.innerWidth < window.innerHeight) {
+                    _transform = "rotate(90deg) translateY(-" + 100 / scale + "vw)";
+                } else {
+                    scale = window.innerWidth / 1500;
+                }
+
+            }
 
             // 进行缩放
             document.body.style.transformOrigin = 'left top';
-            document.body.style.transform = 'scale(' + scale + ', ' + scale + ')';
+            document.body.style.transform = 'scale(' + scale + ', ' + scale + ') ' + _transform;
 
-            document.body.style.height = (100 / scale) + "vh";
+            document.body.style.width = (100 / scale) + _vw; // body
+            document.body.style.height = (100 / scale) + _vh;
+
+            var contentEl = document.getElementById("content");
+            contentEl.style.width = "calc(" + (100 / scale) + _vw + " - 290px)";
         }
     </script>
 </head>
@@ -56,7 +80,7 @@
     </nav>
 
     <!-- 内容 -->
-    <div class="content"
+    <div class="content" id="content"
         style="text-align: center;padding-top: 200px;font-size: 30px;font-weight:800;font-family: monospace;">
         这里应该放点什么？
         <div>
