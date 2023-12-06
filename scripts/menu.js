@@ -234,13 +234,18 @@ var initToggle = function (idName) {
 
                     // 更新菜单
                     if (idName == 'book') {
-                        var _tag = spans[i].getAttribute('tag').split('-');
-                        urlObj.router[0] = _tag[0];
-                        urlObj.router[1] = _tag[1];
-                        loadPage("pages/" + spans[i].getAttribute('tag').replace(/\-/g, '/') + "/menu", function (data) {
-                            document.getElementById('menu-id').innerHTML = data;
-                            initToggle('menu');
-                        });
+                        var oralTag = spans[i].getAttribute('tag');
+                        if (oralTag) {
+                            var _tag = oralTag.split('-');
+                            urlObj.router[0] = _tag[0];
+                            urlObj.router[1] = _tag[1];
+                            loadPage("pages/" + spans[i].getAttribute('tag').replace(/\-/g, '/') + "/menu", function (data) {
+                                document.getElementById('menu-id').innerHTML = data;
+                                initToggle('menu');
+                            });
+                        } else {
+                            alert("暂无内容，敬请期待～");
+                        }
 
                     }
 

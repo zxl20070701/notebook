@@ -120,3 +120,91 @@ for (let index = 0; index &lt; page.length; index++) {
     ► pageB
     ► pageC
 </pre>
+<h2>
+    更多
+</h2>
+<h3>
+    configureWebpack
+</h3>
+<p>
+    比如我们希望在原来的webpack中添加一个插件 MyPlugin ，可以这样：
+</p>
+<pre tag="javascript">
+module.exports = {
+    configureWebpack: {
+        plugins: [
+            new MyPlugin()
+        ]   
+    }
+}
+</pre>
+<p>
+    该对象将会被合并入最终的 webpack 配置。
+</p>
+<p>
+    如果你需要基于环境有条件地配置行为，或者想要直接修改配置，那就换成一个函数：
+</p>
+<pre tag="javascript">
+module.exports = {
+    configureWebpack: config => {
+        if (process.env.NODE_ENV === 'production') {
+            // 为生产环境修改配置...
+        } else {
+            // 为开发环境修改配置...
+        }
+    }
+}
+</pre>
+<p>
+    在函数内，你可以直接修改配置，或者返回一个将会被合并的对象。
+</p>
+<h3>
+    chainWebpack
+</h3>
+<p>
+    Vue CLI 内部的 webpack 配置是通过 webpack-chain 维护的。它允许我们更细粒度的控制其内部配置。
+</p>
+<p class="warn">
+    当你打算链式访问特定的 loader 时，你可以（比如针对scss）：
+    <span class="important">
+        vue inspect --rule scss
+    </span>
+    这样来查看配置结果可能是有益的。
+</p>
+<h4>
+    添加一个新的 Loader
+</h4>
+<p>
+    比如我们对原来的vue-loader再加一个loader（会附加在该规则现有的 loader 之后）：
+</p>
+<pre tag="javascript">
+module.exports = {
+    chainWebpack: config => {
+        config.module
+            .rule('vue')
+            .test(/\.vue$/)
+            .use('./pre-vue-loader.js')
+            .loader('./pre-vue-loader.js')
+            .end()
+    }
+}
+</pre>
+<h4>
+    替换一个规则里的 Loader
+</h4>
+<p>
+    比如我们希望vue文件原来的loader删除了，就用我现在的就可以了：
+</p>
+<pre tag="javascript">
+module.exports = {
+    chainWebpack: config => {
+        const vueRule = config.module.rule('vue').test(/\.vue$/)
+
+        vueRule.uses.clear()
+
+        vueRule.use('./pre-vue-loader.js')
+            .loader('./pre-vue-loader.js')
+            .end()
+    }
+}
+</pre>

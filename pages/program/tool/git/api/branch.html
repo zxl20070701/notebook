@@ -46,4 +46,14 @@
 <p>
     合并分支branchname到当前活跃分支。
 </p>
-<pre tag>git merge|rebase branchname</pre>
+<pre tag>git merge branchname</pre>
+<h2>
+    变基
+</h2>
+<p>
+    把分支branchname合并到当前活跃分支并以此为基。
+</p>
+<p class="warn">
+    温馨提示：和merge相比，不会留下合并记录。
+</p>
+<pre tag>git rebase branchname</pre>
