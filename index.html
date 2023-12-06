@@ -23,6 +23,22 @@
         var host = window.location.host;
         window.needCache = !(/^127\.0\.0\.1/.test(host) || /^localhost/.test(host) || host == "");
 
+        // 是否是手机模式？
+        window.isPhone = /Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent);
+
+        // 计算vw和vh具体应该是什么
+        window.getVwVh = function () {
+            var _vw = "vw", _vh = "vh";
+            if (window.isPhone && window.innerWidth < window.innerHeight) {
+                _vw = "vh";
+                _vh = "vw";
+            }
+            return {
+                vw: _vw,
+                vh: _vh
+            }
+        };
+
         // 监听浏览器点击了回退按钮
         if (window.addEventListener)
             window.addEventListener("hashchange", function () {
@@ -62,49 +78,62 @@
                     // 判断当前是否可以立刻更新
                     // 如果后续又来新任务，noNew肯定被设置成false了，那就只能再等等
                     if (_updateView_params_.noNew) {
-                        var _height;
+                        var vwVh = window.getVwVh();
+                        var _height, _vw = vwVh.vw, _vh = vwVh.vh, _transform = "";
 
                         // 计算缩放比
-                        window.scale = window.innerWidth / 1400;
+                        window.scale = window.innerWidth / (window.isPhone ? 900 : 1400);
+
+                        if (window.isPhone) {
+                            if (window.innerWidth < window.innerHeight) {
+                                window.scale = window.innerWidth / 700;
+                                _transform = "rotate(90deg) translateY(-" + 100 / window.scale + "vw)";
+                            } else {
+                                window.scale = window.innerWidth / 1500;
+                            }
+
+                        }
 
                         // 进行缩放
                         document.body.style.transformOrigin = 'left top';
-                        document.body.style.transform = 'scale(' + window.scale + ', ' + window.scale + ')';
+                        document.body.style.transform = 'scale(' + window.scale + ', ' + window.scale + ') ' + _transform;
 
                         // 恢复
                         // 为什么需要恢复？
                         // 因为现在屏幕的内容可能无法和内容大小保持一致了，
                         // 比如屏幕小，那body就要缩小，那内容也缩小了，就需要把内容区域设置大点
 
-                        document.body.style.width = (100 / window.scale) + "vw"; // body
-                        document.body.style.height = (100 / window.scale) + 'vh';
+                        document.body.style.width = (100 / window.scale) + _vw; // body
+                        document.body.style.height = (100 / window.scale) + _vh;
 
-                        _height = "calc(" + (100 / window.scale) + "vh - 50px)";
-                        _width = "calc(" + (100 / window.scale) + "vw - 520px)";
+                        _height = "calc(" + (100 / window.scale) + _vh + " - 50px)";
+                        _width = "calc(" + (100 / window.scale) + _vw + " - 520px)";
 
-                        document.getElementById('doc-id').style.height = window.isFull ? (100 / window.scale) + 'vh' : _height; // 内容的高
-                        document.getElementById('book-view-id').style.height = "calc(" + (100 / window.scale) + "vh - 220px)";
+                        document.getElementById('doc-id').style.height = window.isFull ? (100 / window.scale) + _vh : _height; // 内容的高
+                        document.getElementById('book-view-id').style.height = "calc(" + (100 / window.scale) + _vh + " - 220px)";
                         document.getElementById('menu-view-id').style.height = _height;
 
                         document.getElementById('doc-id').style.width = _width; // 内容的宽
 
+                        var wOverH = window.innerWidth > window.innerHeight;
+
                         // 例子界面
-                        if (window.innerWidth > window.innerHeight) {
+                        if ((!window.isPhone && wOverH) || window.isPhone) {
                             document.getElementById('example-win').style.whiteSpace = "nowrap";
-                            document.getElementById('example-left-id').style.width = 'calc(' + (45 / window.scale) + 'vw - 30px)'; // 宽屏幕
-                            document.getElementById('example-left-id').style.height = 'calc(' + (90 / window.scale) + 'vh - 40px)';
-                            document.getElementById('example-right-id').style.width = 'calc(' + (45 / window.scale) + 'vw - 30px)';
-                            document.getElementById('example-right-id').style.height = 'calc(' + (90 / window.scale) + 'vh - 40px)';
+                            document.getElementById('example-left-id').style.width = 'calc(' + (45 / window.scale) + _vw + ' - 30px)'; // 宽屏幕
+                            document.getElementById('example-left-id').style.height = 'calc(' + (90 / window.scale) + _vh + ' - 40px)';
+                            document.getElementById('example-right-id').style.width = 'calc(' + (45 / window.scale) + _vw + ' - 30px)';
+                            document.getElementById('example-right-id').style.height = 'calc(' + (90 / window.scale) + _vh + ' - 40px)';
                         } else {
                             document.getElementById('example-win').style.whiteSpace = "normal";
-                            document.getElementById('example-left-id').style.width = 'calc(' + (90 / window.scale) + 'vw - 40px)'; // 高屏幕
-                            document.getElementById('example-left-id').style.height = 'calc(' + (45 / window.scale) + 'vh - 30px)';
-                            document.getElementById('example-right-id').style.width = 'calc(' + (90 / window.scale) + 'vw - 40px)';
-                            document.getElementById('example-right-id').style.height = 'calc(' + (45 / window.scale) + 'vh - 30px)';
+                            document.getElementById('example-left-id').style.width = 'calc(' + (90 / window.scale) + _vw + ' - 40px)'; // 高屏幕
+                            document.getElementById('example-left-id').style.height = 'calc(' + (45 / window.scale) + _vh + ' - 30px)';
+                            document.getElementById('example-right-id').style.width = 'calc(' + (90 / window.scale) + _vw + ' - 40px)';
+                            document.getElementById('example-right-id').style.height = 'calc(' + (45 / window.scale) + _vh + ' - 30px)';
                         }
 
-                        document.getElementById('explain-content-id').style.width = 'calc(' + (100 / window.scale) + 'vw - 420px)';// 解释说明
-                        document.getElementById('explain-content-id').style.height = 'calc(' + (100 / window.scale) + 'vh - 50px)';
+                        document.getElementById('explain-content-id').style.width = 'calc(' + (100 / window.scale) + _vw + ' - 420px)';// 解释说明
+                        document.getElementById('explain-content-id').style.height = 'calc(' + (100 / window.scale) + _vh + ' - 50px)';
 
                         // 标记任务完毕
                         window.clearInterval(interval);
@@ -310,11 +339,11 @@
 
     <!-- 解释说明 -->
     <div class="explain-view" id="explain-root">
+        <div class="doc" id="explain-content-id">
+        </div>
         <button id="explain-close-id">
             关闭
         </button>
-        <div class="doc" id="explain-content-id">
-        </div>
     </div>
 
     <!-- 快捷导航 -->

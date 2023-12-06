@@ -155,7 +155,6 @@ body>.belief {
 
 body>.content {
     position: fixed;
-    width: 1110px;
     height: calc(100% - 100px);
     left: 20px;
     top: 0;

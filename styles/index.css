@@ -1,3 +1,12 @@
+[dialog='yes'] .main-view>div {
+    z-index: -1;
+}
+
+[isfull='yes'] .main-view>div.book,
+[isfull='yes'] .main-view>div.menu {
+    display: none;
+}
+
 /* 请求进度 */
 body>#process {
     position: fixed;
@@ -152,6 +161,7 @@ body>header>.github:hover {
 
 .main-view>.menu {
     width: 260px;
+    position: relative;
 }
 
 /* 实验项目 */
@@ -268,6 +278,11 @@ body>header>.github:hover {
     margin: 0 5px;
 }
 
+.doc a:hover {
+    font-weight: 800;
+    margin: 0 2px;
+}
+
 .doc>ul,
 .doc>ol {
     font-size: 13px;
@@ -301,8 +316,41 @@ body>header>.github:hover {
 .doc .warn {
     font-size: 12px;
     color: #795548;
-    font-weight: 400;
+    font-weight: 800;
     padding: 0 3px;
+    text-decoration: overline;
+}
+
+.doc .tips {
+    padding: 12px 24px 12px 20px;
+    margin: 2em 0;
+    border-left-width: 4px;
+    border-left-style: solid;
+    background-color: #fbfbfb;
+    position: relative;
+    border-bottom-right-radius: 2px;
+    border-top-right-radius: 2px;
+    border-left-color: #673AB7;
+    font-size: 14px;
+    color: #673AB7;
+}
+
+.doc .tips::before {
+    position: absolute;
+    top: 14px;
+    left: -12px;
+    color: #fff;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    text-align: center;
+    line-height: 20px;
+    font-weight: bold;
+    font-family: "Dosis", "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+    font-size: 14px;
+    content: "#";
+    background-color: #673AB7;
+    text-indent: 0;
 }
 
 .doc .gray {
@@ -314,6 +362,7 @@ body>header>.github:hover {
     color: rgb(255, 0, 0);
     font-weight: 800;
     padding: 0 3px;
+    border-bottom: 1px dashed black;
 }
 
 .doc .special {
@@ -399,7 +448,8 @@ body>header>.github:hover {
     height: 100%;
     background-color: rgba(228, 224, 224, 0.661);
     display: none;
-    z-index: 2;
+    z-index: 20;
+
 }
 
 .example-view>div {
@@ -517,7 +567,7 @@ body>header>.github:hover {
 .explain-view>button {
     position: fixed;
     top: 40px;
-    right: 225px;
+    right: 160px;
     background-image: url("../images/close-pink.png");
     height: 40px;
     width: 40px;
@@ -529,7 +579,6 @@ body>header>.github:hover {
     border: none;
     outline: none;
     cursor: pointer;
-    z-index: 1;
 }
 
 /* 按钮 */
@@ -562,7 +611,6 @@ body>header>.github:hover {
     background-image: url('../images/edit.png');
     border-width: 0 0 1px 1px;
     border-radius: 0 0 0 10px;
-    z-index: 1;
 }
 
 /* 全屏右侧 */
