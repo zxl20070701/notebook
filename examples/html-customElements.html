@@ -11,7 +11,9 @@
         class uiDemo extends HTMLElement {
 
             constructor() {
-                super()
+                super();
+
+                console.warn("outerHTML：" + this.outerHTML);
 
                 // 创建shadow根
                 const shadow = this.attachShadow({ mode: 'open' });

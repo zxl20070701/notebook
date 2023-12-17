@@ -856,10 +856,10 @@ window.doShader = function (el) {
             preEls[i].innerHTML = "";
             preEls[i].style.backgroundColor = '#f2f2f3';
             preEls[i].style.padding = '10px';
-            preEls[i].style.fontSize = '12px';
-            preEls[i].style.fontFamily = 'sans-serif';
+            preEls[i].style.fontSize = '13px';
+            preEls[i].style.fontFamily = '"monospace"';
             preEls[i].style.fontWeight = '400';
-            preEls[i].style.lineHeight = '18px';
+            preEls[i].style.lineHeight = '20px';
 
             var itemEl;
             for (j = 0; j < shaderJSON.length; j++) {

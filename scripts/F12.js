@@ -85,7 +85,7 @@ window.rebotF12 = function (obj) {
         log: "black",
         info: 'green',
         debug: 'blue',
-        warn: 'yellow',
+        warn: '#FF9800',
         error: 'red',
         trace: 'pink'
     };

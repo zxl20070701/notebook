@@ -62,6 +62,7 @@
         // 调整显示区域的尺寸
         // 兼容不同大小的屏幕
         function updateView() {
+            document.getElementsByTagName("body")[0].setAttribute("phone", window.isPhone ? "yes" : "no");
 
             // 如果前置任务都完成了
             if (!_updateView_params_.willDo) {
@@ -180,7 +181,6 @@
                 <a href="https://github.com/zxl20070701/notebook/issues" target="_blank">点击此处</a>
                 给我们留言哦~
             </div>
-
         </div>
     </div>
 
@@ -203,29 +203,48 @@
     <!-- 主界面 -->
     <div class="main-view" id="main-view-id">
         <div class="book" id="book-view-id">
-            <h2>列表</h2>
+            <h2>资料&笔记</h2>
             <ul id="book-id">
                 <li>
-                    <span>计算机&编程</span>
+                    <span>计算机</span>
                     <ul>
                         <li>
-                            <span tag="program-course">
-                                经验&查询
+                            <span>
+                                编程
                             </span>
+                            <ul>
+                                <li>
+                                    <span tag="program-course">
+                                        经验&查询
+                                    </span>
+                                </li>
+                                <li>
+                                    <span tag="program-tool">
+                                        命令或工具等
+                                    </span>
+                                </li>
+                            </ul>
                         </li>
                         <li>
-                            <span tag="program-safe">
-                                安全
+                            <span>
+                                基础&通识
                             </span>
+                            <ul>
+                                <li>
+                                    <span tag="program-system">
+                                        理论
+                                    </span>
+                                </li>
+                                <li>
+                                    <span tag="program-safe">
+                                        安全
+                                    </span>
+                                </li>
+                            </ul>
                         </li>
                         <li>
-                            <span tag="program-tool">
-                                命令或工具等
-                            </span>
-                        </li>
-                        <li>
-                            <span tag="program-system">
-                                理论&总结
+                            <span tag="program-software">
+                                软件
                             </span>
                         </li>
                     </ul>
@@ -256,6 +275,26 @@
                     </ul>
                 </li>
                 <li>
+                    <span>哲学</span>
+                    <ul>
+                        <li>
+                            <span tag="philosophy-basic">
+                                基础&通识
+                            </span>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <span>经济学</span>
+                    <ul>
+                        <li>
+                            <span tag="economics-book">
+                                读书笔记
+                            </span>
+                        </li>
+                    </ul>
+                </li>
+                <li>
                     <span>化学</span>
                     <ul>
                         <li>
@@ -275,6 +314,22 @@
                         </li>
                     </ul>
                 </li>
+                <li class="course-book">
+                    教程
+                    <i>一些技术入门或讲义的地方</i>
+                </li>
+                <li>
+                    <span>
+                        编程
+                    </span>
+                    <ul>
+                        <li>
+                            <span tag="course-front_end">
+                                Web前端
+                            </span>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
         <div class="menu" id="menu-view-id">
@@ -282,6 +337,14 @@
             <ul id="menu-id"></ul>
         </div>
         <div class="doc" id="doc-id"></div>
+    </div>
+
+    <!-- 搜索 -->
+    <div class="form-view">
+        <form onsubmit="doSearch(event)">
+            <input type="text" placeholder="输入内容后回车进行查询" spellcheck="false" autocomplete="off" id="search-input">
+            <button type="submit">查询</button>
+        </form>
     </div>
 
     <!-- 例子 -->

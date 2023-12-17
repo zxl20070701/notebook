@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "description": "✔️ 文档笔记，包括编程、数学、计算机、英语、历史等各种常用的内容快速查询",
   "scripts": {
-    "dev": "npm install && devby"
+    "start": "npm install && npm run dev",
+    "dev": "devby"
   },
   "repository": {
     "type": "git",
@@ -17,7 +18,7 @@
   "bugs": {
     "url": "https://github.com/zxl20070701/notebook/issues"
   },
-  "homepage": "https://github.com/zxl20070701/notebook#readme",
+  "homepage": "https://zxl20070701.github.io/notebook/",
   "devDependencies": {
     "devby": "^0.4.4"
   }

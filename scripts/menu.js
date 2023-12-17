@@ -183,6 +183,78 @@ var loadPage = function (pagename, callback) {
 // 记录当前地址栏信息
 var urlObj = urlFormat(window.location.href);
 
+var searchObj = [];
+var initSearchObj = function () {
+    if (window.needCache) {
+        var storageData = sessionStorage.getItem("search://notebook/obj");
+        if (storageData) {
+            searchObj = JSON.parse(storageData);
+            return;
+        }
+    }
+
+    searchObj = [];
+
+    var firstLevelSpans = document.getElementById("book-id").getElementsByTagName("span"), totalCount = firstLevelSpans.length, finshCount = 0;
+    for (var index = 0; index < totalCount; index++) {
+        (function (index) {
+            var firstLevelSpan = firstLevelSpans[index];
+            if (firstLevelSpan.getAttribute("tag")) {
+
+                var firstRemarkArray = [firstLevelSpan.innerText];
+                var firstPreEl = firstLevelSpan.parentElement;
+                while (firstPreEl.getAttribute("id") != "book-id") {
+                    firstPreEl = firstPreEl.parentElement;
+
+                    if (firstPreEl.tagName == "LI") {
+                        firstRemarkArray.unshift(firstPreEl.firstElementChild.innerText.trim());
+                    }
+                }
+
+                var firstLevelUrl = firstLevelSpan.getAttribute('tag').replace(/\-/g, '/')
+                loadPage("pages/" + firstLevelUrl + "/menu", function (data) {
+                    finshCount += 1;
+
+                    var helpUlEl = document.createElement("ul");
+                    helpUlEl.innerHTML = data;
+
+                    var secordLevelSpans = helpUlEl.getElementsByTagName("span"), secordLevelSpan, secordRemarkArray, secordPreEl;
+                    for (var i = 0; i < secordLevelSpans.length; i++) {
+                        secordLevelSpan = secordLevelSpans[i];
+                        if (secordLevelSpan.getAttribute("tag")) {
+                            secordRemarkArray = [];
+
+                            secordPreEl = secordLevelSpan.parentElement;
+                            while (true) {
+                                secordPreEl = secordPreEl.parentElement;
+
+                                if (!secordPreEl) {
+                                    break;
+                                }
+                                else if (secordPreEl.tagName == "LI") {
+                                    secordRemarkArray.unshift(secordPreEl.firstElementChild.innerText.trim());
+                                }
+                            }
+
+                            searchObj.push({
+                                name: secordLevelSpan.innerText.trim(),
+                                path: firstRemarkArray.join("/") + "/" + secordRemarkArray.join("/") + "/" + secordLevelSpan.innerText.trim(),
+                                url: firstLevelUrl + "/" + secordLevelSpan.getAttribute("tag")
+                            });
+                        }
+                    }
+
+                    if (finshCount >= totalCount && window.needCache) {
+                        sessionStorage.setItem("search://notebook/obj", JSON.stringify(searchObj));
+                    }
+                });
+            } else {
+                finshCount += 1;
+            }
+        })(index);
+    }
+};
+
 var updateUrl = function () {
     window.noFresh = true;
 
@@ -192,6 +264,67 @@ var updateUrl = function () {
     }
     window.location.href = "#/" + urlObj.router.join('/') + (paramsStr == "" ? "" : "?" + paramsStr.replace(/\&$/, ''));
 };
+
+// 搜索内容
+var searchTimeout;
+function doSearch(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (searchTimeout) {
+        clearTimeout(searchTimeout);
+    }
+
+    var doSearchReset = function () {
+        window.searchListEl.innerHTML = "";
+        window.searchListEl.style.width = "";
+    };
+
+    var doSearchNotify = function (template) {
+        needReset = true;
+        window.searchListEl.innerHTML = template;
+        window.searchListEl.style.width = "260px";
+        searchTimeout = setTimeout(doSearchReset, 1000);
+    };
+
+    doSearchReset();
+
+    if (window.searchListEl) {
+        window.searchListEl.innerHTML = "";
+        var inputValueOrl = document.getElementById("search-input").value;
+        sessionStorage.setItem("search://notebook/value", inputValueOrl);
+
+        var inputValue = inputValueOrl.trim().toLowerCase(), i, itemEl;
+        if (!inputValue) {
+            doSearchNotify("<div class='notify error'>请输入内容后再检索！</div>");
+        } else {
+            var rightCount = 0;
+            for (i = 0; i < searchObj.length; i++) {
+                // 如果匹配到
+                if (searchObj[i].path.replace(/ /g, '').toLowerCase().indexOf(inputValue) > -1 || searchObj[i].url.toLowerCase().indexOf(inputValue) > -1) {
+                    rightCount += 1;
+                    itemEl = document.createElement("div");
+                    window.searchListEl.appendChild(itemEl);
+                    itemEl.setAttribute("class", "item");
+
+                    // 拼接具体内容
+                    itemEl.innerHTML = "<div class='title'>➤《" + searchObj[i].name + "》</div><div class='remark'>" + searchObj[i].path + "</div>";
+
+                    (function (itemEl, itemObj) {
+                        itemEl.addEventListener("click", function () {
+                            window.location.href = "#/" + itemObj.url + (urlObj.params.model ? "?model=" + urlObj.params.model : "");
+                            window.location.reload();
+                        });
+                    })(itemEl, searchObj[i]);
+                }
+            }
+
+            if (rightCount <= 0) {
+                doSearchNotify("<div class='notify msg'>未匹配到任何内容！</div>");
+            }
+        }
+    }
+}
 
 // 记录当前文字
 sessionStorage.setItem('lang', urlObj.params.lang || "zh-cn");
@@ -206,6 +339,15 @@ function changeLang(lang) {
 
 // 初始化菜单点击事件
 var initToggle = function (idName) {
+
+    document.getElementsByTagName("body")[0].addEventListener("click", function () {
+        if (window.searchListEl) window.searchListEl.innerHTML = "";
+    });
+
+    var searchValue = sessionStorage.getItem("search://notebook/value");
+    if (searchValue) {
+        document.getElementById("search-input").value = searchValue;
+    }
 
     var spans = document.getElementById(idName + "-id").getElementsByTagName('span'), i;
     var autoClickBtn;
@@ -318,9 +460,24 @@ var initToggle = function (idName) {
                                 })(index);
                             }
 
+                            var searchList = document.createElement('div');
                             var fullBtn = document.createElement('span');
                             var fixedBtn = document.getElementById('fixed-id');
                             var githubBtn = document.getElementById('github-id');
+
+                            // 搜索按钮
+                            docEl.appendChild(searchList);
+                            searchList.setAttribute('class', 'search-list');
+                            window.searchListEl = searchList;
+
+                            // 底部的打开编辑按钮
+                            var bottomEditorBtn = document.createElement('a');
+                            docEl.appendChild(bottomEditorBtn);
+                            bottomEditorBtn.innerHTML = '<svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>在 GitHub 上编辑此页';
+                            bottomEditorBtn.setAttribute('class', 'to-editor-btn');
+                            bottomEditorBtn.setAttribute('href', "https://github.com/zxl20070701/notebook/edit/master/pages/" + urlObj.router.join('/') + ".html");
+                            bottomEditorBtn.setAttribute('target', '_blank');
+
 
                             // 打开编辑界面按钮
                             var editorBtn = document.createElement('a');
@@ -345,8 +502,6 @@ var initToggle = function (idName) {
 
                                 // 记录当前是否最大化了
                                 window.isFull = fullBtn.getAttribute('tag') == 'toFull';
-
-                                window.isPhone
 
                                 // 最大化
                                 if (fullBtn.getAttribute('tag') == 'toFull') {
@@ -450,6 +605,11 @@ var initToggle = function (idName) {
 
 // 初始化菜单
 window.initMenu = function () {
+    initSearchObj();
+
+    window.isFull = false;
+    document.body.setAttribute("isFull", "no");
+
     initToggle('book');
 
     var closeDialog = function (idName) {
