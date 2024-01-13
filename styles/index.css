@@ -1,3 +1,13 @@
+html {
+    height: 100vh !important;
+    overflow: hidden;
+}
+
+body {
+    background-color: white;
+    overflow: hidden;
+}
+
 /* 有弹框时 */
 [dialog='yes'] .main-view>div {
     z-index: -1;
@@ -139,16 +149,6 @@
     color: black;
 }
 
-/* 请求进度 */
-body>#process {
-    position: fixed;
-    width: 100vw;
-    height: 2px;
-    left: 0;
-    top: 0;
-    background-color: #0855d7;
-}
-
 /* 页头 */
 body>header {
     background-color: #ffffff;
@@ -286,17 +286,15 @@ body>header>.github:hover {
     text-decoration: underline;
 }
 
-.course-book {
-    margin-top: 20px;
+.kind-title {
     margin-left: -10px;
     width: calc(100% + 10px);
-    font-size: 12px;
     font-weight: 800;
     padding: 10px 0;
     font-size: 16px;
 }
 
-.course-book>i {
+.kind-title>i {
     font-size: 12px;
     font-weight: 800;
     color: red;
@@ -476,6 +474,7 @@ body>header>.github:hover {
     border-left-style: solid;
     background-color: #fbfbfb;
     position: relative;
+    left: 0;
     border-bottom-right-radius: 2px;
     border-top-right-radius: 2px;
     border-left-color: #673AB7;
@@ -896,55 +895,4 @@ body>header>.github:hover {
 
 .fixed-view>.menu>h4 {
     padding-left: 3em;
-}
-
-pre {
-    position: relative;
-}
-
-pre>.copy-icon {
-    position: absolute;
-    right: 5px;
-    top: 5px;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-    background-image: url('../images/copy.png');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 100% auto;
-    background-color: transparent;
-    outline: none;
-    border: none;
-}
-
-.copy-icon[copied] {
-    outline: 1px solid #343848;
-    border-radius: 0 4px 4px 0;
-}
-
-.copy-icon[copied='no'] {
-    outline: 1px solid #ff0000;
-}
-
-.copy-icon[copied]:before {
-    position: absolute;
-    left: -64px;
-    display: block;
-    border-radius: 4px 0 0 4px;
-    width: 64px;
-    height: 32px;
-    line-height: 32px;
-    top: -1px;
-    text-align: center;
-    font-size: 12px;
-    font-weight: 500;
-    color: #ffffff;
-    background-color: #343848;
-    white-space: nowrap;
-    content: attr(data-before);
-}
-
-.copy-icon[copied='no']:before {
-    background-color: #ff0000;
 }

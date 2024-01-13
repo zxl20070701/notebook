@@ -11,11 +11,12 @@
     <link rel="stylesheet" href="./styles/common.css">
     <link rel="stylesheet" href="./styles/index.css">
     <link rel="stylesheet" href="./styles/F12.css">
+    <script src="./scripts/tool.js"></script>
     <script src="./scripts/zh-tw.js"></script>
     <script src="./scripts/shader.js"></script>
-    <script src="./scripts/menu.js"></script>
     <script src="./scripts/formula.js"></script>
     <script src="./scripts/F12.js"></script>
+    <script src="./scripts/index.js"></script>
     <title>《文档笔记》包括编程、数学、计算机、英语、历史、经济学等各种常用的内容快速查询</title>
     <script>
 
@@ -203,8 +204,18 @@
     <!-- 主界面 -->
     <div class="main-view" id="main-view-id">
         <div class="book" id="book-view-id">
-            <h2>资料&笔记</h2>
             <ul id="book-id">
+                <li class="kind-title">
+                    前言
+                </li>
+                <li>
+                    <span tag="begin-edit">
+                        参与笔记编辑？
+                    </span>
+                </li>
+                <li class="kind-title">
+                    资料&笔记
+                </li>
                 <li>
                     <span>计算机</span>
                     <ul>
@@ -245,6 +256,11 @@
                         <li>
                             <span tag="program-software">
                                 软件
+                            </span>
+                        </li>
+                        <li>
+                            <span tag="program-office">
+                                自动化办公
                             </span>
                         </li>
                     </ul>
@@ -314,7 +330,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="course-book">
+                <li class="kind-title">
                     教程
                     <i>一些技术入门或讲义的地方</i>
                 </li>
@@ -343,7 +359,7 @@
     <div class="form-view">
         <form onsubmit="doSearch(event)">
             <input type="text" placeholder="输入内容后回车进行查询" spellcheck="false" autocomplete="off" id="search-input">
-            <button type="submit">查询</button>
+            <button type="submit" id="search-btn">查询</button>
         </form>
     </div>
 

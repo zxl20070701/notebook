@@ -1,164 +1,300 @@
-body {
-    background-color: #f7f7f7;
+.body {
+    height: 100vh;
+    overflow: auto;
+    min-width: 980px;
+}
+
+.cat {
+    background-color: black;
+    text-align: center;
+}
+
+.cat>div {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.cat>.img {
+    background-image: url(../images/cat.webp);
+    height: 400px;
+    width: 500px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: auto 90%;
+}
+
+.cat>.text {
+    color: white;
+    width: 260px;
+    text-align: left;
+    line-height: 1.6em;
+    font-family: cursive;
+    font-weight: 800;
+    font-size: 18px;
 }
 
 .sponsors {
-    width: 240px;
+    text-align: center;
+}
+
+.sponsors>li {
+    width: 200px;
     background-repeat: no-repeat;
-    background-position: center top;
+    background-position: center bottom;
     background-size: 180px auto;
-    margin: auto;
-    border: 1px solid rgb(205, 203, 203);
-    position: fixed;
-    right: 15px;
-    background-color: white;
+    display: inline-block;
+    margin: 0 20px;
 }
 
-.sponsors.zfb {
-    top: 170px;
+.sponsors>li.zfb {
     height: 290px;
-    background-image: url('../images/zfb.jpeg');
-    border-radius: 0 0 10px 10px;
-    border-top: none;
+    background-image: url(../images/zfb.jpeg);
 }
 
-.sponsors.wx {
-    top: 0;
+.sponsors>li.wx {
     height: 200px;
-    background-image: url('../images/wx.jpeg');
-    border-bottom: none;
-    border-top: none;
+    background-image: url(../images/wx.jpeg);
 }
 
-body>nav {
-    position: fixed;
-    left: 0;
-    bottom: 30px;
-    outline: 2px solid rgb(205, 203, 203);
-    border-radius: 0 5px 5px 0;
-    background-color: #d3d1d1;
+nav {
+    text-align: center;
+    background-color: #8ab891;
+    padding: 10px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+nav>a {
+    display: inline-block;
+    padding: 5px 10px;
+    font-weight: 400;
+    font-size: 14px;
+    background-color: #bee2c4;
+    cursor: pointer;
+    margin: 0 10px;
+    color: rgb(0, 0, 0);
+}
+
+nav>a:hover {
+    text-decoration: underline;
+    font-weight: 800;
+}
+
+nav>a.active {
+    text-decoration: none;
+    background-color: white;
+    font-weight: 800;
+}
+
+.view {
+    width: 980px;
+    margin: 20px auto;
+}
+
+.view>h2 {
+    padding-top: 179px;
+    background-image: url('../images/banner.jpg');
+    background-repeat: no-repeat;
+    background-color: #8ab891;
+    line-height: 50px;
+    position: relative;
+    padding-left: 150px;
+    font-family: cursive;
+}
+
+.view>h2>a {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-size: 100% auto;
+    background-image: url('../images/zxl20070701.jpg');
+    background-color: #ffffff;
+    bottom: 23px;
+    left: 25px;
+    outline: 1px solid #000000;
+}
+
+.view>h2 input {
+    height: 30px;
+    border: none;
+    outline: none;
+    padding: 0 10px;
+    padding-right: 35px;
+    background-image: url('../images/search.svg');
+    background-position: center right;
+    background-repeat: no-repeat;
+    border-radius: 3px;
+    background-color: #f3f0f0;
+    margin: 10px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.view>.containter {
+    background-color: #dceffe;
+    min-height: calc(100vh - 705px);
+    position: relative;
+    padding: 30px 0;
     font-size: 0;
 }
 
-body>nav>h2 {
-    display: inline-block;
-    vertical-align: top;
-    font-size: 14px;
-    line-height: 40px;
-    padding: 0 10px;
+.view>.containter>.title {
+    width: 20px;
+    box-sizing: content-box;
+    background-color: #3F51B5;
+    text-align: center;
     color: white;
+    padding: 10px;
+    margin-top: 30px;
+    position: absolute;
+    font-size: 16px;
+    left: 30px;
 }
 
-body>nav>div {
+.view>.containter>.content {
+    width: 600px;
+    background-color: #ffffff;
+    min-height: 500px;
+    margin-left: 70px;
     display: inline-block;
-    vertical-align: top;
 }
 
-body>nav>div>a {
+.view>.containter>.right {
+    width: 280px;
+    min-height: 500px;
     display: inline-block;
-    line-height: 40px;
-    padding: 0 10px;
+}
+
+footer {
+    height: 97px;
+    text-align: center;
+    background-color: #fafafa;
+    border-top: 1px solid #d3d0d0;
+    line-height: 2em;
+    padding: 20px 0;
     font-size: 14px;
+    min-width: 980px;
+}
+
+footer a {
+    padding: 0 5px;
+    color: rgb(5, 100, 117);
+    text-decoration: underline;
+
+}
+
+footer a:hover {
+    color: rgb(3, 61, 71);
+    font-weight: 800;
+}
+
+.journals-content {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(0 0 0 / 63%);
+    z-index: 7;
+    text-align: center;
+    font-size: 0;
+}
+
+.journals-content>.title {
+    width: calc(100vw - 80px);
+    margin-left: 40px;
+    height: 50px;
+    line-height: 50px;
+    background-color: rgb(255, 255, 255);
+    margin-top: 75px;
+    box-shadow: rgb(213 221 225) 0px 4px 6px;
+    z-index: 1;
+    position: relative;
+    font-size: 20px;
+    text-align: left;
+    color: #0855d7;
+    font-weight: 200;
+    font-family: cursive;
+    background-image: url(../images/home.png);
+    background-size: auto 90%;
+    background-repeat: no-repeat;
+    padding-left: 70px;
+    background-position: 15px center;
+}
+
+.journals-content>.title>.close {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    right: 0;
+    top: 0;
+    font-family: system-ui;
+    font-size: 36px;
     color: black;
+    cursor: pointer;
+    transform: rotate(45deg);
+    font-weight: 200;
+}
+
+.journals-content>.title>.close:hover {
+    font-weight: 400;
+}
+
+.journals-content>.item {
+    height: calc(100vh - 200px);
+    display: inline-block;
+    text-align: left;
+    vertical-align: top;
+    font-size: 16px;
+    overflow: auto;
+}
+
+.journals-content>.item.nav {
+    width: 220px;
+    background-color: rgb(232, 228, 228);
+    padding: 10px;
+}
+
+.journals-content>.item.doc {
+    width: calc(100vw - 300px);
     background-color: white;
 }
 
-body>nav>div>a:hover {
-    text-decoration: underline;
+
+.journals-content>.item.nav>h1 {
+    padding: 10px 0;
+    font-size: 16px;
+    border-bottom: 1px solid rgb(205, 203, 203);
 }
 
-body>nav>div>a:first-child {
-    border-radius: 5px 0 0 5px;
-    padding-left: 20px;
-}
-
-body>nav>div>a:last-child {
-    border-radius: 0 5px 5px 0;
-    padding-right: 20px;
-}
-
-body>nav>div>a.group {
-    background-position: 5px center;
-    background-repeat: no-repeat;
-    background-size: auto 70%;
-    padding-left: 40px;
-}
-
-body>nav>div>a.fragement-contrib {
-    background-image: url("../images/fragement-contrib.jpeg");
-}
-
-body>nav>div>a.oi-contrib {
-    background-image: url("../images/oi-contrib.png");
-}
-
-body>nav>div>a.split {
-    position: relative;
-}
-
-body>nav>div>a.split::before {
-    position: absolute;
-    display: inline-block;
-    width: 1px;
-    height: calc(100% - 6px);
-    content: " ";
-    background-color: #d4d0d0;
-    left: 0;
-    top: 3px;
-}
-
-body>.cat {
-    position: fixed;
-    right: 0;
-    bottom: 20px;
-    width: 196px;
-    height: 147px;
-    background-repeat: no-repeat;
-    background-image: url("../images/cat.webp");
-    background-position: center bottom;
-    background-size: auto 100%;
-    outline: 2px solid rgb(0, 0, 0);
-    border-radius: 5px 0 0 5px;
-}
-
-body>.help {
+.journals-content>.item.nav>h2,
+.journals-content>.item.nav>h3,
+.journals-content>.item.nav>h4 {
     font-size: 12px;
-    padding: 10px;
-    width: 200px;
-    position: fixed;
-    top: 450px;
-    right: 30px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-weight: 400;
 }
 
-body>.help>.title {
-    font-weight: 800;
-    font-size: 14px;
-    display: block;
-    line-height: 2.5em;
-}
-
-body>.help>a {
-    color: rgb(10, 165, 226);
+.journals-content>.item.nav>h2:hover,
+.journals-content>.item.nav>h3:hover,
+.journals-content>.item.nav>h4:hover {
     text-decoration: underline;
 }
 
-body>.belief {
-    position: fixed;
-    bottom: 10px;
-    line-height: 80px;
-    left: 550px;
-    font-size: 30px;
-    font-family: cursive;
-    font-weight: 200;
-    color: black;
+.journals-content>.item.nav>h2 {
+    padding-left: 1em;
 }
 
-body>.content {
-    position: fixed;
-    height: calc(100% - 100px);
-    left: 20px;
-    top: 0;
-    background-color: rgb(255, 255, 255);
-    outline: 1px solid rgb(205, 203, 203);
-    overflow: auto;
+.journals-content>.item.nav>h3 {
+    padding-left: 2em;
+}
+
+.journals-content>.item.nav>h4 {
+    padding-left: 3em;
 }

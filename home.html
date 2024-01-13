@@ -5,104 +5,129 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="./images/zxl20070701.jpg">
+    <link rel="shortcut icon" href="./images/home.png">
     <link rel="stylesheet" href="./styles/normalize.css">
     <link rel="stylesheet" href="./styles/common.css">
     <link rel="stylesheet" href="./styles/home.css">
-    <title>zxl20070701 | 捐款支持我们？</title>
-    <script>
-
-        // 是否是手机模式？
-        window.isPhone = /Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent);
-
-        function updateView() {
-            var _transform = "";
-
-            var _vw = "vw", _vh = "vh";
-            if (window.isPhone && window.innerWidth < window.innerHeight) {
-                _vw = "vh";
-                _vh = "vw";
-            }
-
-            // 计算缩放比
-            var scale = window.innerWidth / (window.isPhone ? 900 : 1400);
-
-            if (window.isPhone) {
-                if (window.innerWidth < window.innerHeight) {
-                    _transform = "rotate(90deg) translateY(-" + 100 / scale + "vw)";
-                } else {
-                    scale = window.innerWidth / 1500;
-                }
-
-            }
-
-            // 进行缩放
-            document.body.style.transformOrigin = 'left top';
-            document.body.style.transform = 'scale(' + scale + ', ' + scale + ') ' + _transform;
-
-            document.body.style.width = (100 / scale) + _vw; // body
-            document.body.style.height = (100 / scale) + _vh;
-
-            var contentEl = document.getElementById("content");
-            contentEl.style.width = "calc(" + (100 / scale) + _vw + " - 290px)";
-        }
-    </script>
+    <script src="./scripts/tool.js"></script>
+    <script src="./scripts/zh-tw.js"></script>
+    <script src="./scripts/shader.js"></script>
+    <script src="./scripts/formula.js"></script>
+    <script src="./scripts/home.js"></script>
+    <title>【个人主页】一起来学习吧~ </title>
 </head>
 
-<body onload="updateView();" onresize="updateView();">
+<body onload="initMenu();">
 
-    <!-- 猫 -->
-    <div class="cat"></div>
+    <!-- 进度 -->
+    <div id="process"></div>
 
-    <!-- 捐款 -->
-    <div class="sponsors wx"></div>
-    <div class="sponsors zfb"></div>
-
-    <!-- 提意见 -->
-    <div class="help">
-        <h2 class="title">有什么建议或想法？</h2>
-        你可以
-        <a href="https://github.com/zxl20070701/notebook/issues" target="_blank">点击此处</a>
-        给我们留言哦~
-    </div>
-
-    <!-- 导航 -->
-    <nav>
-        <h2>快速访问</h2>
-        <div>
-            <a href="./index.html" target="_blank" class="notebook">文档笔记</a>
-            <a href="https://zxl20070701.github.io/toolbox" target="_blank" class="toolbox">实用工具</a>
-            <a href="https://github.com/zxl20070701/laboratory" target="_blank" class="laboratory">实验仓库</a>
-            <a href="https://github.com/fragement-contrib" target="_blank"
-                class="fragement-contrib split group">代码仓库</a>
-            <a href="https://github.com/oi-contrib" target="_blank" class="oi-contrib group">OI开源</a>
-        </div>
-    </nav>
-
-    <!-- 内容 -->
-    <div class="content" id="content"
-        style="text-align: center;padding-top: 200px;font-size: 30px;font-weight:800;font-family: monospace;">
-        这里应该放点什么？
-        <div>
-            （What should be displayed here?）
-        </div>
-        <hr />
-        <div style="font-weight: 400;">
-            欢迎
-            <a href="https://github.com/zxl20070701/notebook/issues" target="_blank"
-                style="text-decoration: underline;color: #1978fb;font-weight: 200;">留言</a>
-            告诉我们。
-            <div>
-                （Welcome to <a href="https://github.com/zxl20070701/notebook/issues" target="_blank"
-                    style="text-decoration: underline;color: #1978fb;font-weight: 200;">leave a message</a> and tell
-                us.）
+    <!-- 主体内容 -->
+    <div class="body" id="body">
+        <div class="cat">
+            <div class="img"></div>
+            <div class="text">
+                感谢您这么多年的陪伴，<br />愿您在那边，<br />一切安好！
             </div>
         </div>
+        <nav>
+            <a href="javascript:void(0)" class="active">
+                首页
+            </a>
+            <a href="./index.html" target="_blank">
+                文档笔记
+            </a>
+            <a href="https://zxl20070701.github.io/toolbox" target="_blank">
+                实用工具
+            </a>
+            <a href="https://github.com/zxl20070701/laboratory" target="_blank">
+                实验仓库
+            </a>
+            <a href="https://github.com/fragement-contrib" target="_blank">
+                代码仓库
+            </a>
+            <a href="https://github.com/oi-contrib" target="_blank">
+                OI开源
+            </a>
+        </nav>
+
+        <div class="view">
+            <h2>
+                <a target="_blank" href="https://github.com/zxl20070701"></a>
+                一起来学习吧~
+                <form onsubmit="doSearch(event)">
+                    <input placeholder="输入内容后回车查询" type="text" id="search-input" spellcheck="false" autocomplete="off"
+                        onkeydown="doSearch">
+                </form>
+            </h2>
+
+            <div class="containter">
+                <div class="title">
+                    科学杂志期刊
+                </div>
+                <div class="content">
+
+                    <!-- 期刊目录 -->
+                    <ul id="journals-menu-id">
+                        <!-- <li tag="demo">
+                            测试文章
+                        </li> -->
+                    </ul>
+
+                </div>
+
+                <!-- 右侧内容 -->
+                <div class="right"></div>
+            </div>
+
+        </div>
+
+        <ul class="sponsors">
+            <li class="zfb"></li>
+            <li class="wx"></li>
+        </ul>
+
+        <footer>
+            Copyright © 2007-2024
+            <a href="https://github.com/zxl20070701" target="_blank">zxl20070701 走一步，再走一步。</a>
+            All rights reserved.
+            <br />
+            本网站由“z Z ...”设计、开发和维护
+        </footer>
     </div>
 
-    <div class="belief">
-        走一步，再走一步
+    <!-- 期刊内容 -->
+    <div id="journals-content-id" class="journals-content">
+        <div class="title">
+            科学杂志期刊
+            <div class="close" id="journals-content-close-id" title="关闭">+</div>
+        </div>
+        <div id="journals-content-nav-id" class="nav item"></div>
+        <div id="journals-content-view-id" class="doc item"></div>
     </div>
+
+    <script>
+        var bodyEl = document.getElementById('body');
+
+        var val = 0;
+        var interval = setInterval(function () {
+            val += 30;
+            if (val > 400) {
+                val = 400;
+                clearInterval(interval);
+            }
+            bodyEl.scrollTop = val;
+        }, 30);
+
+        function doSearch(event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            var inputValueOrl = document.getElementById("search-input").value;
+            window.location.href = "./index.html#/?search=" + inputValueOrl;
+        }
+
+    </script>
 
     <!-- 控制台打印 -->
     <script>
