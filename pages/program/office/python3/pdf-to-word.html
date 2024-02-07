@@ -1,14 +1,14 @@
 <header>
-    PDF转图片
+    PDF转word文件
 </header>
 <h2>
     单个文件
 </h2>
 <h3>
-    直接转图片
+    直接转Word
 </h3>
 <p>
-    比如我们有一个pdf文件：<span class="special">demo.pdf</span>，希望转成图片：
+    比如我们有一个pdf文件：<span class="special">demo.pdf</span>，希望转成Word：
 </p>
 <pre tag="python">
 #!/usr/bin/python3
@@ -16,16 +16,16 @@
 
 from py3office import pdf
 
-pdf.toImage("./demo.pdf", "./")
+pdf.toWord("./demo.pdf", "./")
 </pre>
 <p>
-    运行之后，就可以看见当前目录下多了一张图片：<span class="special">demo.jpg</span>。
+    运行之后，就可以看见当前目录下多了一份word文件：<span class="special">demo.docx</span>。
 </p>
 <h3>
-    修改图片名称
+    修改Word名称
 </h3>
 <p>
-    那如果想自定义生成后的图片名称怎么办？比如图片名称希望是<span class="special">picture.jpg</span>，修改代码为：
+    那如果想自定义生成后的word文件名称怎么办？比如word文件名称希望是<span class="special">文件.docx</span>，修改代码为：
 </p>
 <pre tag="python">
 #!/usr/bin/python3
@@ -34,14 +34,14 @@ pdf.toImage("./demo.pdf", "./")
 from py3office import pdf
 
 def getName(name, texts, index, total):
-    return "picture"
-pdf.toImage("./demo.pdf", "./", getName)
+    return "文件"
+pdf.toWord("./demo.pdf", "./", getName)
 </pre>
 <h3>
-    根据pdf内容确定图片名称
+    根据pdf内容确定word文件名称
 </h3>
 <p>
-    有时候，我们图片的名称可能希望根据pdf中的内容进行确定，比如pdf截图如下：
+    有时候，我们word文件的名称可能希望根据pdf中的内容进行确定，比如pdf截图如下：
 </p>
 <img src="./images/office/pdf-demo.jpeg" style="outline:1px solid red" />
 <p>
@@ -57,7 +57,7 @@ from py3office import handler
 def getName(name, texts, index, total):
     handler.printList(texts)
     return "picture"
-pdf.toImage("./demo.pdf", "./", getName)
+pdf.toWord("./demo.pdf", "./", getName)
 </pre>
 <p>
     打印结果如下：
@@ -75,7 +75,7 @@ pdf.toImage("./demo.pdf", "./", getName)
 ......
 </pre>
 <p>
-    比如我们想取<span class="special">[2] VISLite 贡献指南</span>为图片名称，那么代码就变成了：
+    比如我们想取<span class="special">[2] VISLite 贡献指南</span>为word文件名称，那么代码就变成了：
 </p>
 <pre tag="python">
 #!/usr/bin/python3
@@ -86,15 +86,15 @@ from py3office import handler
 
 def getName(name, texts, index, total):
     return texts[2]
-pdf.toImage("./demo.pdf", "./", getName)
+pdf.toWord("./demo.pdf", "./", getName)
 </pre>
 <p>
-    这样，pdf就被转成了图片：<span class="special">VISLite 贡献指南.jpg</span>。
+    这样，pdf就被转成了word文件：<span class="special">VISLite 贡献指南.docx</span>。
 </p>
 <p>
     如果需要更复杂的操作，可以查看：
 </p>
-<button tag="office-pdf-rename_image" type="explain">如何灵活设置pdf转图片后的文件名称？</button>
+<button tag="office-pdf-rename_word" type="explain">如何灵活设置pdf转word文件后的文件名称？</button>
 <h2>
     批量处理
 </h2>
@@ -109,7 +109,7 @@ pdf.toImage("./demo.pdf", "./", getName)
         - 中国银行卡.pdf
 </pre>
 <p>
-    我们希望把其中的所有pdf都变成图片（保持原来的目录结构）：
+    我们希望把其中的所有pdf都变成word文件（保持原来的目录结构）：
 </p>
 <pre tag="python">
 #!/usr/bin/python3
@@ -119,7 +119,7 @@ from py3office import pdf
 from py3office import handler
 
 sourcePath = "./pdf"
-targetPath = "./image"
+targetPath = "./word"
 
 def doit(fileInfo):
     if fileInfo["path"].endswith(".pdf"):
@@ -127,7 +127,7 @@ def doit(fileInfo):
         def getName(name, texts, index, total):
             return name
 
-        pdf.toImage(
+        pdf.toWord(
             fileInfo["path"],
             fileInfo["folder"].replace(sourcePath, targetPath),
             getName,
@@ -137,17 +137,17 @@ def doit(fileInfo):
 handler.listFile(sourcePath, doit)
 </pre>
 <p>
-    运行后会在当前目录多一个文件夹image，目录结构如下：
+    运行后会在当前目录多一个文件夹word，目录结构如下：
 </p>
 <pre>
-- image
-    - 身份证（正面）.jpg
-    - 身份证（正面）.jpg
+- word
+    - 身份证（正面）.docx
+    - 身份证（正面）.docx
     - 银行卡
-        - 中国银行卡.jpg
+        - 中国银行卡.docx
 </pre>
 <div class="tips">
-    温馨提示：对于<span class="special">单个文件</span>中对图片名称的说明，这里类似的，直接修改<span class="important">getName</span>返回值也是可行的。
+    温馨提示：对于<span class="special">单个文件</span>中对word文件名称的说明，这里类似的，直接修改<span class="important">getName</span>返回值也是可行的。
     <hr />
-    为了更方便，你可以直接使用： <span class="important">pdf.logInfo("./demo.pdf", True)</span> 来查看当前pdf文件内容。
+    为了更方便，你可以直接使用： <span class="important">pdf.logInfo("./demo.pdf", False)</span> 来查看当前pdf文件内容。
 </div>

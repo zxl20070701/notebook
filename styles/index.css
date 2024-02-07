@@ -310,17 +310,22 @@ body>header>.github:hover {
     position: relative;
 }
 
-/* 实验项目 */
-.laboratory {
-    background-image: url('../images/laboratory.png');
+/* 回到首页 */
+.goback {
+    background-image: url('../images/home.png');
     position: fixed;
     left: 0px;
-    bottom: 50px;
-    width: 100px;
-    height: 100px;
+    bottom: 70px;
+    width: 50px;
+    height: 50px;
     cursor: pointer;
-    background-size: 100% auto;
+    background-size: 80% auto;
     z-index: 2;
+    background-color: #f7f7f7;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border-radius: 0 10px 10px 0;
+    box-shadow: 0 0 6px 0px black;
 }
 
 /* 切换文字 */
@@ -590,6 +595,13 @@ body>header>.github:hover {
     float: right;
 }
 
+.doc .page-examples {
+    background-color: #f2f2f2;
+    width: 500px;
+    height: 350px;
+    border: none;
+}
+
 /* 例子 */
 .example-view {
     position: fixed;
@@ -770,7 +782,7 @@ body>header>.github:hover {
 
 /* 编辑按钮 */
 .editor-btn {
-    margin-right: 60px !important;
+    margin-right: 65px !important;
     background-size: 100% auto;
     background-image: url('../images/edit.png');
     border-width: 0 0 1px 1px;

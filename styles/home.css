@@ -162,9 +162,68 @@ nav>a.active {
 }
 
 .view>.containter>.right {
-    width: 280px;
+    width: 305px;
     min-height: 500px;
     display: inline-block;
+    vertical-align: top;
+    padding: 10px;
+}
+
+.view>.containter>.right>h2 {
+    font-size: 18px;
+    font-family: cursive;
+    color: #116274;
+    font-weight: 800;
+}
+
+.view>.containter>.right>ul {
+    font-size: 16px;
+}
+
+.view>.containter>.right>ul>li {
+    margin-top: 10px;
+    background-color: white;
+    padding: 10px;
+    background-size: 50px auto;
+    background-repeat: no-repeat;
+    background-position: right bottom;
+}
+
+.view>.containter>.right>ul>li.vislite {
+    background-image: url("../images/vislite.png");
+}
+
+.view>.containter>.right>ul>li>.content {
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.view>.containter>.right>ul>li>.content>h3 {
+    display: inline-block;
+}
+
+.view>.containter>.right>ul>li>.link {
+    padding-top: 5px;
+}
+
+.view>.containter>.right>ul>li>.link>a {
+    height: 30px;
+    border-radius: 15px;
+    width: 50px;
+    margin-top: 10px;
+    display: inline-block;
+    border: 1px solid #b2b2bd;
+    text-align: center;
+    line-height: 30px;
+    vertical-align: top;
+    font-size: 14px;
+    background-color: #e9e9e9;
+    color: #4e4e4e;
+    font-weight: 800;
+}
+
+.view>.containter>.right>ul>li>.link>a:hover {
+    background-color: #a7a4a4;
 }
 
 footer {

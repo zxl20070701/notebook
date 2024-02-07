@@ -223,7 +223,6 @@ var initToggle = function (idName) {
                                     if (pageName) {
 
                                         buttons[index].addEventListener('click', function () {
-
                                             document.getElementsByTagName("body")[0].setAttribute("dialog", 'yes');
 
                                             // 解释说明
@@ -246,15 +245,39 @@ var initToggle = function (idName) {
 
                                             // 默认就是例子
                                             else {
-                                                loadPage("examples/" + pageName, function (data) {
-                                                    document.getElementById('example-root').style.display = "block";
-                                                    document.getElementById('source-id').value = data;
-                                                    document.getElementById('run-btn').click();
 
-                                                    urlObj.params.dialog = pageName;
-                                                    urlObj.params.type = "example";
-                                                    updateUrl();
-                                                });
+                                                // 展示
+                                                if (pageType == 'code') {
+                                                    var explainEl = document.getElementById('explain-content-id');
+                                                    loadPage("examples/" + pageName, function (data) {
+                                                        var format = buttons[index].getAttribute('format') || "";
+                                                        document.getElementById('explain-root').style.display = "block";
+                                                        explainEl.innerHTML = "<pre tag='" + format + "'>" + data + "</pre>";
+
+                                                        window.doShader(explainEl);
+                                                        window.doFormula(explainEl);
+
+                                                        explainEl.scrollTop = 0;
+
+                                                        urlObj.params.dialog = pageName;
+                                                        urlObj.params.type = "code";
+                                                        urlObj.params.format = format;
+                                                        updateUrl();
+                                                    });
+                                                }
+
+                                                // 运行
+                                                else {
+                                                    loadPage("examples/" + pageName, function (data) {
+                                                        document.getElementById('example-root').style.display = "block";
+                                                        document.getElementById('source-id').value = data;
+                                                        document.getElementById('run-btn').click();
+
+                                                        urlObj.params.dialog = pageName;
+                                                        urlObj.params.type = "example";
+                                                        updateUrl();
+                                                    });
+                                                }
                                             }
 
 
@@ -366,7 +389,7 @@ var initToggle = function (idName) {
                             });
 
                             // 分析fixed
-                            initFixed(docEl,document.getElementById('fixed-menu-id'));
+                            initFixed(docEl, document.getElementById('fixed-menu-id'));
 
                             if (urlObj.params.model == 'full') {
                                 fullBtn.click();
@@ -404,6 +427,7 @@ window.initMenu = function () {
 
         delete urlObj.params.dialog;
         delete urlObj.params.type;
+        delete urlObj.params.format;
 
         document.getElementsByTagName("body")[0].setAttribute("dialog", 'no');
 

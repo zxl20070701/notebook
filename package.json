@@ -11,7 +11,21 @@
     "url": "git+https://github.com/zxl20070701/notebook.git"
   },
   "keywords": [
-    "notebook"
+    "notebook",
+    "fragement",
+    "webgl",
+    "canvas",
+    "nodejs",
+    "python3",
+    "pdfjs",
+    "babel",
+    "数学",
+    "经济学",
+    "英语",
+    "english",
+    "计算机",
+    "algorithm",
+    "算法"
   ],
   "author": "zxl20070701",
   "license": "MIT",
