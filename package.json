@@ -4,7 +4,7 @@
   "description": "✔️ 文档笔记，包括编程、数学、计算机、英语、历史等各种常用的内容快速查询",
   "scripts": {
     "start": "npm install && npm run dev",
-    "dev": "devby"
+    "dev": "devby -s 20000"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,8 @@
     "经济学",
     "英语",
     "english",
+    "harmonyos",
+    "linux",
     "计算机",
     "algorithm",
     "算法"
@@ -34,6 +36,6 @@
   },
   "homepage": "https://zxl20070701.github.io/notebook/",
   "devDependencies": {
-    "devby": "^0.4.4"
+    "devby": "^0.6.0"
   }
 }

@@ -143,6 +143,23 @@
     我们希望<span class="special">突出</span>这个内容。
 </p>
 <h3>
+    click
+</h3>
+<p>
+    一般用于标记可点击按钮，比如：
+</p>
+<pre tag="html">
+    <p>
+        你可以<span class="click">点击我</span>。
+    </p>
+</pre>
+<p>
+    运行后效果：
+</p>
+<p>
+    你可以<span class="click">点击我</span>。
+</p>
+<h3>
     tips-info
 </h3>
 <p>
@@ -186,6 +203,12 @@
 <p>
     然后，你需要根据tag的值是“linear-export”，应该存在一个文件<span class="warn">explains/linear-export.html</span>，在里面就是弹框的内容了。
 </p>
+<p>
+    当然，也可以使用方法进行调用：
+</p>
+<pre tag="html">
+    <button onClick="loadExpalins('linear-export')">点击我试一下（只是一个例子）</button>
+</pre>
 <h3>
     运行用例
 </h3>
@@ -202,6 +225,12 @@
 <p>
     类似的，根据tag我们知道，例子的代码写在<span class="warn">examples/linear-gradient.html</span>中。
 </p>
+<p>
+    当然，也可以使用方法进行调用：
+</p>
+<pre tag="html">
+    <button onClick="loadExamples('linear-gradient')">点击我试一下（只是一个例子）</button>
+</pre>
 <p>
     而如果你希望例子直接运行在页面，可以类似这样：
 </p>
@@ -220,3 +249,9 @@
     点击下面的按钮可以查看上面运行程序的具体代码：
 </p>
 <button tag="linear-gradient" type="code" format="html">查看用例</button>
+<p>
+    当然，也可以使用方法进行调用：
+</p>
+<pre tag="html">
+    <button onClick="showExamples('linear-gradient','css')">点击我试一下（只是一个例子）</button>
+</pre>

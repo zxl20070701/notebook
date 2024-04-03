@@ -1,0 +1,29 @@
+<header>
+    页面和自定义组件
+</header>
+<h2>
+    基本用法
+</h2>
+<h3>
+    定义
+</h3>
+<pre tag="javascript">
+@Component
+struct UiDemo{
+    info:string
+    build(){
+        Text(this.info)
+    }
+}
+</pre>
+<h3>
+    使用
+</h3>
+<pre tag="javascript">
+UiDemo({
+    info: "我是自定义的组件"
+})
+</pre>
+<p>
+    此时，你就可以在页面看见一段文本<span class="warn">"我是自定义的组件"</span>。
+</p>

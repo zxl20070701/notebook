@@ -1,6 +1,56 @@
 // 记录当前地址栏信息
 var urlObj = urlFormat(window.location.href);
 
+// 加载Explains显示
+window.loadExpalins = function (filepath) {
+    var explainEl = document.getElementById('explain-content-id');
+    loadPage("explains/" + filepath, function (data) {
+        document.getElementById('explain-root').style.display = "block";
+        explainEl.innerHTML = data;
+
+        window.doShader(explainEl);
+        window.doFormula(explainEl);
+
+        explainEl.scrollTop = 0;
+
+        urlObj.params.dialog = filepath;
+        urlObj.params.type = "explain";
+        updateUrl();
+    });
+};
+
+// 加载Examples显示
+window.loadExamples = function (filepath) {
+    loadPage("examples/" + filepath, function (data) {
+        document.getElementById('example-root').style.display = "block";
+        document.getElementById('source-id').value = data;
+        document.getElementById('run-btn').click();
+
+        urlObj.params.dialog = filepath;
+        urlObj.params.type = "example";
+        updateUrl();
+    });
+};
+
+// 显示Examples显示
+window.showExamples = function (filepath, format) {
+    var explainEl = document.getElementById('explain-content-id');
+    loadPage("examples/" + filepath, function (data) {
+        document.getElementById('explain-root').style.display = "block";
+        explainEl.innerHTML = "<pre tag='" + format + "'>" + data + "</pre>";
+
+        window.doShader(explainEl);
+        window.doFormula(explainEl);
+
+        explainEl.scrollTop = 0;
+
+        urlObj.params.dialog = filepath;
+        urlObj.params.type = "code";
+        urlObj.params.format = format;
+        updateUrl();
+    });
+};
+
 var searchObj = [];
 var initSearchObj = function () {
     if (window.needCache) {
@@ -164,7 +214,8 @@ var initToggle = function (idName) {
 
             // 如果有孩子，只需要控制菜单打开关闭即可
             if (spans[i].parentElement.getElementsByTagName('li').length > 0) {
-                spans[i].parentElement.setAttribute('is-open', 'no');
+                if (!spans[i].parentElement.getAttribute('is-open'))
+                    spans[i].parentElement.setAttribute('is-open', 'no');
                 spans[i].addEventListener('click', function () {
                     spans[i].parentElement.setAttribute('is-open', spans[i].parentElement.getAttribute('is-open') == 'no' ? 'yes' : 'no');
                 });
@@ -227,20 +278,7 @@ var initToggle = function (idName) {
 
                                             // 解释说明
                                             if (pageType == "explain") {
-                                                var explainEl = document.getElementById('explain-content-id');
-                                                loadPage("explains/" + pageName, function (data) {
-                                                    document.getElementById('explain-root').style.display = "block";
-                                                    explainEl.innerHTML = data;
-
-                                                    window.doShader(explainEl);
-                                                    window.doFormula(explainEl);
-
-                                                    explainEl.scrollTop = 0;
-
-                                                    urlObj.params.dialog = pageName;
-                                                    urlObj.params.type = "explain";
-                                                    updateUrl();
-                                                });
+                                                window.loadExpalins(pageName);
                                             }
 
                                             // 默认就是例子
@@ -248,44 +286,16 @@ var initToggle = function (idName) {
 
                                                 // 展示
                                                 if (pageType == 'code') {
-                                                    var explainEl = document.getElementById('explain-content-id');
-                                                    loadPage("examples/" + pageName, function (data) {
-                                                        var format = buttons[index].getAttribute('format') || "";
-                                                        document.getElementById('explain-root').style.display = "block";
-                                                        explainEl.innerHTML = "<pre tag='" + format + "'>" + data + "</pre>";
-
-                                                        window.doShader(explainEl);
-                                                        window.doFormula(explainEl);
-
-                                                        explainEl.scrollTop = 0;
-
-                                                        urlObj.params.dialog = pageName;
-                                                        urlObj.params.type = "code";
-                                                        urlObj.params.format = format;
-                                                        updateUrl();
-                                                    });
+                                                    window.showExamples(pageName, buttons[index].getAttribute('format') || "");
                                                 }
 
                                                 // 运行
                                                 else {
-                                                    loadPage("examples/" + pageName, function (data) {
-                                                        document.getElementById('example-root').style.display = "block";
-                                                        document.getElementById('source-id').value = data;
-                                                        document.getElementById('run-btn').click();
-
-                                                        urlObj.params.dialog = pageName;
-                                                        urlObj.params.type = "example";
-                                                        updateUrl();
-                                                    });
+                                                    window.loadExamples(pageName);
                                                 }
                                             }
 
-
                                         });
-
-                                        if (pageName == urlObj.params.dialog && pageType == urlObj.params.type) {
-                                            buttons[index].click();
-                                        }
 
                                     }
                                 })(index);
@@ -443,4 +453,15 @@ window.initMenu = function () {
     document.getElementById('explain-close-id').addEventListener('click', function () {
         closeDialog('explain-root');
     });
+
+    // 初始化打开弹框
+    if (urlObj.params.dialog) {
+        if (urlObj.params.type == "explain") {
+            window.loadExpalins(urlObj.params.dialog);
+        } else if (urlObj.params.type == "example") {
+            window.loadExamples(urlObj.params.dialog);
+        } else if (urlObj.params.type == "code" && urlObj.params.format) {
+            window.showExamples(urlObj.params.dialog, urlObj.params.format);
+        }
+    }
 };

@@ -1,0 +1,84 @@
+<header>
+    如何定义组件？
+</header>
+<h2>
+    defineComponent
+</h2>
+<p>
+    文件index.vue：
+</p>
+<pre tag="html">
+&lt;template&gt;
+    &lt;!-- 模板 --&gt;  
+&lt;/template&gt;
+&lt;script lang="ts"&gt;  
+import { defineComponent } from "vue";
+
+export default defineComponent({
+    setup() {
+        // 代码
+        return {};
+    };
+});
+&lt;/script&gt;  
+&lt;style lang="scss" scoped&gt;  
+    /* 样式 */
+&lt;/style&gt;  
+</pre>
+<p>
+    更多细节可以查看：
+</p>
+<button tag="vue3-defineComponent" type="explain">自定义组件之defineComponent</button>
+<h2>
+    TSX
+</h2>
+<p>
+    文件index.ts：
+</p>
+<pre tag="javascript">
+import { defineComponent } from 'vue'
+export default defineComponent({
+    props: {},
+    setup(props, ctx) {
+        return () =&gt; {
+            return (&lt;div&gt;&lt;/div&gt;)
+        }
+    }
+});
+</pre>
+<p>
+    ctx中包含：attrs、slots、emit、expose等内容。
+</p>
+<h2>
+    setup
+</h2>
+<p>
+    文件index.vue：
+</p>
+<pre tag="html">
+&lt;template&gt;
+    &lt;!-- 模板 --&gt;  
+&lt;/template&gt;
+&lt;script setup lang="ts"&gt;  
+    // 代码
+&lt;/script&gt;  
+&lt;style lang="scss" scoped&gt;  
+    /* 样式 */
+&lt;/style&gt;  
+</pre>
+<p>
+    更多细节可以查看：
+</p>
+<button tag="vue3-setup" type="explain">自定义组件之setup</button>
+<p>
+    此外，可以通过下面方法获取ctx：
+</p>
+<pre>
+    let ctx = getCurrentInstance().ctx;
+</pre>
+<p>
+    如此你就可以（不过里面不包含attrs、slots、emit、expose等，比如emit你可以直接引入defineEmits后创建获得）：
+</p>
+<pre>
+    ctx.$forceUpdate();
+</pre>

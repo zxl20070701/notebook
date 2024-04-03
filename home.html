@@ -24,12 +24,6 @@
 
     <!-- 主体内容 -->
     <div class="body" id="body">
-        <div class="cat">
-            <div class="img"></div>
-            <div class="text">
-                感谢您这么多年的陪伴，<br />愿您在那边，<br />一切安好！
-            </div>
-        </div>
         <nav>
             <a href="javascript:void(0)" class="active">
                 首页
@@ -40,11 +34,11 @@
             <a href="https://zxl20070701.github.io/toolbox" target="_blank">
                 实用工具
             </a>
-            <a href="https://github.com/fragement-contrib" target="_blank">
-                代码仓库
-            </a>
             <a href="https://github.com/oi-contrib" target="_blank">
                 OI开源
+            </a>
+            <a href="https://github.com/zxl20070701?tab=repositories" target="_blank">
+                更多
             </a>
         </nav>
 
@@ -92,6 +86,7 @@
                             </div>
                         </li>
                     </ul>
+                    <div class="cat"></div>
                 </div>
             </div>
 
@@ -122,18 +117,6 @@
     </div>
 
     <script>
-        var bodyEl = document.getElementById('body');
-
-        var val = 0;
-        var interval = setInterval(function () {
-            val += 30;
-            if (val > 400) {
-                val = 400;
-                clearInterval(interval);
-            }
-            bodyEl.scrollTop = val;
-        }, 30);
-
         function doSearch(event) {
             event.preventDefault();
             event.stopPropagation();
@@ -141,7 +124,6 @@
             var inputValueOrl = document.getElementById("search-input").value;
             window.location.href = "./index.html#/?search=" + inputValueOrl;
         }
-
     </script>
 
     <!-- 控制台打印 -->

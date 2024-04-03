@@ -1,0 +1,25 @@
+<header>
+    自定义组件之defineComponent
+</header>
+<h2>
+    emit
+</h2>
+<pre tag="html">
+&lt;script lang="ts"&gt;  
+import { defineComponent } from "vue";
+
+export default defineComponent({
+    emits:{
+        xxx: () => void
+    },
+    setup(props, ctx) {
+        let doit = () => {
+            ctx.emit("xxx");
+        };
+        return {
+            doit
+        };
+    };
+});
+&lt;/script&gt;  
+</pre>

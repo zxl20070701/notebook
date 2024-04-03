@@ -4,35 +4,6 @@
     min-width: 980px;
 }
 
-.cat {
-    background-color: black;
-    text-align: center;
-}
-
-.cat>div {
-    display: inline-block;
-    vertical-align: middle;
-}
-
-.cat>.img {
-    background-image: url(../images/cat.webp);
-    height: 400px;
-    width: 500px;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: auto 90%;
-}
-
-.cat>.text {
-    color: white;
-    width: 260px;
-    text-align: left;
-    line-height: 1.6em;
-    font-family: cursive;
-    font-weight: 800;
-    font-size: 18px;
-}
-
 .sponsors {
     text-align: center;
 }
@@ -54,6 +25,21 @@
 .sponsors>li.wx {
     height: 200px;
     background-image: url(../images/wx.jpeg);
+}
+
+.cat {
+    width: 213.25px;
+    height: 160px;
+    background-image: url(../images/cat.webp);
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    outline: 2px solid #fff;
+    border-radius: 10px;
 }
 
 nav {
@@ -167,6 +153,7 @@ nav>a.active {
     display: inline-block;
     vertical-align: top;
     padding: 10px;
+    position: relative;
 }
 
 .view>.containter>.right>h2 {

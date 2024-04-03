@@ -3,8 +3,3 @@
 .project
 node_modules
 package-lock.json
-fragement/npm-pkg/puppeteer-core/data/**
-!.gitkeep
-*.class
-*.out
-.vscode
